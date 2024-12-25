@@ -1,10 +1,15 @@
+import exp from 'constants';
+import { initializeApp } from 'firebase/app';
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.API_KEY,  
-  authDomain:  
-  projectId: "ratemycafeteria-67173",
-  storageBucket: "ratemycafeteria-67173.firebasestorage.app",
-  messagingSenderId: "77548333564",
-  appId: "1:77548333564:web:a2ef426c162256b497aa79",
-  measurementId: "G-CNJV1W9P41"
+  authDomain: process.env.AUTH_DOMAIN, 
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID
 };
+
+export const app = initializeApp(firebaseConfig);
