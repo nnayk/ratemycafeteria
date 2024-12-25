@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
+import { initializeApp } from "firebase/app";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,6 +11,13 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// TODO: Replace the following with your app's Firebase project configuration
+const firebaseConfig = {
+  //...
+};
+
+const app = initializeApp(firebaseConfig);
 
 export default function Home() {
   return (
