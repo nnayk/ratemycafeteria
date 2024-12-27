@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { loginUser } from '../auth';
+import { UserCredential } from 'firebase/auth';
 
 interface LoginProps {
   isOpen: boolean;
@@ -8,12 +10,29 @@ interface LoginProps {
 export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [infoMessage, setInfoMessage] = useState('Please provide an .edu email.');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login attempt with:', email, password);
-    onClose();
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    if (!email.endsWith('.edu')) {
+      setErrorMessage('Please provide an .edu email.');
+      return;
+    } else {
+        try {
+          const userCredential: UserCredential = await loginUser(email, password);
+          setSuccessMessage('Login successful!');
+          setTimeout(() => {
+            onClose();
+          }, 2000); // Close the modal after 2 seconds
+        } catch (error) {
+          setErrorMessage('Invalid credentials.');
+        }
+    }
   };
 
   if (!isOpen) return null;
@@ -22,6 +41,21 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-8 rounded-lg">
         <h2 className="text-2xl font-bold mb-4">Login</h2>
+        {!successMessage && !errorMessage && (
+            <div className="mb-4 p-2 bg-blue-100 text-blue-700 rounded">
+              {infoMessage}
+            </div>
+          )}
+        {successMessage && (
+          <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">
+            {successMessage}
+          </div>
+        )}
+        {errorMessage && (
+          <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
+            {errorMessage}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2">Email:</label>
@@ -60,4 +94,3 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
 };
 
 export default Login;
-
