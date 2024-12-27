@@ -19,7 +19,7 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
     // setSuccessMessage('');
     // setErrorMessage('');
 
-    if (email.endsWith('.edu')) {
+    if (!email.endsWith('.edu')) {
       setErrorMessage('Please provide a .edu email.');
       return;
     }

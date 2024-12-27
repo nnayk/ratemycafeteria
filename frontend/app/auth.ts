@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, UserCredential, signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth";
 import { app } from './constants';
+import { log } from "console";
 
 export const auth = getAuth(app);
 onAuthStateChanged(auth, (user) => {
@@ -25,12 +26,12 @@ export async function registerUser(email: string, password: string): Promise<Use
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       sendEmailVerification(userCredential.user, actionCodeSettings).then(() => {
         console.log("Email verification sent!");
-        return userCredential;
       }).catch((error) => {
         console.error("Email verification error:", error);
         // delete user
         throw error;
       });
+        return userCredential;
         // console.log("User registered successfully:", userCredential.user);
         // return userCredential;
     } catch (error) {
@@ -42,6 +43,11 @@ export async function registerUser(email: string, password: string): Promise<Use
 export async function loginUser(email: string, password: string): Promise<UserCredential> {
   try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      if (!userCredential.user.emailVerified) {
+        console.error("Email not verified:", userCredential.user);
+        await logoutUser(email, password);
+        throw new Error("Email not verified. Please verify your email.");
+      }
       console.log("User logged in successfully:", userCredential.user);
       return userCredential;
   } catch (error) {
