@@ -1,7 +1,5 @@
-import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, UserCredential, signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth";
 import { app } from './constants';
-import { log } from "console";
 
 export const auth = getAuth(app);
 onAuthStateChanged(auth, (user) => {
@@ -23,6 +21,7 @@ export async function registerUser(email: string, password: string): Promise<Use
       const actionCodeSettings = { 
         url: 'http://localhost:3000',
       };
+      x
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       sendEmailVerification(userCredential.user, actionCodeSettings).then(() => {
         console.log("Email verification sent!");

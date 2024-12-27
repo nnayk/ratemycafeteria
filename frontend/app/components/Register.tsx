@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { registerUser } from '../auth';
 import { UserCredential } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 interface LoginProps {
   isOpen: boolean;
@@ -26,6 +27,11 @@ export const Register: React.FC<LoginProps> = ({ isOpen, onClose }) => {
       return;
     }
 
+    if(password.length < 6){
+      setErrorMessage('Password must be at least 6 characters.');
+      return;
+    }
+
     try {
       const userCredential: UserCredential = await registerUser(email, password);
       setSuccessMessage(`Verification email sent! You can exit this tab.`);
@@ -35,8 +41,15 @@ export const Register: React.FC<LoginProps> = ({ isOpen, onClose }) => {
       }, 2000);
     } catch (error) {
       setSuccessMessage(''); 
-      // TODO: Fix this error message
-      setErrorMessage('Registration failed..');
+      if(error instanceof FirebaseError){
+        let message : string = "Registration failed.";
+        if(error.code === "auth/email-already-in-use"){
+          message = "Email already in use.";
+        }
+        setErrorMessage(message);
+      } else {
+        setErrorMessage('Server error :(. Please try again later.');
+      }
     }
   };
 

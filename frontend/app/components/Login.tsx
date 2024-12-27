@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { loginUser } from '../auth';
 import { UserCredential } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 interface LoginProps {
   isOpen: boolean;
@@ -34,7 +35,11 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
       }, 1000);
     } catch (error) {
       setSuccessMessage(''); 
-      setErrorMessage('Login failed. Please check your credentials.');
+      if(error instanceof FirebaseError){
+        setErrorMessage('Login failed. Please check your credentials.');
+      } else {
+        setErrorMessage('Server error :(. Please try again later.');
+      }
     }
   };
 
