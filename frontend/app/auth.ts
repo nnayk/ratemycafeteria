@@ -19,9 +19,8 @@ onAuthStateChanged(auth, (user) => {
 export async function registerUser(email: string, password: string): Promise<UserCredential> {
     try {
       const actionCodeSettings = { 
-        url: 'http://localhost:3000',
+        url: 'http://localhost:3000/',
       };
-      x
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       sendEmailVerification(userCredential.user, actionCodeSettings).then(() => {
         console.log("Email verification sent!");
@@ -62,4 +61,7 @@ export async function logoutUser(email: string, password: string): Promise<void>
       console.error("Login error:", error);
       throw error; // Re-throw the error to handle it in the calling code
   }
+}
+
+export async function sendPasswordResetEmail(email: string): Promise<void> {
 }
