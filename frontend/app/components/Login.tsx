@@ -13,7 +13,6 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
   const [password, setPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const infoMessage = 'Provide a .edu email.';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +20,7 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
     // setErrorMessage('');
 
     if (email.endsWith('.edu')) {
-      setErrorMessage('Provide an.edu email.');
+      setErrorMessage('Please provide a .edu email.');
       return;
     }
 
@@ -32,7 +31,7 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
       setTimeout(() => {
         clearInputs(); // Clear inputs before closing
         onClose();
-      }, 2000);
+      }, 1000);
     } catch (error) {
       setSuccessMessage(''); 
       setErrorMessage('Login failed. Please check your credentials.');
@@ -41,6 +40,8 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
 
   // Function to clear email and password inputs
   const clearInputs = () => {
+    setSuccessMessage('');
+    setErrorMessage('');
     setEmail('');
     setPassword('');
   };
@@ -57,23 +58,16 @@ export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-8 rounded-lg w-96">
         <h2 className="text-2xl font-bold mb-4">Login</h2>
-        <div className="h-16 mb-4 overflow-hidden transition-all duration-300 ease-in-out">
-          {!successMessage && !errorMessage && (
-            <div className="p-2 bg-blue-100 text-blue-700 rounded">
-              {infoMessage}
-            </div>
-          )}
           {successMessage && (
-            <div className="p-2 bg-green-100 text-green-700 rounded">
+            <div className="p-2 mb-3 bg-green-100 text-green-700 rounded">
               {successMessage}
             </div>
           )}
           {errorMessage && (
-            <div className="p-2 bg-red-100 text-red-700 rounded">
+            <div className="p-2 mb-3 bg-red-100 text-red-700 rounded">
               {errorMessage}
             </div>
           )}
-        </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2">Email:</label>

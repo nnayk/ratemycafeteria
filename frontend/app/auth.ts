@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, UserCredential, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, UserCredential, signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth";
 import { app } from './constants';
 
 export const auth = getAuth(app);
@@ -19,9 +19,20 @@ onAuthStateChanged(auth, (user) => {
 
 export async function registerUser(email: string, password: string): Promise<UserCredential> {
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("User registered successfully:", userCredential.user);
+      const actionCodeSettings = { 
+        url: 'http://localhost:3000',
+      };
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      sendEmailVerification(userCredential.user, actionCodeSettings).then(() => {
+        console.log("Email verification sent!");
         return userCredential;
+      }).catch((error) => {
+        console.error("Email verification error:", error);
+        // delete user
+        throw error;
+      });
+        // console.log("User registered successfully:", userCredential.user);
+        // return userCredential;
     } catch (error) {
         console.error("Registration error:", error);
         throw error; // Re-throw the error to handle it in the calling code

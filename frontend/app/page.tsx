@@ -16,12 +16,16 @@ export default function Home() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user && user.emailVerified) {
         setIsLoggedIn(true); // User is signed in
         console.log(`User with id ${user.uid} is signed in:`, user);
       } else {
         setIsLoggedIn(false); // User is signed out
-        console.log("User is signed out");
+        if (user) {
+          console.log(`User with id ${user.uid} is signed in but not verified:`, user);
+        } else {
+          console.log("User is signed out");
+        }
       }
     });
 
