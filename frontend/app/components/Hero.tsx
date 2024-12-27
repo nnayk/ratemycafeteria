@@ -1,24 +1,45 @@
-import React from 'react';
+import { Autocomplete, TextField, Button } from '@mui/material';
 
+// In your Hero component
 export const Hero: React.FC = () => {
   return (
-    <div className="bg-white min-h-[50vh] flex flex-col items-center justify-center text-white p-4">
+    <div className="bg-white min-h-[50vh] flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold mb-6 text-black">Search a school to get started</h1>
       
       <div className="w-full max-w-md">
-        <input
-          type="text"
-          placeholder="Enter school name..."
-          className="w-full px-4 py-2 text-black rounded-md border-2 border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+        <Autocomplete
+          options={['School 1', 'Tchool 2', '$chool 3']} // Replace with your school list
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              placeholder="Enter school name"
+              variant="outlined"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: '#F59E0B', // Yellow border
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#F59E0B',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#F59E0B',
+                  },
+                },
+              }}
+            />
+          )}
         />
       </div>
       
-      <button className="mt-8 text-lg text-black underline transition duration-300">
-        See all schools
-      </button>
+      <div className="mt-8 flex space-x-2">
+        <Button variant="outlined" color="primary" sx={{ borderColor: '#F59E0B', color: '#000' }}>
+          Add a school
+        </Button>
+        <Button variant="outlined" color="primary" sx={{ borderColor: '#F59E0B', color: '#000' }}>
+          See all schools 
+        </Button>
+      </div>
     </div>
   );
 };
-
-export default Hero;
-

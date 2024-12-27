@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
           <button className="bg-white text-black px-4 py-2 rounded-md mr-2 hover:bg-yellow-100 transition duration-300">
             Login
           </button>
-          <button className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-300">
+          <button className="bg-yellow-700 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-300">
             Register
           </button>
         </div>

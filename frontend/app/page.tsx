@@ -5,25 +5,23 @@ import {app} from './constants';
 import { registerUser,loginUser, logoutUser } from "./auth";
 import { Navbar } from "./components/NavBar";
 import {Hero } from "./components/Hero";
-// TODO: Replace the following with your app's Firebase project configuration
+import {Footer} from "./components/Footer";
+
 const firebaseConfig = {
   //...
 };
 
-
 export default function Home() {
-console.log(`${app.name} initialized`);
+  console.log(`${app.name} initialized`);
   let secret = "123456";
   console.log(`testos = ${process.env.NEXT_PUBLIC_TEST}`)
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar/>
-      <Hero/>
-      {/* <h1>Hello</h1>
-      <button onClick={() => registerUser("hello@gmail.com",secret)}>Register</button>
-      <button onClick={() => loginUser("hello@gmail.com",secret)}>Login</button>
-      <button onClick={() => logoutUser("hello@gmail.com",secret)}>Logout</button> */}
+      <main className="flex-grow">
+        <Hero/>
+      </main>
+      <Footer/>
     </div>
-
   );
 }
