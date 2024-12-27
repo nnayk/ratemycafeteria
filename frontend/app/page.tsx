@@ -8,6 +8,7 @@ import { Navbar } from "./components/NavBar";
 import { Hero } from "./components/Hero";
 import { Footer } from "./components/Footer";
 import { Login } from "./components/Login";
+import { Register } from "./components/Register";
 
 const firebaseConfig = {
   //...
@@ -15,8 +16,10 @@ const firebaseConfig = {
 
 export default function Home() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   const toggleLogin = () => setIsLoginOpen(!isLoginOpen);
+  const toggleRegister = () => setIsRegisterOpen(!isRegisterOpen);
 
   console.log(`${app.name} initialized`);
   let secret = "123456";
@@ -24,12 +27,13 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar onLoginClick={toggleLogin} />
+      <Navbar onLoginClick={toggleLogin} onRegisterClick={toggleRegister} />
       <main className="flex-grow">
         <Hero />
       </main>
       <Footer />
       <Login isOpen={isLoginOpen} onClose={toggleLogin} />
+      <Register isOpen={isRegisterOpen} onClose={toggleRegister} />
     </div>
   );
 }

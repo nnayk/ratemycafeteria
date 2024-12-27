@@ -2,9 +2,10 @@ import React from 'react';
 
 interface NavbarProps {
   onLoginClick: () => void;
+  onRegisterClick: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
   return (
     <nav className="bg-yellow-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -18,7 +19,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
           >
             Login
           </button>
-          <button className="bg-yellow-700 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-300">
+          <button 
+            onClick={onRegisterClick}
+            className="bg-yellow-700 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-300"
+          >
             Register
           </button>
         </div>
@@ -28,4 +32,3 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
 };
 
 export default Navbar;
-
