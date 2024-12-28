@@ -1,14 +1,25 @@
+import React from 'react';
 import { Autocomplete, TextField, Button } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
-// In your Hero component
 export const Hero: React.FC = () => {
+  const router = useRouter();
+
+  const handleSchoolSelect = (event: React.SyntheticEvent, value: string | null) => {
+    if (value) {
+      // Navigate to the school's page
+      router.push(`/school/${encodeURIComponent(value)}`);
+    }
+  };
+
   return (
     <div className="bg-white min-h-[50vh] flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold mb-6 text-black">Search a school to get started</h1>
       
       <div className="w-full max-w-md">
         <Autocomplete
-          options={['School 1', 'Tchool 2', '$chool 3']} // Replace with your school list
+          options={['School 1', 'School 2', 'School 3']} // Replace with your school list
+          onChange={handleSchoolSelect}
           renderInput={(params) => (
             <TextField
               {...params}
