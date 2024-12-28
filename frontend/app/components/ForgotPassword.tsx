@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sendPasswordResetEmail } from '../auth'; // Import your password reset function
+import { resetPassword } from '../auth'; // Import your password reset function
 import { FirebaseError } from 'firebase/app';
 
 interface ForgotPasswordProps {
@@ -18,8 +18,8 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({ isOpen, onClose 
     setErrorMessage('');
 
     try {
-      await sendPasswordResetEmail(email); // Call your function to send reset email
-      setMessage('A password reset email has been sent.');
+      await resetPassword(email); // Call your function to send reset email
+      setMessage('A password reset email has been sent. You can close this tab.');
       setEmail(''); // Clear the email input
     } catch (error) {
       if (error instanceof FirebaseError) {

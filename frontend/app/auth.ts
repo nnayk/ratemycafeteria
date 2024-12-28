@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, UserCredential, signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, UserCredential, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail } from "firebase/auth";
 import { app } from './constants';
 
 export const auth = getAuth(app);
@@ -63,5 +63,14 @@ export async function logoutUser(email: string, password: string): Promise<void>
   }
 }
 
-export async function sendPasswordResetEmail(email: string): Promise<void> {
+export async function resetPassword(email: string): Promise<void> {
+  try {
+    const actionCodeSettings = { 
+      url: 'http://localhost:3000/',
+    };
+    await sendPasswordResetEmail(auth, email, actionCodeSettings);
+  } catch (error) {
+      console.error("Password reset error:", error);
+      throw error; // Re-throw the error to handle it in the calling code
+  }
 }
