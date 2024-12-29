@@ -44,10 +44,10 @@ export const Hero: React.FC = () => {
       </div>
       
       <div className="mt-8 flex space-x-2">
-        <Button variant="outlined" color="primary" sx={{ borderColor: '#F59E0B', color: '#000' }}>
+        <Button variant="outlined" color="primary" sx={{ borderColor: '#F59E0B', color: '#000' }} onClick = {() => router.push('/schools/add')}>
           Add a school
         </Button>
-        <Button variant="outlined" color="primary" sx={{ borderColor: '#F59E0B', color: '#000' }}>
+        <Button variant="outlined" color="primary" sx={{ borderColor: '#F59E0B', color: '#000' }} onClick={() => router.push('/schools')}>
           See all schools 
         </Button>
       </div>

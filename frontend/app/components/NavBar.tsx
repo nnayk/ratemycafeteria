@@ -1,13 +1,17 @@
+'use client';
+
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { auth } from '../auth';
 
-interface NavbarProps {
-  isLoggedIn: boolean; // New prop to track login state
-  onLoginClick: () => void;
-  onRegisterClick: () => void;
-  onLogoutClick: () => void; // New prop for logout action
-}
+export const Navbar: React.FC = () => {
+  const { isLoggedIn, toggleLogin, toggleRegister } = useAuth();
 
-export const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLoginClick, onRegisterClick, onLogoutClick }) => {
+  const handleLogout = async () => {
+    await auth.signOut();
+    console.log('User logged out');
+  };
+
   return (
     <nav className="bg-yellow-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -24,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLoginClick, onRegi
                 Profile
               </button>
               <button 
-                onClick={onLogoutClick}
+                onClick={handleLogout}
                 className="bg-yellow-700 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-300"
               >
                 Logout
@@ -33,13 +37,13 @@ export const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLoginClick, onRegi
           ) : (
             <>
               <button 
-                onClick={onLoginClick}
+                onClick={toggleLogin}
                 className="bg-white text-black px-4 py-2 rounded-md mr-2 hover:bg-yellow-100 transition duration-300"
               >
                 Login
               </button>
               <button 
-                onClick={onRegisterClick}
+                onClick={toggleRegister}
                 className="bg-yellow-700 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-300"
               >
                 Register
