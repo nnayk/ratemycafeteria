@@ -2,13 +2,20 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/app/components/NavBar';
+import {Loading} from '../../components/Loading';
+import { Navbar } from '../../components/NavBar';
+import { useAuth } from '../../contexts/AuthContext';
+
 
 export default function AddUniversityPage() {
   const [universityName, setUniversityName] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const router = useRouter();
+  const { isLoading } = useAuth();
+  if(isLoading) {
+    return <Loading />;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

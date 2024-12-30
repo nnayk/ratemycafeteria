@@ -6,11 +6,14 @@ import { Hero } from './components/Hero';
 import { Footer } from './components/Footer';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
+import { Loading } from './components/Loading';
 import { useAuth } from './contexts/AuthContext';
 
 export default function Home() {
-  const { isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
-
+  const { isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
+  // if(isLoading) {
+  //   return <Loading />;
+  // }
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
