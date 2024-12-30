@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import {Loading} from '../../components/Loading';
 import { Navbar } from '../../components/NavBar';
 import { useAuth } from '../../contexts/AuthContext';
+import { requestSchool } from '../../db';
 
 
 export default function AddUniversityPage() {
@@ -12,7 +13,9 @@ export default function AddUniversityPage() {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const router = useRouter();
+  const {user} = useAuth();
   const { isLoading } = useAuth();
+  const maxInputLength = 50;
   if(isLoading) {
     return <Loading />;
   }
@@ -21,6 +24,7 @@ export default function AddUniversityPage() {
     e.preventDefault();
     // Here you would typically send the data to your backend
     console.log({ universityName, city, state });
+    requestSchool(user,universityName, city, state);
     // After submission, you might want to redirect to the schools list
     // router.push('/schools');
   };
@@ -49,6 +53,12 @@ export default function AddUniversityPage() {
           label="University Name"
           variant="outlined"
           value={universityName}
+          slotProps={{
+            htmlInput: {
+              maxLength: 50,
+              type: 'string'
+            }
+          }}
           onChange={(e) => setUniversityName(e.target.value)}
           required
           margin="normal"
@@ -66,6 +76,12 @@ export default function AddUniversityPage() {
           label="University City"
           variant="outlined"
           value={city}
+          slotProps={{
+            htmlInput: {
+              maxLength: 50,
+              type: 'string'
+            }
+          }}
           onChange={(e) => setCity(e.target.value)}
           required
           margin="normal"
@@ -83,6 +99,12 @@ export default function AddUniversityPage() {
           label="University State"
           variant="outlined"
           value={state}
+          slotProps={{
+            htmlInput: {
+              maxLength: 50,
+              type: 'string'
+            }
+          }}
           onChange={(e) => setState(e.target.value)}
           required
           margin="normal"

@@ -14,6 +14,7 @@ export default function Home() {
   // if(isLoading) {
   //   return <Loading />;
   // }
+  // getDb();
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
