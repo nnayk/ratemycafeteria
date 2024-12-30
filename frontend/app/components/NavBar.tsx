@@ -3,6 +3,7 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { auth } from '../auth';
+import Link from 'next/link';
 import "../css/nav.css"
 
 export const Navbar: React.FC = () => {
@@ -18,9 +19,9 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="bg-yellow-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-xl font-bold">
+        <Link href="/" className="text-white text-xl font-bold hover:text-yellow-200 transition duration-300">
           RateMyCafeteria
-        </div>
+        </Link> 
         <div className="flex items-center">
           {isLoading ? (
             <div className="flex items-center space-x-2">
