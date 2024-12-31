@@ -5,6 +5,16 @@ import { User } from "firebase/auth";
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
+export interface Cafeteria {
+    name: string;
+    imageUrl: string;
+  }
+  
+export interface SchoolDetails {
+    name: string;
+    cafeterias: Cafeteria[];
+}
+
 export function getDb() {
     console.log(`db's app = ${db.app.name}`)
     return db;
@@ -13,6 +23,20 @@ export function getDb() {
 export async function getSchools() {
     return ["school1", "school2", "school3"];
 }
+
+export async function getSchoolDetails(school : string) {
+    return {
+        name: school,
+        cafeterias: [
+            { name: "cafeteria1", imageUrl: "https://via.placeholder.com/150" },
+            { name: "cafeteria2", imageUrl: "https://via.placeholder.com/150" },
+            { name: "cafeteria3", imageUrl: "https://via.placeholder.com/150" },
+            { name: "cafeteria4", imageUrl: "https://via.placeholder.com/150" },
+            { name: "cafeteria5", imageUrl: "https://via.placeholder.com/150" },
+            { name: "cafeteria6", imageUrl: "https://via.placeholder.com/150" },
+        ],
+    };
+} 
 
 export async function requestSchool(user : User|null, name : string) {
     try {
