@@ -1,17 +1,20 @@
 'use client';
-import React, { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Box, Typography, Autocomplete } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import {Loading} from '../../components/Loading';
 import { Navbar } from '../../components/NavBar';
 import { useAuth } from '../../contexts/AuthContext';
 import { requestSchool } from '../../db';
+import { US_STATES } from '../../constants';
 
 
+const yourhandle= require('countrycitystatejson');
 export default function AddUniversityPage() {
   const [universityName, setUniversityName] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
+  const [cities, setCities] = useState([]);
   const router = useRouter();
   const {user} = useAuth();
   const { isLoading } = useAuth();
@@ -19,6 +22,20 @@ export default function AddUniversityPage() {
   if(isLoading) {
     return <Loading />;
   }
+
+  // console.log(`my handle = ${yourhandle}`)
+  // console.log(yourhandle.getCities('US','California'))
+
+  // useEffect(() => {
+  //   const fetchCities = async () => {
+  //     if (state) {
+  //       const stateCitiesList = await yourhandle.getCities('US', state);
+  //       setCities(stateCitiesList);
+  //     } else {
+  //       setCities([]);
+  //     }
+  //   };
+  // }, [state]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,10 +87,72 @@ export default function AddUniversityPage() {
             },
           }}
         />
+
+        <div className="w-full max-w-md">
+          <Autocomplete
+            options={US_STATES}
+            value={state}
+            onChange={(event, newValue) => {
+              setState(newValue);
+              setCity('');
+              setCities(yourhandle.getCities('US', newValue));
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                required
+                label="University State"
+                variant="outlined"
+                margin='normal'
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: '#F59E0B',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#F59E0B',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#F59E0B',
+                    },
+                  },
+                }}
+              />
+            )}
+          />
+        </div>
+
+        <div className="w-full max-w-md">
+          <Autocomplete
+            options={cities}
+            value={city}
+            onChange={(event, newValue) => {
+              console.log(`newValue = ${newValue}`);
+              setCity(newValue);
+            }}
+            disabled={!state} // Disable if no state is selected
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                required
+                label="University City"
+                variant="outlined"
+                margin='normal'
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': { borderColor: '#F59E0B' },
+                    '&:hover fieldset': { borderColor: '#F59E0B' },
+                    '&.Mui-focused fieldset': { borderColor: '#F59E0B' },
+                  },
+                }}
+              />
+            )}
+          />
+        </div>
         
-        <TextField
+        {/* <TextField
           fullWidth
-          label="University City"
+          label="University Location"
           variant="outlined"
           value={city}
           slotProps={{
@@ -92,9 +171,9 @@ export default function AddUniversityPage() {
               '&.Mui-focused fieldset': { borderColor: '#F59E0B' },
             },
           }}
-        />
+        /> */}
         
-        <TextField
+        {/* <TextField
           fullWidth
           label="University State"
           variant="outlined"
@@ -115,7 +194,7 @@ export default function AddUniversityPage() {
               '&.Mui-focused fieldset': { borderColor: '#F59E0B' },
             },
           }}
-        />
+        /> */}
         
         <Button 
           type="submit" 
