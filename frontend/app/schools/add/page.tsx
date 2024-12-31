@@ -12,9 +12,9 @@ import { US_STATES } from '../../constants';
 const yourhandle= require('countrycitystatejson');
 export default function AddUniversityPage() {
   const [universityName, setUniversityName] = useState('');
-  const [city, setCity] = useState('');
+  // const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [cities, setCities] = useState([]);
+  // const [cities, setCities] = useState([]);
   const router = useRouter();
   const {user} = useAuth();
   const { isLoading } = useAuth();
@@ -94,8 +94,8 @@ export default function AddUniversityPage() {
             value={state}
             onChange={(event, newValue) => {
               setState(newValue);
-              setCity('');
-              setCities(yourhandle.getCities('US', newValue));
+              // setCity('');
+              // setCities(yourhandle.getCities('US', newValue));
             }}
             renderInput={(params) => (
               <TextField
@@ -122,7 +122,7 @@ export default function AddUniversityPage() {
           />
         </div>
 
-        <div className="w-full max-w-md">
+        {/* <div className="w-full max-w-md">
           <Autocomplete
             options={cities}
             value={city}
@@ -148,7 +148,7 @@ export default function AddUniversityPage() {
               />
             )}
           />
-        </div>
+        </div> */}
         
         {/* <TextField
           fullWidth
