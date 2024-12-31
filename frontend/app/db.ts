@@ -10,12 +10,16 @@ export function getDb() {
     return db;
 }
 
+export async function getSchools() {
+    return ["school1", "school2", "school3"];
+}
+
 export async function requestSchool(user : User|null, name : string) {
     try {
         console.log(`user=${user}`)
         await addDoc(collection(db, "school_requests"), {
             name: name,
-            user: user?.uid
+            user: user ? user.uid : null, 
         })
     } catch (e) {
         console.error("Error adding document: ", e);

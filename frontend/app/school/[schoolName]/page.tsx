@@ -1,13 +1,10 @@
-// app/school/[schoolName]/page.tsx
+export default async function SchoolPage({ params }: { params: { schoolName: string } }) {
+  const { schoolName } = await params;
 
-import { useRouter } from 'next/navigation';
-
-export default function SchoolPage({ params }: { params: { schoolName: string } }) {
   return (
     <div>
-      <h1>{decodeURIComponent(params.schoolName)}</h1>
+      <h1>{decodeURIComponent(schoolName)}</h1>
       {/* Add more details about the school here */}
     </div>
   );
 }
-
