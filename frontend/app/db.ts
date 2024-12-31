@@ -1,4 +1,4 @@
-import { getFirestore, setDoc, doc  } from "firebase/firestore";
+import { getFirestore, setDoc, doc, addDoc, collection  } from "firebase/firestore";
 import {app} from './constants';
 import { User } from "firebase/auth";
 
@@ -10,17 +10,13 @@ export function getDb() {
     return db;
 }
 
-export async function requestSchool(user : User, name : string,city : string,state : string) {
+export async function requestSchool(user : User|null, name : string) {
     try {
-        const docId = `${name}-${city}-${state}`
-        console.log(`user=${user}, id = ${user.uid}`)
-        await setDoc(doc(db, "school_requests", docId), {    
+        console.log(`user=${user}`)
+        await addDoc(collection(db, "school_requests"), {
             name: name,
-            city: city,
-            state: state,
-            user: user.uid, 
-        });
-        console.log("Document written with ID: ", docId);
+            user: user?.uid
+        })
     } catch (e) {
         console.error("Error adding document: ", e);
     }
