@@ -2,12 +2,12 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import {Loading} from '../../components/Loading';
-import { Navbar } from '../../components/NavBar';
-import { useAuth } from '../../contexts/AuthContext';
-import { requestSchool } from '../../db';
+import {Loading} from '../../../../components/Loading';
+import { Navbar } from '../../../../components/NavBar';
+import { useAuth } from '../../../../contexts/AuthContext';
+import { requestSchool } from '../../../../db';
 
-export default function AddschoolPage() {
+export default function AddCafe() {
   const [schoolName, setSchoolName] = useState('');
   const [cafe, setCafe] = useState('');
   const router = useRouter();
@@ -40,13 +40,13 @@ export default function AddschoolPage() {
         }}
       >
         <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'black', fontWeight: 'bold' }}>
-          Add a school
+          Add a dining option 
         </Typography>
         
         <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%', maxWidth: 400 }}>
           <TextField
             fullWidth
-            label="School name"
+            label="Dining option name"
             variant="outlined"
             value={schoolName}
             slotProps={{
@@ -69,7 +69,7 @@ export default function AddschoolPage() {
 
           <TextField
             fullWidth
-            label="One dining option you would like to review"
+            label="Anything we should know? (optional)"
             variant="outlined"
             value={cafe}
             slotProps={{
@@ -79,7 +79,7 @@ export default function AddschoolPage() {
               }
             }}
             onChange={(e) => setCafe(e.target.value)}
-            required
+            // required
             margin="normal"
             sx={{
               '& .MuiOutlinedInput-root': {

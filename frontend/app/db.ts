@@ -29,10 +29,10 @@ export async function getSchoolDetails(school : string) {
         name: school,
         cafeterias: [
             { name: "cafeteria1jksadflhiudjsgdshfdukajslhsfhljlhjkadsflhjakdahkkhDKHADHkdjs", imageUrl: "/einsteins.png" },
-            { name: "cafeteria2", imageUrl: "/subway.jpg" },
-            { name: "cafeteria3", imageUrl: "/raw.png" },
-            { name: "cafeteria4", imageUrl: "/vg.jpg" },
-            { name: "cafeteria5", imageUrl: "https://via.placeholder.com/150" },
+            { name: "Subway", imageUrl: "/subway.jpg" },
+            { name: "Panda Express", imageUrl: "/raw.png" },
+            { name: "VG", imageUrl: "/vg.jpg" },
+            { name: "Vista Grande", imageUrl: "https://via.placeholder.com/150" },
             { name: "cafeteria6", imageUrl: "https://via.placeholder.com/150" },
             { name: "cafeteria1", imageUrl: "https://via.placeholder.com/150" },
             { name: "cafeteria1", imageUrl: "https://via.placeholder.com/150" },
@@ -56,12 +56,13 @@ export async function getSchoolDetails(school : string) {
     };
 } 
 
-export async function requestSchool(user : User|null, name : string) {
+export async function requestSchool(user : User|null, name : string, cafe : string) {
     try {
         console.log(`user=${user}`)
         await addDoc(collection(db, "school_requests"), {
             name: name,
-            user: user ? user.uid : null, 
+            user: user ? user.uid : null,
+            cafe: cafe 
         })
     } catch (e) {
         console.error("Error adding document: ", e);

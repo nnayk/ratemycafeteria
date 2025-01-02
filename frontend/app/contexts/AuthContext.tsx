@@ -39,7 +39,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => unsubscribe();
   }, []);
 
-  const toggleLogin = () => setIsLoginOpen(!isLoginOpen);
+  const toggleLogin = () => {
+    console.log(`toggling login to ${!isLoginOpen}`)
+    setIsLoginOpen(!isLoginOpen);
+  }
   const toggleRegister = () => setIsRegisterOpen(!isRegisterOpen);
 
   return (

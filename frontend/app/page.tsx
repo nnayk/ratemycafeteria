@@ -4,17 +4,17 @@ import React from 'react';
 import { Navbar } from './components/NavBar';
 import { Hero } from './components/Hero';
 import { Footer } from './components/Footer';
-import { Login } from './components/Login';
-import { Register } from './components/Register';
 import { Loading } from './components/Loading';
 import { useAuth } from './contexts/AuthContext';
+import { Login } from './components/Login';
+import { Register } from './components/Register';
 
 export default function Home() {
-  const { isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
   // if(isLoading) {
   //   return <Loading />;
   // }
   // getDb();
+  const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />

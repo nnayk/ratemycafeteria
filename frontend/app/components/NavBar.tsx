@@ -4,10 +4,13 @@ import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { auth } from '../auth';
 import Link from 'next/link';
+import { Login } from '../components/Login';
+import { Register } from '../components/Register';
 import "../css/nav.css"
 
 export const Navbar: React.FC = () => {
-  const { isLoggedIn, isLoading, toggleLogin, toggleRegister } = useAuth();
+  // const { isLoggedIn, isLoading, toggleLogin, toggleRegister } = useAuth();
+  const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
 
   const handleLogout = async () => {
     await auth.signOut();

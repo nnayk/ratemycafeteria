@@ -5,11 +5,15 @@ import { Typography, Box, Card, CardContent, CardMedia, Link as MuiLink } from '
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '../../components/NavBar';
+import {Login} from "../../components/Login"
+import {Register} from "../../components/Register"
 import { getSchoolDetails, SchoolDetails } from '../../db';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function SchoolPage({ params }: { params: { schoolName: string } }) {
   const { schoolName } = React.use(params); // Unwrap the promise using React.use()
   const [schoolDetails, setSchoolDetails] = React.useState<SchoolDetails | null>(null);
+  const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
   const router = useRouter();
 
   React.useEffect(() => {
@@ -42,7 +46,7 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
           gutterBottom
           sx={{ textAlign: 'center', marginBottom: 2 }}
         >
-          {schoolDetails.cafeterias.length} cafeteria{schoolDetails.cafeterias.length !== 1 ? 's' : ''}
+          {schoolDetails.cafeterias.length} dining option{schoolDetails.cafeterias.length !== 1 ? 's' : ''}
         </Typography>
 
         {/* Add Cafeteria Link */}
@@ -51,10 +55,10 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
           gutterBottom
           sx={{ textAlign: 'center', marginBottom: 4 }}
         >
-          Don’t see a cafeteria?{' '}
+          Don’t see a dining option?{' '}
           <MuiLink
             component={Link}
-            href="/cafeterias/add"
+            href={`/school/${encodeURIComponent(schoolName)}/cafes/add`}
             sx={{
               color: '#F59E0B',
               textDecoration: 'underline',
@@ -128,6 +132,8 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
           ))}
         </Box>
       </Box>
+      <Login isOpen={isLoginOpen} onClose={toggleLogin} />
+      <Register isOpen={isRegisterOpen} onClose={toggleRegister} />
     </div>
   );
 }
