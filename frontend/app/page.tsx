@@ -14,7 +14,7 @@ export default function Home() {
   //   return <Loading />;
   // }
   // getDb();
-  const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
+  // const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -22,8 +22,8 @@ export default function Home() {
         <Hero />
       </main>
       <Footer />
-      <Login isOpen={isLoginOpen} onClose={toggleLogin} />
-      <Register isOpen={isRegisterOpen} onClose={toggleRegister} />
+      {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
+      {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}
     </div>
   );
 }

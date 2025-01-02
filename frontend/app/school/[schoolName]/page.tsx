@@ -132,8 +132,8 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
           ))}
         </Box>
       </Box>
-      <Login isOpen={isLoginOpen} onClose={toggleLogin} />
-      <Register isOpen={isRegisterOpen} onClose={toggleRegister} />
+      {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
+      {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}
     </div>
   );
 }

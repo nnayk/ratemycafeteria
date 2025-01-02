@@ -70,7 +70,7 @@ export const Register: React.FC<LoginProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg w-96">
         <h2 className="text-2xl font-bold mb-4">Register</h2>
           {!successMessage && !errorMessage && (

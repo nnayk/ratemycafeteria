@@ -6,13 +6,15 @@ import {Loading} from '../../../../components/Loading';
 import { Navbar } from '../../../../components/NavBar';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { requestSchool } from '../../../../db';
+import {Login} from "../../../../components/Login"
+import {Register} from "../../../../components/Register"
 
 export default function AddCafe() {
   const [schoolName, setSchoolName] = useState('');
   const [cafe, setCafe] = useState('');
   const router = useRouter();
   const {user} = useAuth();
-  const { isLoading } = useAuth();
+  const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
   const maxInputLength = 50;
   
   if(isLoading) {
@@ -107,6 +109,8 @@ export default function AddCafe() {
           </Button>
         </Box>
       </Box>
+      {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
+      {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}
     </div>
   );
 }

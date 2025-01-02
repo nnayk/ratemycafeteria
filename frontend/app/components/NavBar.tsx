@@ -70,6 +70,8 @@ export const Navbar: React.FC = () => {
           )}
         </div>
       </div>
+      <Login isOpen={isLoginOpen} onClose={toggleLogin} />
+      <Register isOpen={isRegisterOpen} onClose={toggleRegister} />
     </nav>
   );
 };
