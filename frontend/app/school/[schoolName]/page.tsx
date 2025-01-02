@@ -5,6 +5,7 @@ import { Typography, Box, Card, CardContent, CardMedia, Link as MuiLink } from '
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '../../components/NavBar';
+import { Footer } from '../../components/Footer';
 import {Login} from "../../components/Login"
 import {Register} from "../../components/Register"
 import { getSchoolDetails, SchoolDetails } from '../../db';
@@ -27,9 +28,9 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
   if (!schoolDetails) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className='flex flex-col min-h-screen'>
       <Navbar />
-      <Box sx={{ padding: 4, backgroundColor: 'white' }}>
+      <Box sx={{ padding: 4, backgroundColor: 'white', flexGrow: 1 }}>
         {/* Top of Page: School Name */}
         <Typography
           variant="h3"
@@ -134,6 +135,7 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
       </Box>
       {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
       {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}
+    <Footer />
     </div>
   );
 }

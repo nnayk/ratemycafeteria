@@ -4,6 +4,7 @@ import { TextField, Button, Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import {Loading} from '../../../../components/Loading';
 import { Navbar } from '../../../../components/NavBar';
+import { Footer } from '../../../../components/Footer';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { requestSchool } from '../../../../db';
 import {Login} from "../../../../components/Login"
@@ -28,7 +29,7 @@ export default function AddCafe() {
   };
 
   return (
-    <div>
+    <div className='flex flex-col min-h-screen'>
       <Navbar />
       <Box 
         sx={{ 
@@ -39,6 +40,7 @@ export default function AddCafe() {
           justifyContent: 'flex-start', // Changed from 'center' to 'flex-start'
           padding: '2rem 1rem', // Adjusted padding
           marginTop: '4rem', // Added margin at the top
+          flexGrow: 1,
         }}
       >
         <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'black', fontWeight: 'bold' }}>
@@ -111,6 +113,7 @@ export default function AddCafe() {
       </Box>
       {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
       {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}
+      <Footer />
     </div>
   );
 }

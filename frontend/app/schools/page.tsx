@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Typography, List, ListItem, ListItemText, Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '../components/NavBar';
+import { Footer } from '../components/Footer';
 import { useAuth } from '../contexts/AuthContext';
 import { getSchools } from '../db';
 
@@ -14,7 +15,7 @@ export default function SchoolsPage() {
 
   useEffect(() => {
     fetchSchools();
-  }, []); // Add empty dependency array to run only once
+  }, []);
 
   const fetchSchools = async () => {
     try {
@@ -34,9 +35,9 @@ export default function SchoolsPage() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <Box sx={{ padding: 4 }}>
+      <Box sx={{ padding: 4, flexGrow: 1 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Schools
         </Typography>
@@ -58,6 +59,7 @@ export default function SchoolsPage() {
           ))}
         </List>
       </Box>
+      <Footer />
     </div>
   );
 }
