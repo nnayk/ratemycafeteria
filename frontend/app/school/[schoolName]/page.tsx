@@ -92,7 +92,7 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
                 display: 'flex',
                 flexDirection: 'column',
               }}
-              onClick={() => router.push(`/cafeterias/${encodeURIComponent(cafeteria.name)}`)}
+              onClick={() => router.push(`/school/${schoolName}/cafes/${encodeURIComponent(cafeteria.name)}`)}
             >
               <CardMedia
                 component="img"
