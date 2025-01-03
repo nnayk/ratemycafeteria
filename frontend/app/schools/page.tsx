@@ -45,7 +45,7 @@ export default function SchoolsPage() {
           {schools.map((school, index) => (
             <ListItem 
               key={index} 
-              onClick={() => handleSchoolClick(school)}
+              onClick={() => handleSchoolClick(school.name)}
               sx={{
                 cursor: 'pointer',
                 '&:hover': {
@@ -54,7 +54,7 @@ export default function SchoolsPage() {
                 },
               }}
             >
-              <ListItemText primary={school} />
+              <ListItemText primary={school.name} />
             </ListItem>
           ))}
         </List>

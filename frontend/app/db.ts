@@ -1,4 +1,4 @@
-import { getFirestore, setDoc, doc, addDoc, collection  } from "firebase/firestore";
+import { getFirestore, setDoc, getDocs, doc, addDoc, collection  } from "firebase/firestore";
 import {app} from './constants';
 import { User } from "firebase/auth";
 
@@ -21,7 +21,9 @@ export function getDb() {
 }
 
 export async function getSchools() {
-    return ["school1", "school2", "school3"];
+    const querySnap = await getDocs(collection(db,"schools"));
+    const schools = querySnap.docs.map(doc => doc.data());
+    return schools;
 }
 
 export async function getSchoolDetails(school : string) {
