@@ -107,7 +107,7 @@ export default function AddCafe() {
               },
             }}
           >
-            Add school
+            Add dining option 
           </Button>
         </Box>
       </Box>

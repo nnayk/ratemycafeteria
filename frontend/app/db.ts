@@ -69,6 +69,23 @@ export async function requestSchool(user : User|null, name : string, cafe : stri
     }
 }
 
+export async function requestCafe(user : User|null, school : string, cafe : string) {
+    try {
+        console.log(`user=${user}`)
+        await addDoc(collection(db, "cafe_requests"), {
+            school: school,
+            user: user ? user.uid : null,
+            cafe: cafe 
+        })
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}
+
+export async function schoolNameToId(name : string) {
+    return name.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase();
+}
+
 // for now will manually approve and add schools but this will be a future utility
 // export async function addSchool(name : string,city : string,state : string) {
 //     try {
