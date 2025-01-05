@@ -24,6 +24,11 @@ export default function CafePage({ params }: { params: { schoolName: string, caf
     // Add more review objects here...
   ];
 
+  const handleReviewRequest = () => {
+    console.log('Write a review for:', decodedCafeName);
+    router.push(`/school/${schoolName}/cafes/${decodedCafeName}/review`);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
@@ -33,10 +38,11 @@ export default function CafePage({ params }: { params: { schoolName: string, caf
           <p className="text-gray-600 mt-2">{reviews.length} reviews</p>
         </div>
         <div className="flex flex-wrap justify-center space-x-4 mb-6 gap-4">
-          <Button className="bg-yellow-600 text-white hover:bg-yellow-500 px-4 py-2 rounded-md shadow-md w-full sm:w-auto">
+          <Button className="bg-yellow-600 text-white hover:bg-yellow-500 px-4 py-2 rounded-md shadow-md w-full sm:w-auto"
+          onClick={handleReviewRequest}>
             Write a Review
           </Button>
-          <Button className="bg-gray-400 text-white hover:bg-gray-300 px-4 py-2 rounded-md shadow-md w-full sm:w-auto" 
+          <Button className="bg-gray-400 text-white hover:bg-gray-300 px-4 py-2 rounded-md shadow-md w-full sm:w-auto"
           onClick={() => router.back()}>
             Return to {decodedSchoolName} Page
           </Button>
