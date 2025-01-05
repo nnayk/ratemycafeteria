@@ -1,6 +1,7 @@
 import React from 'react';
 import { Autocomplete, TextField, Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { SCHOOLS } from '../constants';
 
 export const Hero: React.FC = () => {
   const router = useRouter();
@@ -18,7 +19,8 @@ export const Hero: React.FC = () => {
       
       <div className="w-full max-w-md">
         <Autocomplete
-          options={['School 1', 'School 2', 'School 3']} // Replace with your school list
+        // SCHOOLS is a list of objects with attribute name. I want a list of these names
+          options={SCHOOLS.map((school) => school.name)} // TODO: call getSchools() even if it's just a static list rn
           onChange={handleSchoolSelect}
           renderInput={(params) => (
             <TextField

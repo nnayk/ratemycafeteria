@@ -110,6 +110,22 @@ export default function AddschoolPage() {
             Add school
           </Button>
         </Box>
+         {/* Centered Back Button */}
+       <Button
+          onClick={() => router.back()}
+          variant="outlined"
+          sx={{
+            mt: 2,
+            color: '#F59E0B',
+            borderColor: '#F59E0B',
+            '&:hover': {
+              backgroundColor: 'rgba(245, 158, 11, 0.1)',
+              borderColor: '#D97706',
+            },
+          }}
+        >
+          {`Go back to home page`}
+        </Button>
       </Box>
       {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
       {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}

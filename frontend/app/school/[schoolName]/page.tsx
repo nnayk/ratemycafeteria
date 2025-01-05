@@ -1,20 +1,19 @@
 'use client';
 
 import React from 'react';
-import { Typography, Box, Card, CardContent, CardMedia, Link as MuiLink } from '@mui/material';
+import { Typography, Box, Card, CardContent, CardMedia, Button, Link as MuiLink, Stack } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
-import {Login} from "../../components/Login"
-import {Register} from "../../components/Register"
 import { getSchoolDetails, SchoolDetails } from '../../db';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function SchoolPage({ params }: { params: { schoolName: string } }) {
   const { schoolName } = React.use(params); // Unwrap the promise using React.use()
   const [schoolDetails, setSchoolDetails] = React.useState<SchoolDetails | null>(null);
-  const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
+  const { isLoggedIn, isLoading, isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
   const router = useRouter();
 
   React.useEffect(() => {
@@ -28,9 +27,31 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
   if (!schoolDetails) return <div>Loading...</div>;
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <Box sx={{ padding: 4, backgroundColor: 'white', flexGrow: 1 }}>
+      <Box sx={{ padding: 4, backgroundColor: 'white', flexGrow: 1, position: 'relative' }}>
+      <Stack spacing={2}>
+        {/* Back Button */}
+        <Button
+  variant="text"
+  startIcon={<ArrowBackIcon />}
+  sx={{
+    position: { xs: 'static', sm: 'absolute' },
+    top: { sm: 16 },
+    left: { sm: 16 },
+    color: '#F59E0B',
+    '&:hover': {
+      backgroundColor: '#FFF7E6',
+    },
+    mb: { xs: 2, sm: 0 }, // Add margin bottom on mobile
+    alignSelf: { xs: 'flex-start', sm: 'auto' }, // Align to the left on mobile
+  }}
+  onClick={() => router.back()}
+>
+  Back
+</Button>
+ 
+
         {/* Top of Page: School Name */}
         <Typography
           variant="h3"
@@ -59,7 +80,7 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
           Don’t see a dining option?{' '}
           <MuiLink
             component={Link}
-            href={`/school/${encodeURIComponent(schoolName)}/cafes/add`}
+            href={`/school/${schoolName}/cafes/add`}
             sx={{
               color: '#F59E0B',
               textDecoration: 'underline',
@@ -132,10 +153,9 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
             </Card>
           ))}
         </Box>
+        </Stack>
       </Box>
-      {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
-      {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}
-    <Footer />
+      <Footer />
     </div>
   );
 }

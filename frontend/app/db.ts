@@ -1,5 +1,5 @@
 import { getFirestore, setDoc, getDocs, doc, addDoc, collection  } from "firebase/firestore";
-import {app} from './constants';
+import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
 
 // Initialize Cloud Firestore and get a reference to the service
@@ -21,9 +21,11 @@ export function getDb() {
 }
 
 export async function getSchools() {
-    const querySnap = await getDocs(collection(db,"schools"));
-    const schools = querySnap.docs.map(doc => doc.data());
-    return schools;
+ // THis will be a future utility when we have a dynamic list of schools
+//    const querySnap = await getDocs(collection(db,"schools"));
+//    const schools = querySnap.docs.map(doc => doc.data());
+//    return schools;
+ return SCHOOLS;
 }
 
 export async function getSchoolDetails(school : string) {

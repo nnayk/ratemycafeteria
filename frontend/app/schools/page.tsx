@@ -1,15 +1,23 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Typography, List, ListItem, ListItemText, Box } from '@mui/material';
+import { Typography, List, ListItem, ListItemText, Box, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '../components/NavBar';
 import { Footer } from '../components/Footer';
 import { useAuth } from '../contexts/AuthContext';
 import { getSchools } from '../db';
 
+interface School {
+  name: string;
+  city: string;
+  state: string;
+}
+
 export default function SchoolsPage() {
-  const [schools, setSchools] = useState<string[]>([]);
+  const [schoolsByState, setSchoolsByState] = useState<Record<string, School[]>>({});
+  const [expandedStates, setExpandedStates] = useState<Record<string, boolean>>({});
   const router = useRouter();
   const { user, isLoading } = useAuth();
 
@@ -20,7 +28,21 @@ export default function SchoolsPage() {
   const fetchSchools = async () => {
     try {
       const schoolsList = await getSchools();
-      setSchools(schoolsList);
+      const grouped = schoolsList.reduce((acc, school) => {
+        if (!acc[school.state]) {
+          acc[school.state] = [];
+        }
+        acc[school.state].push(school);
+        return acc;
+      }, {} as Record<string, School[]>);
+      setSchoolsByState(grouped);
+      
+      // Set all states to expanded by default
+      const initialExpandedStates = Object.keys(grouped).reduce((acc, state) => {
+        acc[state] = true;
+        return acc;
+      }, {} as Record<string, boolean>);
+      setExpandedStates(initialExpandedStates);
     } catch (error) {
       console.error('Error fetching schools:', error);
     }
@@ -28,6 +50,10 @@ export default function SchoolsPage() {
 
   const handleSchoolClick = (school: string) => {
     router.push(`/school/${encodeURIComponent(school)}`);
+  };
+
+  const handleAccordionChange = (state: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpandedStates(prev => ({ ...prev, [state]: isExpanded }));
   };
 
   if (isLoading) {
@@ -39,25 +65,38 @@ export default function SchoolsPage() {
       <Navbar />
       <Box sx={{ padding: 4, flexGrow: 1 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Schools
+          Schools by State
         </Typography>
-        <List>
-          {schools.map((school, index) => (
-            <ListItem 
-              key={index} 
-              onClick={() => handleSchoolClick(school.name)}
-              sx={{
-                cursor: 'pointer',
-                '&:hover': {
-                  backgroundColor: '#F59E0B',
-                  color: 'white',
-                },
-              }}
-            >
-              <ListItemText primary={school.name} />
-            </ListItem>
-          ))}
-        </List>
+        {Object.entries(schoolsByState).map(([state, schools]) => (
+          <Accordion 
+            key={state} 
+            expanded={expandedStates[state]} 
+            onChange={handleAccordionChange(state)}
+          >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography variant="h6">{state}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List>
+                {schools.map((school, index) => (
+                  <ListItem 
+                    key={index} 
+                    onClick={() => handleSchoolClick(school.name)}
+                    sx={{
+                      cursor: 'pointer',
+                      '&:hover': {
+                        backgroundColor: '#F59E0B',
+                        color: 'white',
+                      },
+                    }}
+                  >
+                    <ListItemText primary={`${school.name} (${school.city})`} />
+                  </ListItem>
+                ))}
+              </List>
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </Box>
       <Footer />
     </div>

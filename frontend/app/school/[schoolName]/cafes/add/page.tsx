@@ -10,8 +10,11 @@ import { requestSchool } from '../../../../db';
 import {Login} from "../../../../components/Login"
 import {Register} from "../../../../components/Register"
 
-export default function AddCafe() {
-  const [schoolName, setSchoolName] = useState('');
+export default function AddCafe({ params }: { params: { schoolName: string } }) {
+  const { schoolName } = React.use(params);
+  const decodedSchoolName = decodeURIComponent(schoolName);
+  console.log(`decodedSchoolName = ${decodedSchoolName}`);
+  const [cafeName, setCafeName] = useState('');
   const [cafe, setCafe] = useState('');
   const router = useRouter();
   const {user} = useAuth();
@@ -52,14 +55,14 @@ export default function AddCafe() {
             fullWidth
             label="Dining option name"
             variant="outlined"
-            value={schoolName}
+            value={cafeName}
             slotProps={{
               htmlInput: {
                 maxLength: 50,
                 type: 'string'
               }
             }}
-            onChange={(e) => setSchoolName(e.target.value)}
+            onChange={(e) => setCafeName(e.target.value)}
             required
             margin="normal"
             sx={{
@@ -110,6 +113,22 @@ export default function AddCafe() {
             Add dining option 
           </Button>
         </Box>
+       {/* Centered Back Button */}
+       <Button
+          onClick={() => router.back()}
+          variant="outlined"
+          sx={{
+            mt: 2,
+            color: '#F59E0B',
+            borderColor: '#F59E0B',
+            '&:hover': {
+              backgroundColor: 'rgba(245, 158, 11, 0.1)',
+              borderColor: '#D97706',
+            },
+          }}
+        >
+          {`Go back to ${decodedSchoolName} page`}
+        </Button>
       </Box>
       {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
       {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}

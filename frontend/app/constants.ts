@@ -14,11 +14,20 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 
-export const US_STATES = [
-  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia',
-  'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
-  'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-  'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
-  'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
+export const SCHOOLS = [
+    {
+        "name":"Cal Poly San Luis Obispo",
+        "city":"San Luis Obispo",
+        "state":"CA",
+        "first_cafe":"Vista Grande",
+        "review_count":0,
+    },
+    {
+        "name":"Vanderbilt University",
+        "city":"Nashville",
+        "state":"TN",
+        "first_cafe":"Commons",
+        "review_count":0,
+    }
 
+];
