@@ -76,7 +76,8 @@ export async function requestSchool(user : User|null, name : string, cafe : stri
 export async function requestCafe(user : User|null, school : string, cafe : string) {
     try {
         console.log(`user=${user}`)
-        await addDoc(collection(db, "cafe_requests"), {
+        const cafeRef = collection(db, "cafe_requests")
+        await addDoc(doc(cafeRef,school), {
             school: school,
             user: user ? user.uid : null,
             cafe: cafe 

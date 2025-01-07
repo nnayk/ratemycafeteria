@@ -6,7 +6,7 @@ import {Loading} from '../../../../components/Loading';
 import { Navbar } from '../../../../components/NavBar';
 import { Footer } from '../../../../components/Footer';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { requestSchool } from '../../../../db';
+import { requestCafe } from '../../../../db';
 import {Login} from "../../../../components/Login"
 import {Register} from "../../../../components/Register"
 
@@ -26,9 +26,9 @@ export default function AddCafe({ params }: { params: { schoolName: string } }) 
   }
 
   const handleSubmit = (e: React.FormEvent) => {
-    console.log(`school name = ${schoolName}, cafe = ${cafe}`);
+    console.log(`school name = ${decodedSchoolName}, cafe = ${cafe}`);
     e.preventDefault();
-    requestSchool(user,schoolName,cafe);
+    requestCafe(user,decodedSchoolName,cafe);
   };
 
   return (

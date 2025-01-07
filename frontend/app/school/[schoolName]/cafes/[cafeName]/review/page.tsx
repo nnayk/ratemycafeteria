@@ -9,7 +9,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
   const router = useRouter();
-  const { schoolName, cafeName } = params;
+  const { schoolName, cafeName } = React.use(params);
   const decodedSchoolName = decodeURIComponent(schoolName);
   const decodedCafeName = decodeURIComponent(cafeName);
 
