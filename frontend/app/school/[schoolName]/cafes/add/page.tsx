@@ -15,7 +15,6 @@ export default function AddCafe({ params }: { params: { schoolName: string } }) 
   const decodedSchoolName = decodeURIComponent(schoolName);
   console.log(`decodedSchoolName = ${decodedSchoolName}`);
   const [cafeName, setCafeName] = useState('');
-  const [cafe, setCafe] = useState('');
   const router = useRouter();
   const {user} = useAuth();
   const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
@@ -26,9 +25,9 @@ export default function AddCafe({ params }: { params: { schoolName: string } }) 
   }
 
   const handleSubmit = (e: React.FormEvent) => {
-    console.log(`school name = ${decodedSchoolName}, cafe = ${cafe}`);
+    console.log(`school name = ${decodedSchoolName}, cafe = ${cafeName}`);
     e.preventDefault();
-    requestCafe(user,decodedSchoolName,cafe);
+    requestCafe(user,decodedSchoolName,cafeName);
   };
 
   return (
@@ -64,29 +63,6 @@ export default function AddCafe({ params }: { params: { schoolName: string } }) 
             }}
             onChange={(e) => setCafeName(e.target.value)}
             required
-            margin="normal"
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': { borderColor: '#F59E0B' },
-                '&:hover fieldset': { borderColor: '#F59E0B' },
-                '&.Mui-focused fieldset': { borderColor: '#F59E0B' },
-              },
-            }}
-          />
-
-          <TextField
-            fullWidth
-            label="Anything we should know? (optional)"
-            variant="outlined"
-            value={cafe}
-            slotProps={{
-              htmlInput: {
-                maxLength: 50,
-                type: 'string'
-              }
-            }}
-            onChange={(e) => setCafe(e.target.value)}
-            // required
             margin="normal"
             sx={{
               '& .MuiOutlinedInput-root': {

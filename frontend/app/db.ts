@@ -75,12 +75,11 @@ export async function requestSchool(user : User|null, name : string, cafe : stri
 
 export async function requestCafe(user : User|null, school : string, cafe : string) {
     try {
-        console.log(`user=${user}`)
+        console.log(`user=${user},school=${school},cafe=${cafe}`);
         const cafeRef = collection(db, "cafe_requests")
-        await addDoc(doc(cafeRef,school), {
-            school: school,
+        await setDoc(doc(cafeRef,school), {
             user: user ? user.uid : null,
-            cafe: cafe 
+            cafe: cafe,
         })
     } catch (e) {
         console.error("Error adding document: ", e);
