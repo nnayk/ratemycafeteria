@@ -6,6 +6,8 @@ import { Button } from '../../../../../components/Button';
 import { useRouter } from 'next/navigation';
 import { Rating } from '@mui/material'; // Assuming you have MUI installed for the star ratings
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { addReview } from '../../../../../db';
+import { useAuth } from '../../../../../contexts/AuthContext';
 
 export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
   const router = useRouter();
@@ -18,6 +20,8 @@ export default function WriteReviewPage({ params }: { params: { schoolName: stri
   const [pricing, setPricing] = useState<number | null>(0);
   const [details, setDetails] = useState('');
   const [photos, setPhotos] = useState<File[]>([]);
+
+  const {user} = useAuth();
 
   const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -32,10 +36,10 @@ export default function WriteReviewPage({ params }: { params: { schoolName: stri
       quantity,
       pricing,
       details,
-      photos,
     };
+    addReview(decodedSchoolName, decodedCafeName, user, quality, quantity, pricing, details, photos);
     console.log('Review submitted:', reviewData);
-    router.back(); // Navigate back after submission (replace with your API logic)
+    //router.back(); // Navigate back after submission (replace with your API logic)
   };
 
   return (
@@ -43,7 +47,7 @@ export default function WriteReviewPage({ params }: { params: { schoolName: stri
       <Navbar />
       <main className="flex-grow p-4">
         <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-          <h1 className="text-xl font-bold text-gray-800 mb-4">
+          <h1 className="text-xl font-bold text-gray-800 mb-4 truncate">
             Write a Review for {decodedCafeName}
           </h1>
           <form onSubmit={handleSubmit}>

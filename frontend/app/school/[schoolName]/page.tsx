@@ -145,6 +145,7 @@ export default function SchoolPage({ params }: { params: { schoolName: string } 
                     variant="body1"
                     component="div"
                     sx={{ fontWeight: 'bold' }}
+                    style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}
                   >
                     {cafeteria.name}
                   </Typography>

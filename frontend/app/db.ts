@@ -1,7 +1,7 @@
 import { getFirestore, setDoc, getDocs, doc, addDoc, collection  } from "firebase/firestore";
 import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
-
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
@@ -76,12 +76,13 @@ export async function requestSchool(user : User|null, name : string, cafe : stri
 export async function requestCafe(user : User|null, school : string, cafe : string) {
     try {
         console.log(`user=${user},school=${school},cafe=${cafe}`);
-        const cafeRef = collection(db, "cafe_requests")
-        await setDoc(doc(cafeRef,school), {
-            user: user ? user.uid : null,
-            cafe: cafe,
-        })
-    } catch (e) {
+		const schoolRef = doc(db, "cafe_requests", school); // Document for the school
+	const cafesRef = collection(schoolRef, "cafes"); // Subcollection for cafes
+	await setDoc(doc(cafesRef, cafe), {
+		user: user ? user.uid : null,
+		cafe: cafe,
+	});
+	} catch (e) {
         console.error("Error adding document: ", e);
     }
 }
@@ -105,3 +106,33 @@ export async function schoolNameToId(name : string) {
 //         console.error("Error adding document: ", e);
 //     }
 // }
+//
+
+export async function addReview(school : string, cafe : string, user : User, quality : number, quantity : number, pricing : number, details : string, photos: File[]) {
+    try {
+        const reviewRef = doc(db, "reviews",school);
+        const cafeRef = collection(reviewRef, cafe);
+        //const cafeReviewRef = doc(cafeRef, "reviews");
+        const docRef = await addDoc(cafeRef, {
+                        user: user ? user.uid : null,
+                        quality: quality,
+                        quantity: quantity,
+                        pricing: pricing,
+                        details: details,
+            //timestamp: new Date(),
+        });
+        console.log("Document written with ID: ", docRef.id);
+        console.log("Number of photos: ", photos.length);
+        for(let i = 0; i < photos.length; i++) {
+            console.log("Uploading photo ", i);
+            const storage = getStorage(app);
+            const storageRef = ref(storage, `images/${school}/${cafe}/${docRef.id}/${i}.jpg`);
+            const uploadTask = uploadBytesResumable(storageRef, photos[i]);
+            uploadTask.then((snapshot) => {
+                console.log('Uploaded a blob or file!', snapshot);
+            });
+        }
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}
