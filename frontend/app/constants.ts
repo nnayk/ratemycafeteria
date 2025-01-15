@@ -29,5 +29,10 @@ export const SCHOOLS = [
         "first_cafe":"Commons",
         "review_count":0,
     }
-
 ];
+
+export const cloudinaryConfig = {
+    cloud_name: process.env.NEXT_PUBLIC_CLOUD_NAME,
+    api_key: process.env.NEXT_PUBLIC_API_KEY,
+    api_secret: process.env.NEXT_PUBLIC_API_SECRET
+}

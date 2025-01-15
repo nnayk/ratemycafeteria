@@ -11,6 +11,7 @@ import { getSchoolDetails, SchoolDetails } from '../../db';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function SchoolPage({ params }: { params: { schoolName: string } }) {
+  console.log(`hello`)
   const { schoolName } = React.use(params); // Unwrap the promise using React.use()
   const [schoolDetails, setSchoolDetails] = React.useState<SchoolDetails | null>(null);
   const { isLoggedIn, isLoading, isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();

@@ -1,7 +1,7 @@
 import { getFirestore, setDoc, getDocs, doc, addDoc, collection  } from "firebase/firestore";
 import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
-import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { v2 as cloudinary } from 'cloudinary';
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
@@ -123,16 +123,26 @@ export async function addReview(school : string, cafe : string, user : User, qua
         });
         console.log("Document written with ID: ", docRef.id);
         console.log("Number of photos: ", photos.length);
-        for(let i = 0; i < photos.length; i++) {
-            console.log("Uploading photo ", i);
-            const storage = getStorage(app);
-            const storageRef = ref(storage, `images/${school}/${cafe}/${docRef.id}/${i}.jpg`);
-            const uploadTask = uploadBytesResumable(storageRef, photos[i]);
-            uploadTask.then((snapshot) => {
-                console.log('Uploaded a blob or file!', snapshot);
-            });
+        for (const photo of photos) {
+            console.log(photo.name);
         }
+        //await uploadPhotos(photos, school, cafe, docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
+    }
+}
+
+export async function uploadPhotos(photos: File[], school: string, cafe: string, reviewId: string) {
+    return;
+    // Upload an image
+    for (const photo of photos) {
+        const uploadResult = await cloudinary.uploader
+            .upload(photo, {
+                public_id: `${school}/${cafe}/${reviewId}/${photo.name}`,
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        console.log(uploadResult);
     }
 }
