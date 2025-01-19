@@ -1,7 +1,7 @@
 import { getFirestore, setDoc, getDocs, doc, addDoc, collection  } from "firebase/firestore";
 import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
-import { v2 as cloudinary } from 'cloudinary';
+//import { v2 as cloudinary } from 'cloudinary';
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
@@ -132,6 +132,7 @@ export async function addReview(school : string, cafe : string, user : User, qua
     }
 }
 
+/*
 export async function uploadPhotos(photos: File[], school: string, cafe: string, reviewId: string) {
     return;
     // Upload an image
@@ -146,3 +147,4 @@ export async function uploadPhotos(photos: File[], school: string, cafe: string,
         console.log(uploadResult);
     }
 }
+*/
