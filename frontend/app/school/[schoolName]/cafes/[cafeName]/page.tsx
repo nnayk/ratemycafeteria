@@ -5,12 +5,25 @@ import { Navbar } from '../../../../components/NavBar';
 import { Button } from '../../../../components/Button'; // Assuming you have a Button component
 import { ReviewCard } from '../../../../components/ReviewCard'; // Assuming you can create or have a ReviewCard component
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function CafePage({ params }: { params: { schoolName: string, cafeName: string } }) {
+//export default function CafePage({ params }: { params: { schoolName: string, cafeName: string } }) {
+export default function CafePage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
+  const [decodedSchoolName, setDecodedSchoolName] = React.useState<string | null>(null);
+  const [decodedCafeName, setDecodedCafeName] = React.useState<string | null>(null);
   const router = useRouter();
-  const { schoolName, cafeName } = React.use(params);
-  const decodedSchoolName = decodeURIComponent(schoolName);
-  const decodedCafeName = decodeURIComponent(cafeName);
+useEffect(() => {
+    params.then((resolvedParams) => {
+      const { schoolName, cafeName } = resolvedParams;
+      setDecodedSchoolName(decodeURIComponent(schoolName));
+      setDecodedCafeName(decodeURIComponent(cafeName));
+    });
+  }, [params]);
+  //const router = useRouter();
+  //const { schoolName, cafeName } = React.use(params);
+  //const { schoolName, cafeName } = params;
+  //const decodedSchoolName = decodeURIComponent(schoolName);
+  //const decodedCafeName = decodeURIComponent(cafeName);
   const reviews = [
     {
       quality: 4,

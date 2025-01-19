@@ -31,6 +31,8 @@ export default function WriteReviewPage({ params }: { params: { schoolName: stri
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    // I want to store the date in YYYY-MM-DD format
+    const date = new Date().toISOString().split('T')[0];
     const reviewData = {
       quality,
       quantity,
