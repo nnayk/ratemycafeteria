@@ -39,7 +39,7 @@ useEffect(() => {
 
   const handleReviewRequest = () => {
     console.log('Write a review for:', decodedCafeName);
-    router.push(`/school/${schoolName}/cafes/${decodedCafeName}/review`);
+    router.push(`/school/${decodedSchoolName}/cafes/${decodedCafeName}/review`);
   };
 
   return (

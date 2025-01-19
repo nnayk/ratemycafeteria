@@ -8,12 +8,25 @@ import { Rating } from '@mui/material'; // Assuming you have MUI installed for t
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { addReview } from '../../../../../db';
 import { useAuth } from '../../../../../contexts/AuthContext';
+import { useEffect } from 'react';
 
-export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
-  const router = useRouter();
-  const { schoolName, cafeName } = React.use(params);
-  const decodedSchoolName = decodeURIComponent(schoolName);
-  const decodedCafeName = decodeURIComponent(cafeName);
+//export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
+//  const router = useRouter();
+//  const { schoolName, cafeName } = React.use(params);
+//  const decodedSchoolName = decodeURIComponent(schoolName);
+//  const decodedCafeName = decodeURIComponent(cafeName);
+export default function WriteReviewPage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
+  const [decodedSchoolName, setDecodedSchoolName] = useState<string | null>(null);
+  const [decodedCafeName, setDecodedCafeName] = useState<string | null>(null);
+
+  useEffect(() => {
+    params.then((resolvedParams) => {
+      const { schoolName, cafeName } = resolvedParams;
+      setDecodedSchoolName(decodeURIComponent(schoolName));
+      setDecodedCafeName(decodeURIComponent(cafeName));
+    });
+  }, [params]);
+
 
   const [quality, setQuality] = useState<number | null>(0);
   const [quantity, setQuantity] = useState<number | null>(0);
@@ -33,6 +46,7 @@ export default function WriteReviewPage({ params }: { params: { schoolName: stri
     event.preventDefault();
     // I want to store the date in YYYY-MM-DD format
     const date = new Date().toISOString().split('T')[0];
+    console.log('Date:', date);
     const reviewData = {
       quality,
       quantity,

@@ -9,22 +9,25 @@ import { Navbar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
 import { getSchoolDetails, SchoolDetails } from '../../db';
 import { useAuth } from '../../contexts/AuthContext';
+import { useEffect } from 'react';
 
-export default function SchoolPage({ params }: { params: { schoolName: string } }) {
+export default function SchoolPage({ params }: { params: Promise<{ schoolName: string }> }) {
   console.log(`hello`)
-  const { schoolName } = React.use(params); // Unwrap the promise using React.use()
+  //const { schoolName } = React.use(params); // Unwrap the promise using React.use()
   const [schoolDetails, setSchoolDetails] = React.useState<SchoolDetails | null>(null);
   const { isLoggedIn, isLoading, isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
   const router = useRouter();
 
-  React.useEffect(() => {
+useEffect(() => {
     const fetchSchoolDetails = async () => {
+      const resolvedParams = await params;
+      const { schoolName } = resolvedParams;
       const details = await getSchoolDetails(decodeURIComponent(schoolName));
       setSchoolDetails(details);
     };
-    fetchSchoolDetails();
-  }, [schoolName]);
 
+    fetchSchoolDetails();
+  }, [params]);
   if (!schoolDetails) return <div>Loading...</div>;
 
   return (

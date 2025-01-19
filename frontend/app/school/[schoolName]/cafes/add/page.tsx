@@ -10,9 +10,18 @@ import { requestCafe } from '../../../../db';
 import {Login} from "../../../../components/Login"
 import {Register} from "../../../../components/Register"
 
-export default function AddCafe({ params }: { params: { schoolName: string } }) {
-  const { schoolName } = React.use(params);
-  const decodedSchoolName = decodeURIComponent(schoolName);
+export default function AddCafe({ params }: { params: Promise<{ schoolName: string }> }) {
+  //const { schoolName } = React.use(params);
+  //const decodedSchoolName = decodeURIComponent(schoolName);
+  const [decodedSchoolName, setDecodedSchoolName] = useState<string | null>(null);
+
+  useEffect(() => {
+    params.then((resolvedParams) => {
+      const { schoolName } = resolvedParams;
+      setDecodedSchoolName(decodeURIComponent(schoolName));
+    });
+  }, [params]);
+
   console.log(`decodedSchoolName = ${decodedSchoolName}`);
   const [cafeName, setCafeName] = useState('');
   const router = useRouter();
