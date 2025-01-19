@@ -16,8 +16,8 @@ import { useEffect } from 'react';
 //  const decodedSchoolName = decodeURIComponent(schoolName);
 //  const decodedCafeName = decodeURIComponent(cafeName);
 export default function WriteReviewPage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
-  const [decodedSchoolName, setDecodedSchoolName] = useState<string | null>(null);
-  const [decodedCafeName, setDecodedCafeName] = useState<string | null>(null);
+  const [decodedSchoolName, setDecodedSchoolName] = useState<string>("");
+  const [decodedCafeName, setDecodedCafeName] = useState<string>("");
 
   useEffect(() => {
     params.then((resolvedParams) => {

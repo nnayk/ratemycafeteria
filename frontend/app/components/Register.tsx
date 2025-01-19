@@ -6,7 +6,6 @@ import { FirebaseError } from 'firebase/app';
 interface LoginProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void; // New prop for handling success
 }
 
 export const Register: React.FC<LoginProps> = ({ isOpen, onClose }) => {

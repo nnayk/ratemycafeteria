@@ -108,7 +108,7 @@ export async function schoolNameToId(name : string) {
 // }
 //
 
-export async function addReview(school : string, cafe : string, user : User, quality : number, quantity : number, pricing : number, details : string, photos: File[]) {
+export async function addReview(school : string, cafe : string, user : User | null, quality : number | null, quantity : number | null, pricing : number | null, details : string, photos: File[]) {
     try {
         const reviewRef = doc(db, "reviews",school);
         const cafeRef = collection(reviewRef, cafe);

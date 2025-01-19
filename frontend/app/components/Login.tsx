@@ -7,7 +7,6 @@ import { ForgotPassword } from './ForgotPassword'; // Import the ForgotPassword 
 interface LoginProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void; // New prop for handling success
 }
 
 export const Login: React.FC<LoginProps> = ({ isOpen, onClose }) => {
