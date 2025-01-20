@@ -15,6 +15,7 @@ export default function SchoolPage({ params }: { params: Promise<{ schoolName: s
   console.log(`hello`)
   //const { schoolName } = React.use(params); // Unwrap the promise using React.use()
   const [schoolDetails, setSchoolDetails] = React.useState<SchoolDetails | null>(null);
+  const [schoolName, setSchoolName] = React.useState('');
   const { isLoggedIn, isLoading, isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
   const router = useRouter();
 
@@ -22,6 +23,7 @@ useEffect(() => {
     const fetchSchoolDetails = async () => {
       const resolvedParams = await params;
       const { schoolName } = resolvedParams;
+      setSchoolName(schoolName);
       const details = await getSchoolDetails(decodeURIComponent(schoolName));
       setSchoolDetails(details);
     };

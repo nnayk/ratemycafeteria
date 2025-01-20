@@ -9,11 +9,12 @@ import { useAuth } from '../../../../contexts/AuthContext';
 import { requestCafe } from '../../../../db';
 import {Login} from "../../../../components/Login"
 import {Register} from "../../../../components/Register"
+import { useEffect } from 'react';
 
 export default function AddCafe({ params }: { params: Promise<{ schoolName: string }> }) {
   //const { schoolName } = React.use(params);
   //const decodedSchoolName = decodeURIComponent(schoolName);
-  const [decodedSchoolName, setDecodedSchoolName] = useState<string | null>(null);
+  const [decodedSchoolName, setDecodedSchoolName] = useState<string>('');
 
   useEffect(() => {
     params.then((resolvedParams) => {
