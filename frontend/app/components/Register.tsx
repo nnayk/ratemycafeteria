@@ -14,17 +14,11 @@ export const Register: React.FC<LoginProps> = ({ isOpen, onClose }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [disableClose, setDisableClose] = useState('');
-  const infoMessage = 'Please provide a .edu email.';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // setSuccessMessage('');
     // setErrorMessage('');
-
-    if (!email.endsWith('.edu')) {
-      setErrorMessage('Please provide a .edu email.');
-      return;
-    }
 
     if(password.length < 6){
       setErrorMessage('Password must be at least 6 characters.');
@@ -72,11 +66,6 @@ export const Register: React.FC<LoginProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg w-96">
         <h2 className="text-2xl font-bold mb-4">Register</h2>
-          {!successMessage && !errorMessage && (
-            <div className="p-2 mb-3 bg-blue-100 text-blue-700 rounded">
-              {infoMessage}
-            </div>
-          )}
           {successMessage && (
             <div className="p-2 mb-3 bg-green-100 text-green-700 rounded">
               {successMessage}
