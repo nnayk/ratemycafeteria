@@ -8,3 +8,4 @@ node_modules
 foo
 myTee.txt
 myt.txt
+*.swp

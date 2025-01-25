@@ -49,12 +49,15 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     const date = new Date().toISOString().split('T')[0];
     console.log('Date:', date);
     const reviewData = {
+      user,
       quality,
       quantity,
       pricing,
       details,
+      date,
+      photos,
     };
-    addReview(decodedSchoolName, decodedCafeName, user, quality, quantity, pricing, details, photos);
+    addReview(decodedSchoolName, decodedCafeName, reviewData);
     console.log('Review submitted:', reviewData);
     //router.back(); // Navigate back after submission (replace with your API logic)
   };

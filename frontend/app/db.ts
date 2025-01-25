@@ -2,7 +2,8 @@ import { getFirestore, setDoc, getDocs, doc, addDoc, collection  } from "firebas
 import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
 //import { v2 as cloudinary } from 'cloudinary';
-// Initialize Cloud Firestore and get a reference to the service
+// Initialize Cloud Firestore and get a reference to the service 
+
 const db = getFirestore(app);
 
 export interface Cafeteria {
@@ -20,8 +21,7 @@ export function getDb() {
     return db;
 }
 
-export async function getSchools() {
- // THis will be a future utility when we have a dynamic list of schools
+export async function getSchools() { // THis will be a future utility when we have a dynamic list of schools
 //    const querySnap = await getDocs(collection(db,"schools"));
 //    const schools = querySnap.docs.map(doc => doc.data());
 //    return schools;
@@ -108,16 +108,18 @@ export async function schoolNameToId(name : string) {
 // }
 //
 
-export async function addReview(school : string, cafe : string, user : User | null, quality : number | null, quantity : number | null, pricing : number | null, details : string, photos: File[]) {
+export async function addReview(school : string, cafe : string, reviewData : any) {
     try {
         const reviewRef = doc(db, "reviews",school);
         const cafeRef = collection(reviewRef, cafe);
         //const cafeReviewRef = doc(cafeRef, "reviews");
+        const { user, quality, quantity, pricing, details, date, photos } = reviewData;
         const docRef = await addDoc(cafeRef, {
                         user: user ? user.uid : null,
                         quality: quality,
                         quantity: quantity,
                         pricing: pricing,
+                        date: date,
                         details: details,
             //timestamp: new Date(),
         });
@@ -130,6 +132,19 @@ export async function addReview(school : string, cafe : string, user : User | nu
     } catch (e) {
         console.error("Error adding document: ", e);
     }
+}
+
+export async function getReviews(school : string, cafe : string) {
+    const db = getDb(); 
+    console.log(`db = ${db.app.name}`);
+    school = "Cal Poly San Luis Obispo";
+    cafe = "Panda Express";
+    const querySnap = await getDocs(collection(db, "reviews", school, cafe));
+    console.log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
+    const reviews = querySnap.docs.map(doc => doc.data());
+    console.log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
+    console.log(reviews);
+    return reviews;
 }
 
 /*
