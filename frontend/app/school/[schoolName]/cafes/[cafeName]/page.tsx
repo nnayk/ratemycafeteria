@@ -13,7 +13,7 @@ export default function CafePage({ params }: { params: Promise<{ schoolName: str
   const [decodedSchoolName, setDecodedSchoolName] = React.useState<string | null>(null);
   const [decodedCafeName, setDecodedCafeName] = React.useState<string | null>(null);
   const [cafeDetails, setCafeDetails] = React.useState<CafeDetails | null>(null); 
-  const [reviews, setReviews] = React.useState<any[]>([]);
+  const [reviews, setReviews] = React.useState<object[]>([]);
   const router = useRouter();
 useEffect(() => {
     params.then((resolvedParams) => {

@@ -59,7 +59,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       date,
       photos,
     };
-    addReview(decodedSchoolName, decodedCafeName, reviewData);
+    // addReview(decodedSchoolName, decodedCafeName, reviewData);
     console.log('Review submitted:', reviewData);
 	setShowThankYouPopup(true);
 	for (const photo of photos) {
@@ -184,6 +184,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     <div className="bg-white p-8 rounded-lg w-96">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Thanks, food critic!</h2>
       <p className="mb-6 text-gray-600"> We hope other students find your review helpful!</p>
+      <img src="http://res.cloudinary.com/dh4nyybh4/image/upload/v1737902959/foofoo.jpg" width={200} height={200} alt="Thank you" />
       <div className="flex justify-between">
         <button
           onClick={() => {
@@ -206,7 +207,6 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     </div>
   </div>
 )}
-
     </div>
   );
 }

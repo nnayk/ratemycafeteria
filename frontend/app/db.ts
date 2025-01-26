@@ -123,7 +123,7 @@ export async function schoolNameToId(name : string) {
 // }
 //
 
-export async function addReview(school : string, cafe : string, reviewData : any) {
+export async function addReview(school : string, cafe : string, reviewData : object) {
     try {
         const reviewRef = doc(db, "reviews",school);
         const cafeRef = collection(reviewRef, cafe);
