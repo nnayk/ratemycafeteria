@@ -6,14 +6,14 @@ import { Button } from '../../../../components/Button'; // Assuming you have a B
 import { ReviewCard } from '../../../../components/ReviewCard'; // Assuming you can create or have a ReviewCard component
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { CafeDetails, getReviews } from '../../../../db'; 
+import { Review, CafeDetails, getReviews } from '../../../../db'; 
 
 //export default function CafePage({ params }: { params: { schoolName: string, cafeName: string } }) {
 export default function CafePage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
   const [decodedSchoolName, setDecodedSchoolName] = React.useState<string | null>(null);
   const [decodedCafeName, setDecodedCafeName] = React.useState<string | null>(null);
   const [cafeDetails, setCafeDetails] = React.useState<CafeDetails | null>(null); 
-  const [reviews, setReviews] = React.useState<object[]>([]);
+  const [reviews, setReviews] = React.useState<Review[]>([]);
   const router = useRouter();
 useEffect(() => {
     params.then((resolvedParams) => {

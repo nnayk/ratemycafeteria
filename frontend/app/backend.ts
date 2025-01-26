@@ -1,4 +1,5 @@
-export async function uploadPhotos(photos: File[], schoolName: string, cafeName: string, reviewData: ReviewData) {
+import { Review } from './db';
+export async function uploadPhotos(photos: File[], schoolName: string, cafeName: string, reviewData: Review) {
   const formData = new FormData();
   photos.forEach((photo) => {
     console.log('adding to formData -- Photo:', photo.name);
