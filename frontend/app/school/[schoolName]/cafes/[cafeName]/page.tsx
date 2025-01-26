@@ -6,12 +6,14 @@ import { Button } from '../../../../components/Button'; // Assuming you have a B
 import { ReviewCard } from '../../../../components/ReviewCard'; // Assuming you can create or have a ReviewCard component
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { getReviews } from '../../../../db'; 
+import { CafeDetails, getReviews } from '../../../../db'; 
 
 //export default function CafePage({ params }: { params: { schoolName: string, cafeName: string } }) {
 export default function CafePage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
   const [decodedSchoolName, setDecodedSchoolName] = React.useState<string | null>(null);
   const [decodedCafeName, setDecodedCafeName] = React.useState<string | null>(null);
+  const [cafeDetails, setCafeDetails] = React.useState<CafeDetails | null>(null); 
+  const [reviews, setReviews] = React.useState<any[]>([]);
   const router = useRouter();
 useEffect(() => {
     params.then((resolvedParams) => {
@@ -21,24 +23,14 @@ useEffect(() => {
     });
   }, [params]);
   //const router = useRouter();
-  //const { schoolName, cafeName } = React.use(params);
-  //const { schoolName, cafeName } = params;
-  //const decodedSchoolName = decodeURIComponent(schoolName);
-  //const decodedCafeName = decodeURIComponent(cafeName);
-  // const reviews = [
-  //   {
-  //     quality: 4,
-  //     quantity: 5,
-  //     pricing: 1,
-  //     date: '2025-01-01',
-  //     text: 'Great food, but a bit pricey.',
-  //     likes: 12,
-  //     dislikes: 2,
-  //   },
-  //   // Add more review objects here...
-  // ];
+  useEffect(() => {
+    const fetchCafeDetails = async () => {
+      const reviews = await getReviews(decodedSchoolName, decodedCafeName);
+      setReviews(reviews);
+    };
+    fetchCafeDetails();
+  }, [params]);
 
-  const reviews = getReviews(decodedSchoolName, decodedCafeName); 
   console.log(`in cafe page got reviews = ${reviews}`);
   const handleReviewRequest = () => {
     console.log('Write a review for:', decodedCafeName);

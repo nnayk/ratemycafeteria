@@ -9,6 +9,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { addReview } from '../../../../../db';
 import { useAuth } from '../../../../../contexts/AuthContext';
 import { useEffect } from 'react';
+import { uploadPhotos } from '../../../../../backend';
 
 //export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
 //  const router = useRouter();
@@ -34,6 +35,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   const [pricing, setPricing] = useState<number | null>(0);
   const [details, setDetails] = useState('');
   const [photos, setPhotos] = useState<File[]>([]);
+  const [showThankYouPopup, setShowThankYouPopup] = useState(false);
 
   const {user} = useAuth();
 
@@ -59,6 +61,12 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     };
     addReview(decodedSchoolName, decodedCafeName, reviewData);
     console.log('Review submitted:', reviewData);
+	setShowThankYouPopup(true);
+	for (const photo of photos) {
+        console.log('Photo:', photo.name);
+    }
+    const data = uploadPhotos(photos, decodedSchoolName, decodedCafeName, reviewData);
+    // router.back();
     //router.back(); // Navigate back after submission (replace with your API logic)
   };
 
@@ -105,35 +113,55 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
                 placeholder="Write about your experience..."
+                required
+                minLength={5}
+                maxLength={500}
                 rows={4}
               />
             </div>
 
-            <div className="mb-6">
-              <label className="block text-gray-700 mb-2">Upload up to 3 photos</label>
-              <input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={handlePhotoUpload}
-                className="hidden"
-                id="photo-upload"
-              />
-              <label
-                htmlFor="photo-upload"
-                className="flex items-center justify-center px-4 py-2 bg-yellow-500 text-white rounded-lg cursor-pointer hover:bg-yellow-400"
-              >
-                <PhotoCamera className="mr-2" />
-                Upload Photos
-              </label>
-              <div className="mt-2">
-                {photos.map((photo, index) => (
-                  <div key={index} className="text-sm text-gray-500">
-                    {photo.name}
-                  </div>
-                ))}
-              </div>
-            </div>
+<div className="mb-6">
+  <label className="block text-gray-700 mb-2">Upload up to 3 photos</label>
+  <input
+    type="file"
+    multiple
+    accept="image/*"
+    onChange={handlePhotoUpload}
+    className="hidden"
+    id="photo-upload"
+    disabled={photos.length >= 3} // Disable the input when 3 photos are uploaded
+  />
+  <label
+    htmlFor="photo-upload"
+    className={`flex items-center justify-center px-4 py-2 rounded-lg cursor-pointer ${
+      photos.length >= 3
+        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+        : "bg-yellow-500 text-white hover:bg-yellow-400"
+    }`}
+  >
+    <PhotoCamera className="mr-2" />
+    {photos.length >= 3 ? "Max Photos Uploaded" : "Upload Photos"}
+  </label>
+  <div className="mt-2">
+    {photos.map((photo, index) => (
+      <div
+        key={index}
+        className="flex items-center justify-between text-sm text-gray-500 border-b pb-2 mb-2"
+      >
+        <span>{photo.name}</span>
+        <button
+          onClick={() => {
+            setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
+          }}
+          className="text-red-500 hover:text-red-700 focus:outline-none"
+          aria-label={`Delete ${photo.name}`}
+        >
+          ✕
+        </button>
+      </div>
+    ))}
+  </div>
+</div>
 
             <div className="flex justify-between">
               <Button
@@ -151,6 +179,34 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
           </form>
         </div>
       </main>
+{showThankYouPopup && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white p-8 rounded-lg w-96">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Thanks, food critic!</h2>
+      <p className="mb-6 text-gray-600"> We hope other students find your review helpful!</p>
+      <div className="flex justify-between">
+        <button
+          onClick={() => {
+              router.push(`/school/${encodeURIComponent(decodedSchoolName)}`);
+          }}
+          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300"
+        >
+          Write Another Review
+        </button>
+        <button
+          onClick={() => {
+            setShowThankYouPopup(false);
+            router.back();
+          }}
+          className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 transition duration-300"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

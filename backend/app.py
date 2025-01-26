@@ -20,7 +20,8 @@ def create_app(config_class=Config):
     }})
     app.config["CORS_HEADERS"] = "Content-Type"
 
-    @app.route("",methods=['GET'])
+    @app.route("/photos/upload",methods=['POST'])
     def upload_photos():
+        print("Request received")
         return jsonify({"message":"Profile created successfully"})
     return app

@@ -9,11 +9,26 @@ const db = getFirestore(app);
 export interface Cafeteria {
     name: string;
     imageUrl: string;
-  }
+}
+
+export interface Review {
+    user: string | null;
+    quality: number;
+    quantity: number;
+    pricing: number;
+    date: string;
+    details: string;
+    photos: File[];
+}
   
 export interface SchoolDetails {
     name: string;
     cafeterias: Cafeteria[];
+}
+
+export interface CafeDetails {
+    name: string;
+    reviews: Review[];
 }
 
 export function getDb() {
