@@ -34,6 +34,8 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   const [quantity, setQuantity] = useState<number | null>(0);
   const [pricing, setPricing] = useState<number | null>(0);
   const [details, setDetails] = useState('');
+  const [likes, setLikes] = useState<number | null>(0);
+  const [dislikes, setDislikes] = useState<number | null>(0);
   const [photos, setPhotos] = useState<File[]>([]);
   const [showThankYouPopup, setShowThankYouPopup] = useState(false);
 
@@ -57,6 +59,8 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       pricing,
       details,
       date,
+      likes,
+      dislikes,
       photos,
     };
     // addReview(decodedSchoolName, decodedCafeName, reviewData);

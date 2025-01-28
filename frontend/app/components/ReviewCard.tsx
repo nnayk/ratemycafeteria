@@ -1,16 +1,8 @@
 import React from 'react';
 import { StarIcon as SolidStarIcon } from '@heroicons/react/solid';
 import { StarIcon as OutlineStarIcon } from '@heroicons/react/outline';
+import { Review } from '../db';	
 
-interface Review {
-  quality: number;
-  quantity: number;
-  pricing: number;
-  date: string;
-  text: string;
-  likes: number;
-  dislikes: number;
-}
 
 interface ReviewCardProps {
   review: Review;
@@ -32,7 +24,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       <div className="text-xs text-gray-500 mb-2">{review.date}</div>
 
       {/* Review Text */}
-      <p className="mb-4">{review.text}</p>
+      <p className="mb-4">{review.details}</p>
 
       {/* Like/Dislike */}
       <div className="flex items-center space-x-4">

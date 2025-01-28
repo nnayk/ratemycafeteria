@@ -10,26 +10,24 @@ import { Review, CafeDetails, getReviews } from '../../../../db';
 
 //export default function CafePage({ params }: { params: { schoolName: string, cafeName: string } }) {
 export default function CafePage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
-  const [decodedSchoolName, setDecodedSchoolName] = React.useState<string | null>(null);
-  const [decodedCafeName, setDecodedCafeName] = React.useState<string | null>(null);
-  const [cafeDetails, setCafeDetails] = React.useState<CafeDetails | null>(null); 
-  const [reviews, setReviews] = React.useState<Review[]>([]);
+  const [decodedSchoolName, setDecodedSchoolName] = React.useState('');
+  const [decodedCafeName, setDecodedCafeName] = React.useState('');
+  const [cafeDetails, setCafeDetails] = React.useState('');
+  const [reviews, setReviews] = React.useState<Review[]>([]); 
   const router = useRouter();
 useEffect(() => {
     params.then((resolvedParams) => {
       const { schoolName, cafeName } = resolvedParams;
       setDecodedSchoolName(decodeURIComponent(schoolName));
       setDecodedCafeName(decodeURIComponent(cafeName));
-    });
-  }, [params]);
-  //const router = useRouter();
-  useEffect(() => {
-    const fetchCafeDetails = async () => {
+      const fetchCafeDetails = async () => {
       const reviews = await getReviews(decodedSchoolName, decodedCafeName);
       setReviews(reviews);
     };
     fetchCafeDetails();
+    });
   }, [params]);
+  //const router = useRouter();
 
   console.log(`in cafe page got reviews = ${reviews}`);
   const handleReviewRequest = () => {

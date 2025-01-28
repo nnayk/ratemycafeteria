@@ -12,12 +12,14 @@ export interface Cafeteria {
 }
 
 export interface Review {
-    user: string | null;
+    user: User | null;
     quality: number;
     quantity: number;
     pricing: number;
     date: string;
     details: string;
+    likes: number;
+    dislikes: number;
     photos: File[];
 }
   
@@ -123,7 +125,7 @@ export async function schoolNameToId(name : string) {
 // }
 //
 
-export async function addReview(school : string, cafe : string, reviewData : object) {
+export async function addReview(school : string, cafe : string, reviewData : Review ) {
     try {
         const reviewRef = doc(db, "reviews",school);
         const cafeRef = collection(reviewRef, cafe);
@@ -149,17 +151,32 @@ export async function addReview(school : string, cafe : string, reviewData : obj
     }
 }
 
-export async function getReviews(school : string, cafe : string) {
-    const db = getDb(); 
-    console.log(`db = ${db.app.name}`);
-    school = "Cal Poly San Luis Obispo";
-    cafe = "Panda Express";
-    const querySnap = await getDocs(collection(db, "reviews", school, cafe));
-    console.log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
-    const reviews = querySnap.docs.map(doc => doc.data());
-    console.log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
-    console.log(reviews);
-    return reviews;
+export async function getReviews(school: string, cafe: string): Promise<Review[]> {
+  const db = getDb();
+  console.log(`db = ${db.app.name}`);
+  school = "Cal Poly San Luis Obispo";
+  cafe = "Panda Express";
+  const querySnap = await getDocs(collection(db, "reviews", school, cafe));
+  console.log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
+  
+  const reviews: Review[] = querySnap.docs.map(doc => {
+    const data = doc.data();
+    return {
+      user: data.user || null,
+      quality: data.quality || 0,
+      quantity: data.quantity || 0,
+      pricing: data.pricing || 0,
+      date: data.date || '',
+      details: data.details || '',
+      likes: data.likes || 0,
+      dislikes: data.dislikes || 0,
+      photos: data.photos || [],
+    };
+  });
+  
+  console.log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
+  console.log(reviews);
+  return reviews;
 }
 
 /*
