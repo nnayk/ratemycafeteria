@@ -9,6 +9,7 @@ interface ReviewCardProps {
 }
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
+  console.log(`in ReviewCard got review with num photos = ${review.photos.length}`);
   return (
     <div className="border rounded-md p-4 shadow-md">
       {/* Ratings Row */}

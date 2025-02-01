@@ -9,7 +9,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { addReview } from '../../../../../db';
 import { useAuth } from '../../../../../contexts/AuthContext';
 import { useEffect } from 'react';
-import { uploadPhotos } from '../../../../../backend';
+// import { uploadPhotos } from '../../../../../backend';
 
 //export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
 //  const router = useRouter();
@@ -65,13 +65,13 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       dislikes,
       photos,
     };
-    // addReview(decodedSchoolName, decodedCafeName, reviewData);
+    addReview(decodedSchoolName, decodedCafeName, reviewData);
     console.log('Review submitted:', reviewData);
 	setShowThankYouPopup(true);
 	for (const photo of photos) {
         console.log('Photo:', photo.name);
     }
-    const data = uploadPhotos(photos, decodedSchoolName, decodedCafeName, reviewData);
+    //const data = uploadPhotos(photos, decodedSchoolName, decodedCafeName, reviewData);
     // router.back();
     //router.back(); // Navigate back after submission (replace with your API logic)
   };

@@ -1,6 +1,7 @@
 import { getFirestore, setDoc, getDocs, doc, addDoc, collection  } from "firebase/firestore";
 import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
+import { uploadPhotos } from './backend';
 //import { v2 as cloudinary } from 'cloudinary';
 // Initialize Cloud Firestore and get a reference to the service 
 
@@ -127,10 +128,17 @@ export async function schoolNameToId(name : string) {
 
 export async function addReview(school : string, cafe : string, reviewData : Review ) {
     try {
+        console.log(`school=${school},cafe=${cafe}, reviewData=${reviewData}`);
         const reviewRef = doc(db, "reviews",school);
+        console.log(`reviewRef=${reviewRef}`);
         const cafeRef = collection(reviewRef, cafe);
         //const cafeReviewRef = doc(cafeRef, "reviews");
         const { user, quality, quantity, pricing, details, date, photos } = reviewData;
+        console.log(`Adding review for ${school}/${cafe}`);
+        for (const photo of photos) {
+            await uploadPhotos(photo, school, cafe, "reviewId");
+            console.log(photo.name);
+        }
         const docRef = await addDoc(cafeRef, {
                         user: user ? user.uid : null,
                         quality: quality,
@@ -142,9 +150,6 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
         });
         console.log("Document written with ID: ", docRef.id);
         console.log("Number of photos: ", photos.length);
-        for (const photo of photos) {
-            console.log(photo.name);
-        }
         //await uploadPhotos(photos, school, cafe, docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
