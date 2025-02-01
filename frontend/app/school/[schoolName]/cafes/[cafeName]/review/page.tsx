@@ -43,7 +43,9 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
 
   const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
+      console.log('event.target.files:', event.target.files);
       setPhotos([...photos, ...Array.from(event.target.files)].slice(0, 3)); // Limit to 3 photos
+      event.target.value = null; // Clear the input after uploading
     }
   };
 
@@ -156,6 +158,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
         <button
           onClick={() => {
             setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
+            console.log('Deleted photo:', photo.name);
           }}
           className="text-red-500 hover:text-red-700 focus:outline-none"
           aria-label={`Delete ${photo.name}`}

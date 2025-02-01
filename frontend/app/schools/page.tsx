@@ -28,6 +28,7 @@ export default function SchoolsPage() {
   const fetchSchools = async () => {
     try {
       const schoolsList = await getSchools();
+      console.log('Schools:', schoolsList);
       const grouped = schoolsList.reduce((acc, school) => {
         if (!acc[school.state]) {
           acc[school.state] = [];

@@ -18,10 +18,14 @@ export default function CafePage({ params }: { params: Promise<{ schoolName: str
 useEffect(() => {
     params.then((resolvedParams) => {
       const { schoolName, cafeName } = resolvedParams;
-      setDecodedSchoolName(decodeURIComponent(schoolName));
-      setDecodedCafeName(decodeURIComponent(cafeName));
+      const realSchoolName = decodeURIComponent(schoolName);
+      const realCafeName = decodeURIComponent(cafeName);
+      setDecodedSchoolName(realSchoolName);
+      setDecodedCafeName(realCafeName);
       const fetchCafeDetails = async () => {
-      const reviews = await getReviews(decodedSchoolName, decodedCafeName);
+      console.log(`schoolName = ${schoolName}, cafeName = ${cafeName}`);
+      console.log(`Fetching details for ${realSchoolName}/${realCafeName}`);
+      const reviews = await getReviews(realSchoolName, realCafeName);
       setReviews(reviews);
     };
     fetchCafeDetails();

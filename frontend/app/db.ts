@@ -154,8 +154,9 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
 export async function getReviews(school: string, cafe: string): Promise<Review[]> {
   const db = getDb();
   console.log(`db = ${db.app.name}`);
-  school = "Cal Poly San Luis Obispo";
-  cafe = "Panda Express";
+  // school = "Cal Poly San Luis Obispo";
+  // cafe = "Panda Express";
+  console.log(`Getting reviews for ${school}/${cafe}`);
   const querySnap = await getDocs(collection(db, "reviews", school, cafe));
   console.log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
   
