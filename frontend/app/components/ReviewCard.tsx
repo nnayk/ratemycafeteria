@@ -2,6 +2,7 @@ import React from 'react';
 import { StarIcon as SolidStarIcon } from '@heroicons/react/solid';
 import { StarIcon as OutlineStarIcon } from '@heroicons/react/outline';
 import { Review } from '../db';	
+import { useState } from 'react';
 
 
 interface ReviewCardProps {
@@ -9,6 +10,7 @@ interface ReviewCardProps {
 }
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   console.log(`in ReviewCard got review with num photos = ${review.photos.length}`);
   return (
     <div className="border rounded-md p-4 shadow-md">
@@ -26,6 +28,44 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
 
       {/* Review Text */}
       <p className="mb-4">{review.details}</p>
+
+{/* Photos */}
+      {review.photos.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-4">
+          {review.photos.map((photo, index) => (
+            <div
+              key={index}
+              className="w-32 h-32 sm:w-40 sm:h-40 rounded-lg overflow-hidden cursor-pointer"
+              onClick={() => setSelectedImage(photo)}
+            >
+              <img
+                src={photo}
+                alt={`Review photo ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Image Popup Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          onClick={() => setSelectedImage(null)} // Close when clicking outside
+        >
+          <div className="relative">
+            <button
+              className="absolute -top-4 -right-4 bg-white text-black rounded-full p-1 w-8 h-8 flex items-center justify-center text-xl shadow-lg"
+              onClick={() => setSelectedImage(null)}
+            >
+              ✕
+            </button>
+            <img src={selectedImage} alt="Enlarged preview" className="max-w-full max-h-[90vh] rounded-lg shadow-lg" />
+          </div>
+        </div>
+      )}
+
 
       {/* Like/Dislike */}
       <div className="flex items-center space-x-4">

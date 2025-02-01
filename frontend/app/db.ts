@@ -21,7 +21,7 @@ export interface Review {
     details: string;
     likes: number;
     dislikes: number;
-    photos: File[];
+    photos: string[] | File[];
 }
   
 export interface SchoolDetails {
@@ -135,9 +135,9 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
         //const cafeReviewRef = doc(cafeRef, "reviews");
         const { user, quality, quantity, pricing, details, date, photos } = reviewData;
         console.log(`Adding review for ${school}/${cafe}`);
-        for (const photo of photos) {
-            console.log(photo.name);
-        }
+        // for (const photo of photos) {
+        //     console.log(photo.name);
+        // }
         const photo_urls =  await uploadPhotos(photos, school, cafe);
         // store the photo urls returned in the response in a var photo_urls
         const docRef = await addDoc(cafeRef, {
@@ -179,7 +179,7 @@ export async function getReviews(school: string, cafe: string): Promise<Review[]
       details: data.details || '',
       likes: data.likes || 0,
       dislikes: data.dislikes || 0,
-      photos: data.photos || [],
+      photos: data.photo_urls || [],
     };
   });
   

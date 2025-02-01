@@ -26,6 +26,9 @@ useEffect(() => {
       console.log(`schoolName = ${schoolName}, cafeName = ${cafeName}`);
       console.log(`Fetching details for ${realSchoolName}/${realCafeName}`);
       const reviews = await getReviews(realSchoolName, realCafeName);
+	  for (const review of reviews) {
+          console.log(`review photo urls = ${review.photos}`);
+      }
       setReviews(reviews);
     };
     fetchCafeDetails();

@@ -1,5 +1,5 @@
 import { Review } from './db';
-export async function uploadPhotos(photos: File[], schoolName: string, cafeName: string) {
+export async function uploadPhotos(photos: string[] | File[], schoolName: string, cafeName: string) {
   try 
   {
       const formData = new FormData();
@@ -22,7 +22,7 @@ export async function uploadPhotos(photos: File[], schoolName: string, cafeName:
       const data = await response.json();
       console.log( `data = ${data}` );
       // print the data keys and values
-      return data;
+      return data['photo_urls'];
   } catch (e) {
         console.error('Error uploading photos: ', e);
         throw e;
