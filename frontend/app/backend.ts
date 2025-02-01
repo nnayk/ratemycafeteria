@@ -1,15 +1,31 @@
 import { Review } from './db';
 export async function uploadPhotos(photos: File[], schoolName: string, cafeName: string) {
-  const formData = new FormData();
-  photos.forEach((photo) => {
-    console.log('adding to formData -- Photo:', photo.name);
-    formData.append('photos', photo);
-  });
-  console.log( 'Uploading photos...' );
-  const response = await fetch('http://127.0.0.1:5000/photos/upload', {
-    method: 'POST',
-    body: formData,
-  });
-  console.log( `Upload response: ${response.status}, message = ${response.text}` );
-  return response.json();
+  try 
+  {
+      const formData = new FormData();
+      for (const photo of photos) {
+        console.log( `photo = ${photo}` );
+        formData.append('photos', photo);
+      }
+      console.log( 'Uploading photos...' );
+      const response = await fetch('http://127.0.0.1:5000/photos/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      console.log( `Upload response: ${response.status}, message = ${response.text}` );
+      console.log("DUMMY");
+      if (response.status !== 200) {
+        console.error('Failed to upload photos');
+        throw new Error('Failed to upload photos');
+      }
+      console.log( 'Photos uploaded successfully' );
+      const data = await response.json();
+      console.log( `data = ${data}` );
+      // print the data keys and values
+      return data;
+  } catch (e) {
+        console.error('Error uploading photos: ', e);
+        throw e;
+    }
+
 } 

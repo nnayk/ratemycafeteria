@@ -138,9 +138,8 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
         for (const photo of photos) {
             console.log(photo.name);
         }
-        const response =  await uploadPhotos(photos, school, cafe);
+        const photo_urls =  await uploadPhotos(photos, school, cafe);
         // store the photo urls returned in the response in a var photo_urls
-        const photo_urls = response.json();
         const docRef = await addDoc(cafeRef, {
                         user: user ? user.uid : null,
                         quality: quality,

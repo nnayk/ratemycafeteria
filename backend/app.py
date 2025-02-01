@@ -39,14 +39,20 @@ def create_app(config_class=Config):
 
     @app.route("/photos/upload",methods=['POST'])
     def upload_photos():
-        debug("Request received")
-        form_data = request.form # TODO: get rid of to_dict for performance boost
-        photo_url = form_data.get("photo_url")
-        photos = request.files.getlist("photos")
-        debug(f'photo_url = {photo_url}')
-        debug(f'num photos = {len(photos)}')
-        debug(f'type photo 1 = {type(photos[0])}')
-        upload_result = cloudinary.uploader.upload(photos[0], public_id=photo_url)
-        debug(f'upload_result = {upload_result}')
-        return jsonify({"message":"Profile created successfully"})
+        try:
+            debug("inside upload_photos")
+            # return jsonify({"message":"success"})
+            form_data = request.form # TODO: get rid of to_dict for performance boost
+            photos = request.files.getlist("photos")
+            debug(f'num photos = {len(photos)}')
+            photo_urls = []
+            for photo in photos:
+                debug(f'photo = {photo.filename}')
+                response = cloudinary.uploader.upload(photo)
+                photo_urls.append(response["secure_url"])
+                debug(f'response = {response}')
+            return jsonify({"photo_urls":photo_urls})
+        except Exception as e:
+            error(f'Error: {e}')
+            return make_response(jsonify({"error":str(e)}), 500)
     return app
