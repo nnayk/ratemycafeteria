@@ -31,11 +31,11 @@ def create_app(config_class=Config):
     # JWTManager(app)
     # Configure CORS for all routes
     cors = CORS(app, resources={r"/*": {
-        "origins": "*",  # Allow all origins (for development only, later only allow the frontend domain)
-        "methods": ["GET", "POST", "DELETE","OPTIONS"],
+        "origins": ["https://ratemycafeteria.vercel.app/"],
+        "methods": ["POST"],
         "allow_headers": ["Content-Type", "Authorization","Access-Control-Allow-Origin"]
     }})
-    app.config["CORS_HEADERS"] = "Content-Type"
+    # use the cors var above to configure CORS for all routes
 
     @app.route("/photos/upload",methods=['POST'])
     def upload_photos():
