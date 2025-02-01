@@ -50,6 +50,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   };
 
   const handleSubmit = (event: React.FormEvent) => {
+    console.log('inside handleSubmit');
     event.preventDefault();
     // I want to store the date in YYYY-MM-DD format
     const date = new Date().toISOString().split('T')[0];
@@ -156,6 +157,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       >
         <span>{photo.name}</span>
         <button
+          type="button"
           onClick={() => {
             setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
             console.log('Deleted photo:', photo.name);
