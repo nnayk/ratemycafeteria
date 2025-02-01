@@ -136,9 +136,11 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
         const { user, quality, quantity, pricing, details, date, photos } = reviewData;
         console.log(`Adding review for ${school}/${cafe}`);
         for (const photo of photos) {
-            await uploadPhotos(photo, school, cafe, "reviewId");
             console.log(photo.name);
         }
+        const response =  await uploadPhotos(photos, school, cafe);
+        // store the photo urls returned in the response in a var photo_urls
+        const photo_urls = response.json();
         const docRef = await addDoc(cafeRef, {
                         user: user ? user.uid : null,
                         quality: quality,
@@ -146,6 +148,7 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
                         pricing: pricing,
                         date: date,
                         details: details,
+                        photo_urls: photo_urls,
             //timestamp: new Date(),
         });
         console.log("Document written with ID: ", docRef.id);
@@ -153,6 +156,7 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
         //await uploadPhotos(photos, school, cafe, docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
+        // TODO: redirect to server error page
     }
 }
 
