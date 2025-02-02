@@ -56,7 +56,7 @@ useEffect(() => {
             Write a Review
           </Button>
           <Button className="bg-gray-400 text-white hover:bg-gray-300 px-4 py-2 rounded-md shadow-md w-full sm:w-auto"
-          onClick={() => router.back()}>
+          onClick={() => router.push(`/school/${decodedSchoolName}`)}>
             Return to {decodedSchoolName} Page
           </Button>
         </div>
