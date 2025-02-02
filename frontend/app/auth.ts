@@ -66,7 +66,7 @@ export async function logoutUser(email: string, password: string): Promise<void>
 export async function resetPassword(email: string): Promise<void> {
   try {
     const actionCodeSettings = { 
-      url: 'http://localhost:3000/',
+      url: 'http://localhost:3000/', // TODO: change this url to the actual frontend url
     };
     await sendPasswordResetEmail(auth, email, actionCodeSettings);
   } catch (error) {

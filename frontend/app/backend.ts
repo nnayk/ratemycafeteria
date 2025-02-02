@@ -8,7 +8,7 @@ export async function uploadPhotos(photos: string[] | File[], schoolName: string
         formData.append('photos', photo);
       }
       console.log( 'Uploading photos...' );
-      const response = await fetch('http://127.0.0.1:5000/photos/upload', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/photos/upload`, {
         method: 'POST',
         body: formData,
       });
