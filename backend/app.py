@@ -34,6 +34,10 @@ CORS(app, resources={r"/*": {
     "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Origin"]
 }})
 
+@app.route("/")
+def hello():
+    return "Hello, World!"
+
 @app.route("/photos/upload", methods=['POST'])
 def upload_photos():
     try:
