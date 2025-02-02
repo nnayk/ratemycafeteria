@@ -8,8 +8,8 @@ import os
 from dotenv import load_dotenv
 
 # Load environment variables
-success = load_dotenv()
-assert success, "Failed to load .env"
+# success = load_dotenv()
+# assert success, "Failed to load .env"
 
 # Configure Cloudinary
 cloudinary.config(
