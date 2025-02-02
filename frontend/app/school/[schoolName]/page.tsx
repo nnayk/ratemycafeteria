@@ -52,7 +52,7 @@ useEffect(() => {
     mb: { xs: 2, sm: 0 }, // Add margin bottom on mobile
     alignSelf: { xs: 'flex-start', sm: 'auto' }, // Align to the left on mobile
   }}
-  onClick={() => router.back()}
+  onClick={() => router.push('/schools')}
 >
   Back
 </Button>
