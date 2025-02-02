@@ -8,9 +8,13 @@ export async function uploadPhotos(photos: string[] | File[], schoolName: string
         formData.append('photos', photo);
       }
       console.log( 'Uploading photos...' );
+      const simpleResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/`);
+      console.log( `Simple response: ${simpleResponse.status}, message = ${simpleResponse.text}` );
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/photos/upload`, {
         method: 'POST',
         body: formData,
+        // specify cors mode to avoid cors errors
+        mode: 'cors',
       });
       console.log( `Upload response: ${response.status}, message = ${response.text}` );
       console.log("DUMMY");
