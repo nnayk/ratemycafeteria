@@ -10,7 +10,9 @@ export async function uploadPhotos(photos: string[] | File[], schoolName: string
       console.log( 'Uploading photos...' );
       const simpleResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/`);
       console.log( `Simple response: ${simpleResponse.status}, message = ${simpleResponse.text}` );
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/photos/upload`, {
+      const upload_url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/photos/upload`;
+      console.log( `upload_url = ${upload_url}` );
+      const response = await fetch(upload_url, {
         method: 'POST',
         body: formData,
         // specify cors mode to avoid cors errors
