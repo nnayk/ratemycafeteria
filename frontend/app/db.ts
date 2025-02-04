@@ -1,4 +1,5 @@
-import { getFirestore, setDoc, getDocs, doc, addDoc, collection  } from "firebase/firestore";
+import { getFirestore, setDoc, getDocs, doc, addDoc, collection, getDoc  } 
+from "firebase/firestore";
 import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
 import { uploadPhotos } from './backend';
@@ -40,40 +41,38 @@ export function getDb() {
 }
 
 export async function getSchools() { // THis will be a future utility when we have a dynamic list of schools
-//    const querySnap = await getDocs(collection(db,"schools"));
-//    const schools = querySnap.docs.map(doc => doc.data());
-//    return schools;
- return SCHOOLS;
+   console.log(`inside getSchools`);
+   const querySnap = await getDocs(collection(db,"schools"));
+   const schools = querySnap.docs.map(doc => doc.data());
+   console.log(`schools=${schools}`);
+   return schools;
+}
+
+export async function getCafeterias(school : string) {
+    console.log("inside getCafeterias");
+    console.log(`school=${school}`);
+    const docRef = doc(db, "reviews", school);
+    console.log(`docRef=${docRef}`);
+    const docSnap = await getDoc(docRef);
+    console.log(`docSnap.data()=${docSnap.data()}`);
+    // const cafeterias = querySnap.docs.map(doc => doc.data());
+    // console.log(`cafeterias=${cafeterias}`);
+    // return cafeterias;
 }
 
 export async function getSchoolDetails(school : string) {
+    console.log("inside getSchoolDetails");
+    // fetch cafeterias for the school
+    const cafeterias = await getCafeterias(school);
     return {
         name: school,
+        // cafeterias: cafeterias,
         cafeterias: [
             { name: "cafeteria1jksadflhiudjsgdshfdukajslhsfhljlhjkadsflhjakdahkkhDKHADHkdjs", imageUrl: "/einsteins.png" },
             { name: "Subway", imageUrl: "/subway.jpg" },
             { name: "Panda Express", imageUrl: "/raw.png" },
             { name: "VG", imageUrl: "/vg.jpg" },
             { name: "Vista Grande", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria6", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria1", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria1", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria1", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria2", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria3", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria4", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria5", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria6", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria2", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria3", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria4", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria5", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria6", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria2", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria3", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria4", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria5", imageUrl: "https://via.placeholder.com/150" },
-            // { name: "cafeteria6", imageUrl: "https://via.placeholder.com/150" },
         ],
     };
 } 
