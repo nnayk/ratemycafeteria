@@ -66,6 +66,12 @@ export const Navbar: React.FC = () => {
               >
                 Register
               </button>
+			  <button 
+				  onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSeL6vxDf8SGlOoybnsfDLLTZv9fCf0p1KxkCzwCrw4oofewiQ/viewform?usp=header', '_blank')}
+				  className={`${buttonClasses} bg-red-600 text-white hover:bg-red-500 ml-2`}
+    		  >
+				  File a Bug
+      		  </button>
             </>
           )}
         </div>
