@@ -1,4 +1,4 @@
-import { getFirestore, setDoc, getDocs, doc, addDoc, collection, getDoc, listCollections } 
+import { getFirestore, setDoc, getDocs, doc, addDoc, collection, getDoc } 
 from "firebase/firestore";
 import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
@@ -128,22 +128,21 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
         school="foo";
         // if this is the first review for the school, create a document for the school
         // create the school doc
-        if(!await getDoc(doc(db, "reviews", school))) {
-            await setDoc(doc(db, "reviews", school), {
+        console.log(`Checking if document exists for ${school}`);
+        let schoolDoc = await getDoc(doc(db, "reviews", school));
+        if(!schoolDoc.exists()) {
+            console.log(`Creating document for ${school}`);
+            schoolDoc = await addDoc(doc(db, "reviews", school), {
             });
+        } else {
+            console.log(`Document exists for ${school}`);
         }
-        const reviewRef = doc(db, "reviews",school);
-        console.log(`reviewRef=${reviewRef}`);
-        const cafeRef = collection(reviewRef, cafe);
-        //const cafeReviewRef = doc(cafeRef, "reviews");
+        const cafeRef = collection(schoolDoc, cafe);
         const { user, quality, quantity, pricing, details, date, photos } = reviewData;
         console.log(`Adding review for ${school}/${cafe}`);
-        // for (const photo of photos) {
-        //     console.log(photo.name);
-        // }
         const photo_urls =  await uploadPhotos(photos, school, cafe);
         // store the photo urls returned in the response in a var photo_urls
-        const docRef = await addDoc(cafeRef, {
+        const reviewDocRef = await addDoc(cafeRef, {
                         user: user ? user.uid : null,
                         quality: quality,
                         quantity: quantity,
@@ -153,9 +152,9 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
                         photo_urls: photo_urls,
             //timestamp: new Date(),
         });
-        console.log("Document written with ID: ", docRef.id);
+        console.log("Document written with ID: ", reviewDocRef.id);
         console.log("Number of photos: ", photos.length);
-        //await uploadPhotos(photos, school, cafe, docRef.id);
+        //await uploadPhotos(photos, school, cafe, reviewDocRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
         // TODO: redirect to server error page
