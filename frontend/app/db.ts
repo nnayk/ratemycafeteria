@@ -1,4 +1,4 @@
-import { getFirestore, setDoc, getDocs, doc, addDoc, collection, getDoc  } 
+import { getFirestore, setDoc, getDocs, doc, addDoc, collection, getDoc, listCollections } 
 from "firebase/firestore";
 import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
@@ -51,13 +51,10 @@ export async function getSchools() { // THis will be a future utility when we ha
 export async function getCafeterias(school : string) {
     console.log("inside getCafeterias");
     console.log(`school=${school}`);
-    const docRef = doc(db, "reviews", school);
-    console.log(`docRef=${docRef}`);
-    const docSnap = await getDoc(docRef);
-    console.log(`docSnap.data()=${docSnap.data()}`);
-    // const cafeterias = querySnap.docs.map(doc => doc.data());
-    // console.log(`cafeterias=${cafeterias}`);
-    // return cafeterias;
+    const querySnap = await getDocs(collection(db, "reviews"));
+    const cafeterias = querySnap.docs.map(doc => doc.data());
+    console.log(`cafeterias=${cafeterias}`);
+    return cafeterias;
 }
 
 export async function getSchoolDetails(school : string) {
@@ -128,6 +125,13 @@ export async function schoolNameToId(name : string) {
 export async function addReview(school : string, cafe : string, reviewData : Review ) {
     try {
         console.log(`school=${school},cafe=${cafe}, reviewData=${reviewData}`);
+        school="foo";
+        // if this is the first review for the school, create a document for the school
+        // create the school doc
+        if(!await getDoc(doc(db, "reviews", school))) {
+            await setDoc(doc(db, "reviews", school), {
+            });
+        }
         const reviewRef = doc(db, "reviews",school);
         console.log(`reviewRef=${reviewRef}`);
         const cafeRef = collection(reviewRef, cafe);
