@@ -1,7 +1,7 @@
 import React from 'react';
 import { Autocomplete, TextField, Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { SCHOOLS } from '../constants';
+import { SCHOOLS } from '../constants'; // HARD coding for now since schools are manually added anyways
 
 export const Hero: React.FC = () => {
   const router = useRouter();

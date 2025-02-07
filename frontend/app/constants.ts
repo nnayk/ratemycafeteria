@@ -28,6 +28,13 @@ export const SCHOOLS = [
         "state":"TN",
         "first_cafe":"Commons",
         "review_count":0,
+    },
+    {
+        "name":"UIUC",
+        "city":"Champaign",
+        "state":"IL",
+        "first_cafe":"Ikenberry",
+        "review_count":0,
     }
 ];
 
