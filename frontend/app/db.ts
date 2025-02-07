@@ -90,7 +90,13 @@ export async function requestSchool(user : User|null, name : string, cafe : stri
 export async function requestCafe(user : User|null, school : string, cafe : string) {
     try {
         console.log(`user=${user},school=${school},cafe=${cafe}`);
-		const schoolRef = doc(db, "cafe_requests", school); // Document for the school
+		let schoolRef = await getDoc(doc(db, "cafe_requests", school)); // Document for the school
+        if(!schoolRef.exists()) {
+            console.log(`Creating document for ${school}`);
+            await setDoc(doc(db, "cafe_requests", school), {
+            });
+        }
+    schoolRef = doc(db, "cafe_requests", school);
 	const cafesRef = collection(schoolRef, "cafes"); // Subcollection for cafes
 	await setDoc(doc(cafesRef, cafe), {
 		user: user ? user.uid : null,
