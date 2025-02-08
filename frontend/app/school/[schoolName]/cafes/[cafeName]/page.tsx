@@ -7,6 +7,7 @@ import { ReviewCard } from '../../../../components/ReviewCard'; // Assuming you 
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Review, CafeDetails, getReviews } from '../../../../db'; 
+import { Footer } from '../../../../components/Footer';
 
 //export default function CafePage({ params }: { params: { schoolName: string, cafeName: string } }) {
 export default function CafePage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
@@ -66,6 +67,7 @@ useEffect(() => {
           ))}
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
