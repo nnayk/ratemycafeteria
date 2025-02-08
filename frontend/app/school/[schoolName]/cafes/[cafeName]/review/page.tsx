@@ -9,6 +9,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { addReview } from '../../../../../db';
 import { useAuth } from '../../../../../contexts/AuthContext';
 import { useEffect } from 'react';
+import { Footer } from '../../../../../components/Footer';
 // import { uploadPhotos } from '../../../../../backend';
 
 //export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
@@ -215,6 +216,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     </div>
   </div>
 )}
+  <Footer />
     </div>
   );
 }
