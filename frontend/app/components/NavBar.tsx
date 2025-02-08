@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Login } from '../components/Login';
 import { Register } from '../components/Register';
 import "../css/nav.css"
+import { log } from "../utils/logger"; 
 
 export const Navbar: React.FC = () => {
   // const { isLoggedIn, isLoading, toggleLogin, toggleRegister } = useAuth();
@@ -14,7 +15,7 @@ export const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     await auth.signOut();
-    console.log('User logged out');
+    log('User logged out');
   };
 
   const buttonClasses = "px-4 py-2 rounded-md transition duration-300";
@@ -40,7 +41,7 @@ export const Navbar: React.FC = () => {
           ) : isLoggedIn ? (
             <>
               <button 
-                onClick={() => console.log('Navigate to Profile')}
+                onClick={() => log('Navigate to Profile')}
                 className={`${buttonClasses} bg-white text-black hover:bg-yellow-100 mr-2`}
               >
                 Profile

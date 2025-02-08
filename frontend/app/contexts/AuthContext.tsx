@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../auth';
+import { log } from "../utils/logger"; 
 
 interface AuthContextType {
   user: User | null;
@@ -40,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const toggleLogin = () => {
-    console.log(`toggling login to ${!isLoginOpen}`)
+    log(`toggling login to ${!isLoginOpen}`)
     setIsLoginOpen(!isLoginOpen);
   }
   const toggleRegister = () => setIsRegisterOpen(!isRegisterOpen);

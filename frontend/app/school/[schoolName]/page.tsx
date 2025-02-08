@@ -10,9 +10,10 @@ import { Footer } from '../../components/Footer';
 import { getSchoolDetails, SchoolDetails } from '../../db';
 import { useAuth } from '../../contexts/AuthContext';
 import { useEffect } from 'react';
+import { log } from "../../utils/logger"; 
 
 export default function SchoolPage({ params }: { params: Promise<{ schoolName: string }> }) {
-  console.log(`hello`)
+  log(`hello`)
   //const { schoolName } = React.use(params); // Unwrap the promise using React.use()
   const [schoolDetails, setSchoolDetails] = React.useState<SchoolDetails | null>(null);
   const [schoolName, setSchoolName] = React.useState('');

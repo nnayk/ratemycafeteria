@@ -3,6 +3,7 @@ import { StarIcon as SolidStarIcon } from '@heroicons/react/solid';
 import { StarIcon as OutlineStarIcon } from '@heroicons/react/outline';
 import { Review } from '../db';	
 import { useState } from 'react';
+import { log } from "../utils/logger"; 
 
 
 interface ReviewCardProps {
@@ -11,7 +12,7 @@ interface ReviewCardProps {
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  console.log(`in ReviewCard got review with num photos = ${review.photos.length}`);
+  log(`in ReviewCard got review with num photos = ${review.photos.length}`);
   return (
     <div className="border rounded-md p-4 shadow-md">
       {/* Ratings Row */}

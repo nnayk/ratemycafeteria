@@ -11,6 +11,7 @@ import { useAuth } from '../../../../../contexts/AuthContext';
 import { useEffect } from 'react';
 import { Footer } from '../../../../../components/Footer';
 // import { uploadPhotos } from '../../../../../backend';
+import { log } from "../../../../../utils/logger"; 
 
 //export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
 //  const router = useRouter();
@@ -44,18 +45,18 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
 
   const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      console.log('event.target.files:', event.target.files);
+      log('event.target.files:', event.target.files);
       setPhotos([...photos, ...Array.from(event.target.files)].slice(0, 3)); // Limit to 3 photos
       event.target.value = null; // Clear the input after uploading
     }
   };
 
   const handleSubmit = (event: React.FormEvent) => {
-    console.log('inside handleSubmit');
+    log('inside handleSubmit');
     event.preventDefault();
     // I want to store the date in YYYY-MM-DD format
     const date = new Date().toISOString().split('T')[0];
-    console.log('Date:', date);
+    log('Date:', date);
     const reviewData = {
       user,
       quality,
@@ -68,10 +69,10 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       photos,
     };
     addReview(decodedSchoolName, decodedCafeName, reviewData);
-    console.log('Review submitted:', reviewData);
+    log('Review submitted:', reviewData);
 	setShowThankYouPopup(true);
 	for (const photo of photos) {
-        console.log('Photo:', photo.name);
+        log('Photo:', photo.name);
     }
     //const data = uploadPhotos(photos, decodedSchoolName, decodedCafeName, reviewData);
     // router.back();
@@ -161,7 +162,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
           type="button"
           onClick={() => {
             setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
-            console.log('Deleted photo:', photo.name);
+            log('Deleted photo:', photo.name);
           }}
           className="text-red-500 hover:text-red-700 focus:outline-none"
           aria-label={`Delete ${photo.name}`}

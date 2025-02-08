@@ -10,6 +10,7 @@ import { requestCafe } from '../../../../db';
 import {Login} from "../../../../components/Login"
 import {Register} from "../../../../components/Register"
 import { useEffect } from 'react';
+import { log } from "../../../../utils/logger"; 
 
 export default function AddCafe({ params }: { params: Promise<{ schoolName: string }> }) {
   //const { schoolName } = React.use(params);
@@ -23,7 +24,7 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
     });
   }, [params]);
 
-  console.log(`decodedSchoolName = ${decodedSchoolName}`);
+  log(`decodedSchoolName = ${decodedSchoolName}`);
   const [cafeName, setCafeName] = useState('');
   const router = useRouter();
   const {user} = useAuth();
@@ -35,7 +36,7 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
   }
 
   const handleSubmit = (e: React.FormEvent) => {
-    console.log(`school name = ${decodedSchoolName}, cafe = ${cafeName}`);
+    log(`school name = ${decodedSchoolName}, cafe = ${cafeName}`);
     e.preventDefault();
     requestCafe(user,decodedSchoolName,cafeName);
   };

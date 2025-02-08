@@ -8,6 +8,7 @@ import { Navbar } from '../components/NavBar';
 import { Footer } from '../components/Footer';
 import { useAuth } from '../contexts/AuthContext';
 import { getSchools } from '../db';
+import { log } from "../utils/logger"; 
 
 interface School {
   name: string;
@@ -28,7 +29,7 @@ export default function SchoolsPage() {
   const fetchSchools = async () => {
     try {
       const schoolsList = await getSchools();
-      console.log('Schools:', schoolsList);
+      log('Schools:', schoolsList);
       const grouped = schoolsList.reduce((acc, school) => {
         if (!acc[school.state]) {
           acc[school.state] = [];
@@ -45,7 +46,7 @@ export default function SchoolsPage() {
       }, {} as Record<string, boolean>);
       setExpandedStates(initialExpandedStates);
     } catch (error) {
-      console.error('Error fetching schools:', error);
+      log('Error fetching schools:', error);
     }
   };
 

@@ -9,6 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { requestSchool } from '../../db';
 import {Login} from "../../components/Login"
 import {Register} from "../../components/Register"
+import { log } from "../../utils/logger"; 
 
 export default function AddschoolPage() {
   const [schoolName, setSchoolName] = useState('');
@@ -23,7 +24,7 @@ export default function AddschoolPage() {
   }
 
   const handleSubmit = (e: React.FormEvent) => {
-    console.log(`school name = ${schoolName}, cafe = ${cafe}`);
+    log(`school name = ${schoolName}, cafe = ${cafe}`);
     e.preventDefault();
     requestSchool(user,schoolName,cafe);
   };

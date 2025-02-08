@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Review, CafeDetails, getReviews } from '../../../../db'; 
 import { Footer } from '../../../../components/Footer';
+import { log } from "../../../../utils/logger"; 
 
 //export default function CafePage({ params }: { params: { schoolName: string, cafeName: string } }) {
 export default function CafePage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
@@ -24,11 +25,11 @@ useEffect(() => {
       setDecodedSchoolName(realSchoolName);
       setDecodedCafeName(realCafeName);
       const fetchCafeDetails = async () => {
-      console.log(`schoolName = ${schoolName}, cafeName = ${cafeName}`);
-      console.log(`Fetching details for ${realSchoolName}/${realCafeName}`);
+      log(`schoolName = ${schoolName}, cafeName = ${cafeName}`);
+      log(`Fetching details for ${realSchoolName}/${realCafeName}`);
       const reviews = await getReviews(realSchoolName, realCafeName);
 	  for (const review of reviews) {
-          console.log(`review photo urls = ${review.photos}`);
+          log(`review photo urls = ${review.photos}`);
       }
       setReviews(reviews);
     };
@@ -37,9 +38,9 @@ useEffect(() => {
   }, [params]);
   //const router = useRouter();
 
-  console.log(`in cafe page got reviews = ${reviews}`);
+  log(`in cafe page got reviews = ${reviews}`);
   const handleReviewRequest = () => {
-    console.log('Write a review for:', decodedCafeName);
+    log('Write a review for:', decodedCafeName);
     router.push(`/school/${decodedSchoolName}/cafes/${decodedCafeName}/review`);
   };
 

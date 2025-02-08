@@ -4,9 +4,10 @@ import {app, SCHOOLS} from './constants';
 import { User } from "firebase/auth";
 import { uploadPhotos } from './backend';
 //import { v2 as cloudinary } from 'cloudinary';
+import { log } from "./utils/logger"; 
 // Initialize Cloud Firestore and get a reference to the service 
 
-const db = getFirestore(app);
+const db = getFirestore(app); // TODO: change this to prod db when it's created
 
 export interface Cafeteria {
     name: string;
@@ -36,29 +37,29 @@ export interface CafeDetails {
 }
 
 export function getDb() {
-    console.log(`db's app = ${db.app.name}`)
+    log(`db's app = ${db.app.name}`)
     return db;
 }
 
 export async function getSchools() { // THis will be a future utility when we have a dynamic list of schools
-   console.log(`inside getSchools`);
+   log(`inside getSchools`);
    const querySnap = await getDocs(collection(db,"schools"));
    const schools = querySnap.docs.map(doc => doc.data());
-   console.log(`schools=${schools}`);
+   log(`schools=${schools}`);
    return schools;
 }
 
 export async function getCafeterias(school : string) {
-    console.log("inside getCafeterias");
-    console.log(`school=${school}`);
+    log("inside getCafeterias");
+    log(`school=${school}`);
     const querySnap = await getDocs(collection(db, "reviews"));
     const cafeterias = querySnap.docs.map(doc => doc.data());
-    console.log(`cafeterias=${cafeterias}`);
+    log(`cafeterias=${cafeterias}`);
     return cafeterias;
 }
 
 export async function getSchoolDetails(school : string) {
-    console.log("inside getSchoolDetails");
+    log("inside getSchoolDetails");
     // fetch cafeterias for the school
     const cafeterias = await getCafeterias(school);
     return {
@@ -76,23 +77,23 @@ export async function getSchoolDetails(school : string) {
 
 export async function requestSchool(user : User|null, name : string, cafe : string) {
     try {
-        console.log(`user=${user}`)
+        log(`user=${user}`)
         await addDoc(collection(db, "school_requests"), {
             name: name,
             user: user ? user.uid : null,
             cafe: cafe 
         })
     } catch (e) {
-        console.error("Error adding document: ", e);
+        log("Error adding document: ", e);
     }
 }
 
 export async function requestCafe(user : User|null, school : string, cafe : string) {
     try {
-        console.log(`user=${user},school=${school},cafe=${cafe}`);
+        log(`user=${user},school=${school},cafe=${cafe}`);
 		const schoolSnap = await getDoc(doc(db, "cafe_requests", school)); // Document for the school
         if(!schoolSnap.exists()) {
-            console.log(`Creating document for ${school}`);
+            log(`Creating document for ${school}`);
             await setDoc(doc(db, "cafe_requests", school), {
             });
         }
@@ -103,7 +104,7 @@ export async function requestCafe(user : User|null, school : string, cafe : stri
 		cafe: cafe,
 	});
 	} catch (e) {
-        console.error("Error adding document: ", e);
+        log("Error adding document: ", e);
     }
 }
 
@@ -121,35 +122,35 @@ export async function schoolNameToId(name : string) {
 //             state: state,
 //             review_count: 0,
 //         });
-//         console.log("Document written with ID: ", docId);
+//         log("Document written with ID: ", docId);
 //     } catch (e) {
-//         console.error("Error adding document: ", e);
+//         log("Error adding document: ", e);
 //     }
 // }
 //
 
 export async function addReview(school : string, cafe : string, reviewData : Review ) {
     try {
-        console.log(`school=${school},cafe=${cafe}, reviewData=${reviewData}`);
+        log(`school=${school},cafe=${cafe}, reviewData=${reviewData}`);
         // if this is the first review for the school, create a document for the school
         // create the school doc
-        console.log(`Checking if document exists for ${school}`);
+        log(`Checking if document exists for ${school}`);
         const reviewDoc = await getDoc(doc(db, "reviews", school));
         if(!reviewDoc.exists()) {
-            console.log(`Creating document for ${school}`);
+            log(`Creating document for ${school}`);
             await setDoc(doc(db, "reviews", school), {
             });
         } else {
-            console.log(`Document exists for ${school}`);
+            log(`Document exists for ${school}`);
         }
         const reviewRef = doc(db, "reviews",school);
-        console.log(`reviewRef=${reviewRef}`);
+        log(`reviewRef=${reviewRef}`);
         const cafeRef = collection(reviewRef, cafe);
         //const cafeReviewRef = doc(cafeRef, "reviews");
         const { user, quality, quantity, pricing, details, date, photos } = reviewData;
-        console.log(`Adding review for ${school}/${cafe}`);
+        log(`Adding review for ${school}/${cafe}`);
         // for (const photo of photos) {
-        //     console.log(photo.name);
+        //     log(photo.name);
         // }
         const photo_urls =  await uploadPhotos(photos, school, cafe);
         // store the photo urls returned in the response in a var photo_urls
@@ -163,23 +164,23 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
                         photo_urls: photo_urls,
             //timestamp: new Date(),
         });
-        console.log("Document written with ID: ", docRef.id);
-        console.log("Number of photos: ", photos.length);
+        log("Document written with ID: ", docRef.id);
+        log("Number of photos: ", photos.length);
         //await uploadPhotos(photos, school, cafe, docRef.id);
     } catch (e) {
-        console.error("Error adding document: ", e);
+        log("Error adding document: ", e);
         // TODO: redirect to server error page
     }
 }
 
 export async function getReviews(school: string, cafe: string): Promise<Review[]> {
   const db = getDb();
-  console.log(`db = ${db.app.name}`);
+  log(`db = ${db.app.name}`);
   // school = "Cal Poly San Luis Obispo";
   // cafe = "Panda Express";
-  console.log(`Getting reviews for ${school}/${cafe}`);
+  log(`Getting reviews for ${school}/${cafe}`);
   const querySnap = await getDocs(collection(db, "reviews", school, cafe));
-  console.log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
+  log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
   
   const reviews: Review[] = querySnap.docs.map(doc => {
     const data = doc.data();
@@ -196,8 +197,8 @@ export async function getReviews(school: string, cafe: string): Promise<Review[]
     };
   });
   
-  console.log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
-  console.log(reviews);
+  log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
+  log(reviews);
   return reviews;
 }
 
@@ -211,9 +212,9 @@ export async function uploadPhotos(photos: File[], school: string, cafe: string,
                 public_id: `${school}/${cafe}/${reviewId}/${photo.name}`,
             })
             .catch((error) => {
-                console.log(error);
+                log(error);
             });
-        console.log(uploadResult);
+        log(uploadResult);
     }
 }
 */
