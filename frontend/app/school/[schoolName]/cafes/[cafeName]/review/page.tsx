@@ -66,7 +66,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   };
 
   const handleSubmit = (event: React.FormEvent) => {
-    console.log(`quality: ${quality}`);
+    console.log(`quality: ${quality}, quantity: ${quantity}, pricing: ${pricing}`);
     log('inside handleSubmit');
     event.preventDefault();
     // I want to store the date in YYYY-MM-DD format

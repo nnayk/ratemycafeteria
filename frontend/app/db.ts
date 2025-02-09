@@ -199,6 +199,11 @@ export async function getReviews(school: string, cafe: string): Promise<Review[]
       photos: data.photo_urls || [],
     };
   });
+
+  // sort reviews by date
+  reviews.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
   
   log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
   log(reviews);
