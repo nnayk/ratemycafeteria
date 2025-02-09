@@ -7,8 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Rating } from '@mui/material'; // Assuming you have MUI installed for the star ratings
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { addReviewRequest } from '../../../../../db';
-import { useAuth } from '../../../../../contexts/AuthContext';
-import { useEffect } from 'react';
+import { useAuth } from '../../../../../contexts/AuthContext'; import { useEffect } from 'react';
 import { Footer } from '../../../../../components/Footer';
 // import { uploadPhotos } from '../../../../../backend';
 import { log } from "../../../../../utils/logger"; 
@@ -41,6 +40,21 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   const [photos, setPhotos] = useState<File[]>([]);
   const [showThankYouPopup, setShowThankYouPopup] = useState(false);
 
+  const handleQualityChange = (_: React.SyntheticEvent, value: number) => {
+    log('Quality:', value);
+    setQuality(value);
+  }
+
+  const handleQuantityChange = (_: React.SyntheticEvent, value: number | null) => {
+    log('Quantity:', value);
+    setQuantity(value);
+  }
+
+  const handlePricingChange = (_: React.SyntheticEvent, value: number | null) => {
+    log('Pricing:', value);
+    setPricing(value);
+  }
+
   const {user} = useAuth();
 
   const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,12 +66,14 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   };
 
   const handleSubmit = (event: React.FormEvent) => {
+    console.log(`quality: ${quality}`);
     log('inside handleSubmit');
     event.preventDefault();
     // I want to store the date in YYYY-MM-DD format
     const date = new Date().toISOString().split('T')[0];
     log('Date:', date);
     const reviewData = {
+      id: '',
       user,
       quality,
       quantity,
@@ -78,6 +94,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     // router.back();
     //router.back(); // Navigate back after submission (replace with your API logic)
   };
+  const [value, setValue] = React.useState<number | null>(2);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -87,31 +104,38 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
           <h1 className="text-xl font-bold text-gray-800 mb-4 truncate">
             Write a Review for {decodedCafeName}
           </h1>
+
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Quality</label>
               <Rating
+              key="quality"
+              defaultValue={0}
                 value={quality}
-                onChange={(_, value) => setQuality(value)}
-                precision={0.5}
+                // precision={0.5}
+                // onChange={handleQualityChange}
+                onChange={(event, newValue) => {
+                    setQuality(newValue);
+                    log('Quality:', newValue);
+                    }}
               />
             </div>
 
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Quantity</label>
               <Rating
-                value={quantity}
-                onChange={(_, value) => setQuantity(value)}
-                precision={0.5}
+                value={quantity ?? 0}
+                onChange={handleQuantityChange}
+                // precision={0.5}
               />
             </div>
 
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Pricing</label>
               <Rating
-                value={pricing}
-                onChange={(_, value) => setPricing(value)}
-                precision={0.5}
+                value={pricing ?? 0}
+                onChange={handlePricingChange}
+                // precision={0.5}
               />
             </div>
 

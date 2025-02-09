@@ -8,6 +8,8 @@ import { log } from "../utils/logger";
 
 interface ReviewCardProps {
   review: Review;
+  school: string;
+  cafe: string;
 }
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) => {
