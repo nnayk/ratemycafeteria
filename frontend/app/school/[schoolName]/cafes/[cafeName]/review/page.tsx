@@ -6,7 +6,7 @@ import { Button } from '../../../../../components/Button';
 import { useRouter } from 'next/navigation';
 import { Rating } from '@mui/material'; // Assuming you have MUI installed for the star ratings
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { addReview } from '../../../../../db';
+import { addReviewRequest } from '../../../../../db';
 import { useAuth } from '../../../../../contexts/AuthContext';
 import { useEffect } from 'react';
 import { Footer } from '../../../../../components/Footer';
@@ -68,7 +68,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       dislikes,
       photos,
     };
-    addReview(decodedSchoolName, decodedCafeName, reviewData);
+    addReviewRequest(decodedSchoolName, decodedCafeName, reviewData);
     log('Review submitted:', reviewData);
 	setShowThankYouPopup(true);
 	for (const photo of photos) {
@@ -194,7 +194,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div className="bg-white p-8 rounded-lg w-96">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Thanks, food critic!</h2>
-      <p className="mb-6 text-gray-600"> We hope other students find your review helpful!</p>
+      <p className="mb-6 text-gray-600"> Your review will be reviewed for any spam and then (hopefully) posted soon!</p>
       <div className="flex justify-between">
         <button
           onClick={() => {

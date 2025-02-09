@@ -64,7 +64,7 @@ useEffect(() => {
         </div>
         <div className="space-y-4">
           {reviews.map((review, index) => (
-            <ReviewCard key={index} review={review} />
+            <ReviewCard key={index} review={review} school={decodedSchoolName} cafe={decodedCafeName} />
           ))}
         </div>
       </main>

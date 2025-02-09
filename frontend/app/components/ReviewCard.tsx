@@ -1,7 +1,7 @@
 import React from 'react';
 import { StarIcon as SolidStarIcon } from '@heroicons/react/solid';
 import { StarIcon as OutlineStarIcon } from '@heroicons/react/outline';
-import { Review } from '../db';	
+import { Review, addLike, removeLike } from '../db';	
 import { useState } from 'react';
 import { log } from "../utils/logger"; 
 
@@ -10,8 +10,25 @@ interface ReviewCardProps {
   review: Review;
 }
 
-export const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
+export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [likes, setLikes] = useState(review.likes);
+  const [dislikes, setDislikes] = useState(review.dislikes);
+
+  const handleLike = async (reviewId: string) => {
+    log("inside addLike");	
+    log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
+    setLikes(likes + 1);
+    await addLike(reviewId, school, cafe);
+  };
+
+  const handleDislike = async (reviewId: string) => {
+    log("inside addLike");	
+    log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
+    setDislikes(dislikes + 1);
+    await removeLike(reviewId, school, cafe);
+  };
+  
   log(`in ReviewCard got review with num photos = ${review.photos.length}`);
   return (
     <div className="border rounded-md p-4 shadow-md">
@@ -69,14 +86,22 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
 
 
       {/* Like/Dislike */}
+      {/*
       <div className="flex items-center space-x-4">
-        <button className="flex items-center space-x-1 text-green-600">
-          👍 <span>{review.likes}</span>
+        <button 
+        className="flex items-center space-x-1 text-green-600"
+        onClick={() => handleLike(review.id)}
+        >
+          👍 <span>{likes}</span>
         </button>
-        <button className="flex items-center space-x-1 text-red-600">
-          👎 <span>{review.dislikes}</span>
+        <button 
+        className="flex items-center space-x-1 text-red-600"
+        onClick={() => handleDislike(review.id)}
+        >
+          👎 <span>{dislikes}</span>
         </button>
       </div>
+      */}
     </div>
   );
 };

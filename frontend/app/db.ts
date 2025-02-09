@@ -5,6 +5,7 @@ import { User } from "firebase/auth";
 import { uploadPhotos } from './backend';
 //import { v2 as cloudinary } from 'cloudinary';
 import { log } from "./utils/logger"; 
+import { increment, updateDoc } from "firebase/firestore";
 // Initialize Cloud Firestore and get a reference to the service 
 
 const db = getFirestore(app); // TODO: change this to prod db when it's created
@@ -15,6 +16,7 @@ export interface Cafeteria {
 }
 
 export interface Review {
+    id: string;
     user: User | null;
     quality: number;
     quantity: number;
@@ -129,13 +131,13 @@ export async function schoolNameToId(name : string) {
 // }
 //
 
-export async function addReview(school : string, cafe : string, reviewData : Review ) {
+export async function addReviewRequest(school : string, cafe : string, reviewData : Review ) {
     try {
         log(`school=${school},cafe=${cafe}, reviewData=${reviewData}`);
         // if this is the first review for the school, create a document for the school
         // create the school doc
         log(`Checking if document exists for ${school}`);
-        const reviewDoc = await getDoc(doc(db, "reviews", school));
+        const reviewDoc = await getDoc(doc(db, "reviewi_requests", school));
         if(!reviewDoc.exists()) {
             log(`Creating document for ${school}`);
             await setDoc(doc(db, "reviews", school), {
@@ -143,7 +145,7 @@ export async function addReview(school : string, cafe : string, reviewData : Rev
         } else {
             log(`Document exists for ${school}`);
         }
-        const reviewRef = doc(db, "reviews",school);
+        const reviewRef = doc(db, "review_requests",school);
         log(`reviewRef=${reviewRef}`);
         const cafeRef = collection(reviewRef, cafe);
         //const cafeReviewRef = doc(cafeRef, "reviews");
@@ -185,6 +187,7 @@ export async function getReviews(school: string, cafe: string): Promise<Review[]
   const reviews: Review[] = querySnap.docs.map(doc => {
     const data = doc.data();
     return {
+      id: doc.id,
       user: data.user || null,
       quality: data.quality || 0,
       quantity: data.quantity || 0,
@@ -218,3 +221,21 @@ export async function uploadPhotos(photos: File[], school: string, cafe: string,
     }
 }
 */
+
+export async function addLike(reviewId: string, school: string, cafe: string) {
+	log("inside addLike");	
+    log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
+    const reviewRef = doc(db, "reviews", school, cafe, reviewId);
+    await updateDoc(reviewRef, {
+        likes: increment(1) // Correctly increments the likes count
+    });
+}
+
+export async function removeLike(reviewId: string, school: string, cafe: string) {
+    log("inside removeLike");
+    log(`reviewId=${reviewId}`);
+    const reviewRef = doc(db, "reviews", school, cafe, reviewId);
+    await updateDoc(reviewRef, {
+        dislikes: increment(1) // Correctly decrements the likes count
+    });
+}
