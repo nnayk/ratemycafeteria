@@ -12,6 +12,7 @@ const db = getFirestore(app); // TODO: change this to prod db when it's created
 
 export interface Cafeteria {
     name: string;
+    stars: number;
     imageUrl: string;
 }
 
@@ -68,11 +69,11 @@ export async function getSchoolDetails(school : string) {
         name: school,
         // cafeterias: cafeterias,
         cafeterias: [
-            { name: "cafeteria1jksadflhiudjsgdshfdukajslhsfhljlhjkadsflhjakdahkkhDKHADHkdjs", imageUrl: "/einsteins.png" },
-            { name: "Subway", imageUrl: "/subway.jpg" },
-            { name: "Panda Express", imageUrl: "/raw.png" },
-            { name: "VG", imageUrl: "/vg.jpg" },
-            { name: "Vista Grande", imageUrl: "https://via.placeholder.com/150" },
+            { name: "cafeteria1jksadflhiudjsgdshfdukajslhsfhljlhjkadsflhjakdahkkhDKHADHkdjs", imageUrl: "/einsteins.png", stars: 4 },
+            { name: "Subway", imageUrl: "/subway.jpg", stars: 3 },
+            { name: "Panda Express", imageUrl: "/raw.png", stars: 2 },
+            { name: "VG", imageUrl: "/vg.jpg", stars: 1 },
+            { name: "Vista Grande", imageUrl: "https://via.placeholder.com/150",stars: 5 },
         ],
     };
 } 
@@ -137,10 +138,10 @@ export async function addReviewRequest(school : string, cafe : string, reviewDat
         // if this is the first review for the school, create a document for the school
         // create the school doc
         log(`Checking if document exists for ${school}`);
-        const reviewDoc = await getDoc(doc(db, "reviewi_requests", school));
+        const reviewDoc = await getDoc(doc(db, "review_requests", school));
         if(!reviewDoc.exists()) {
             log(`Creating document for ${school}`);
-            await setDoc(doc(db, "reviews", school), {
+            await setDoc(doc(db, "review_requests", school), {
             });
         } else {
             log(`Document exists for ${school}`);

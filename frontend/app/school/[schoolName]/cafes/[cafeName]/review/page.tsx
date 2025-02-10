@@ -218,7 +218,9 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div className="bg-white p-8 rounded-lg w-96">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Thanks, food critic!</h2>
-      <p className="mb-6 text-gray-600"> Your review will be reviewed for any spam and then (hopefully) posted soon!</p>
+      <p className="mb-6 text-gray-600"> Your review will be checked for any spam and then (hopefully) posted soon!</p>
+      <p className="mb-6 text-green-600"> 🥠🥠 Enjoy your virtual fortune cookie: 🥠🥠 </p>
+      <p className="mb-6 text-red-600"> You will meet an old friend soon. </p>
       <div className="flex justify-between">
         <button
           onClick={() => {

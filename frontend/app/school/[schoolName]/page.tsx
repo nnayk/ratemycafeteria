@@ -26,6 +26,10 @@ useEffect(() => {
       const { schoolName } = resolvedParams;
       setSchoolName(schoolName);
       const details = await getSchoolDetails(decodeURIComponent(schoolName));
+      for (let i = 0; i < details.cafeterias.length; i++) {
+        const cafeteria = details.cafeterias[i];
+        console.log(`name=${cafeteria.name}, stars=${cafeteria.stars}, imageUrl=${cafeteria.imageUrl}`);
+      }
       setSchoolDetails(details);
     };
 
@@ -155,6 +159,14 @@ useEffect(() => {
                     style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}
                   >
                     {cafeteria.name}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    component="div"
+                    sx={{ fontWeight: 'bold' }}
+                    style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}
+                  >
+                  {`${cafeteria.stars ?? 0}/5 stars`} 
                   </Typography>
                 </CardContent>
               </Box>
