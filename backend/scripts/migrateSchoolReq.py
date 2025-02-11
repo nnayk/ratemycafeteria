@@ -5,6 +5,13 @@ from cafeReqMigrate import migrateCafeReq
 
 def migrateSchoolReqByName(school,city,state,db=None):
     try:
+        schoolDocName = '-'.join(school.lower().split())
+        print(f'schoolDocName: {schoolDocName}')
+        # check if schoolDocName doc ID already exists under schools collection
+        schoolCheckRef = db.collection("schools").document(schoolDocName)
+        if schoolCheckRef.get().exists:
+            print("School already exists")
+            return
         # Get the school document
         # please use filter instead of where
         # use filter() not where()
@@ -12,6 +19,7 @@ def migrateSchoolReqByName(school,city,state,db=None):
         if len(schoolRef) == 0:
             print("School not found")
             return
+        
         print( "Here are the schools: ")
         cafeData = [doc.to_dict() for doc in schoolRef]
         for i,doc in enumerate(cafeData):
@@ -22,9 +30,10 @@ def migrateSchoolReqByName(school,city,state,db=None):
         if len(indexes) == 0:
             print("No documents selected")
             return
-        db.collection("schools").document(school).set({
+        db.collection("schools").document(schoolDocName).set({
             "city": city,
-            "state": state
+            "state": state,
+            "name": school
             })
         # move all cafes
         for i in indexes:

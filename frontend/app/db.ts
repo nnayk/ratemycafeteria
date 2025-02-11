@@ -48,7 +48,7 @@ export async function getSchools() { // THis will be a future utility when we ha
    log(`inside getSchools`);
    const querySnap = await getDocs(collection(db,"schools"));
    const schools = querySnap.docs.map(doc => doc.data());
-   log(`schools=${schools}`);
+   log(`db: schools=${schools}`);
    return schools;
 }
 
