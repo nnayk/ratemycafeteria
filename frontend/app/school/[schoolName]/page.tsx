@@ -28,7 +28,7 @@ useEffect(() => {
       const details = await getSchoolDetails(decodeURIComponent(schoolName));
       for (let i = 0; i < details.cafeterias.length; i++) {
         const cafeteria = details.cafeterias[i];
-        console.log(`name=${cafeteria.name}, stars=${cafeteria.stars}, imageUrl=${cafeteria.imageUrl}`);
+        log(`name=${cafeteria.name}, stars=${cafeteria.stars}, imageUrl=${cafeteria.imageUrl}, reviewCount=${cafeteria.reviewCount}`);
       }
       setSchoolDetails(details);
     };

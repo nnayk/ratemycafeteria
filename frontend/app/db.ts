@@ -55,10 +55,20 @@ export async function getSchools() { // THis will be a future utility when we ha
 export async function getCafeterias(school : string) {
     log("inside getCafeterias");
     log(`school=${school}`);
-    const querySnap = await getDocs(collection(db, "reviews"));
-    const cafeterias = querySnap.docs.map(doc => doc.data());
-    log(`cafeterias=${cafeterias}`);
-    return cafeterias;
+    // get all cafe subcollections under /cafes/{school} doc
+    // keep in mind /cafes/{school} is a doc not a collection
+    const cafeColl = collection(db, "cafes", school, "cafes"); 
+    const querySnap = await getDocs(cafeColl);
+    // store all doc data as well as doc id in a list
+    const cafes = querySnap.docs.map(doc => {
+        const data = doc.data();
+        return {
+            name: doc.id,
+            imageUrl: data.imageUrl,
+            stars: data.stars,
+        };
+    });
+    return cafes;
 }
 
 export async function getSchoolDetails(school : string) {
@@ -67,14 +77,14 @@ export async function getSchoolDetails(school : string) {
     const cafeterias = await getCafeterias(school);
     return {
         name: school,
-        // cafeterias: cafeterias,
-        cafeterias: [
-            { name: "cafeteria1jksadflhiudjsgdshfdukajslhsfhljlhjkadsflhjakdahkkhDKHADHkdjs", imageUrl: "/einsteins.png", stars: 4 },
-            { name: "Subway", imageUrl: "/subway.jpg", stars: 3 },
-            { name: "Panda Express", imageUrl: "/raw.png", stars: 2 },
-            { name: "VG", imageUrl: "/vg.jpg", stars: 1 },
-            { name: "Vista Grande", imageUrl: "https://via.placeholder.com/150",stars: 5 },
-        ],
+        cafeterias: cafeterias,
+        // cafeterias: [
+        //     { name: "cafeteria1jksadflhiudjsgdshfdukajslhsfhljlhjkadsflhjakdahkkhDKHADHkdjs", imageUrl: "/einsteins.png", stars: 4 },
+        //     { name: "Subway", imageUrl: "/subway.jpg", stars: 3 },
+        //     { name: "Panda Express", imageUrl: "/raw.png", stars: 2 },
+        //     { name: "VG", imageUrl: "/vg.jpg", stars: 1 },
+        //     { name: "Vista Grande", imageUrl: "https://contentful.harrypotter.com/usf1vwtuqyxm/5aXQB99zTum9IqXwFjNqrF/e3f4cfce28b6c8baead6f7fc3e1baaa7/the-great-hall_1_1800x1248.png",stars: 5 },
+        // ],
     };
 } 
 
