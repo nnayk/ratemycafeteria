@@ -1,23 +1,17 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
-
-# Initialize Firebase Admin SDK
-cred = credentials.Certificate("serviceAccountKey.json")  # Path to your service account JSON
-firebase_admin.initialize_app(cred)
-
-# Get Firestore database instance
-db = firestore.client()
-
 DEFAULT_IMAGE_URL = "https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design.jpg"
-def migrateCafeReq(school, cafe, imageUrl=DEFAULT_IMAGE_URL):
+def migrateCafeReq(school, cafe, imageUrl=DEFAULT_IMAGE_URL,db=None):
+    print(f"Migrating cafe request for {school}/{cafe}")
     # Get reference to the cafe request collection
     cafeReqRef = db.collection("cafe_requests").document(school).collection("cafes").document(cafe)
     if not cafeReqRef.get().exists:
         print(f"No cafe requests found for {school}/{cafe}")
-        return
-    data = cafeReqRef.get().to_dict()
-    print(f"Cafe {cafe} submitted by user {data['user']}")
-    # add the cafe request to the /cafes/{school}/cafes collection w/the attributes stars=0, reviewCount=0, imageUrl=""
+    else:
+        data = cafeReqRef.get().to_dict()
+        print(f"Cafe {cafe} request submitted by user {data['user']}")
+    # create the school document in the /cafes collection if it doesn't exist
+    db.collection("cafes").document(school).set({})
     db.collection("cafes").document(school).collection("cafes").document(cafe).set({
         "stars": 0,
         "reviewCount": 0,
@@ -26,7 +20,11 @@ def migrateCafeReq(school, cafe, imageUrl=DEFAULT_IMAGE_URL):
 
     print("Cafe requests migrated successfully!")
     # delete the cafe request from the /cafe_requests/{school}/cafes collection
-    # cafeReqRef.delete()
-    # print("Cafe requests deleted successfully!")
-
-migrateCafeReq("UIUC","swi")
+    # if cafeReqRef.get().exists:
+    #     cafeReqRef.delete()
+    #     print("Cafe requests deleted successfully!")
+if __name__ == "__main__":
+    cred = credentials.Certificate("serviceAccountKey.json")
+    firebase_admin.initialize_app(cred)
+    db = firestore.client()
+    migrateCafeReq("UIUC","swai")

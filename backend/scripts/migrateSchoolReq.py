@@ -1,14 +1,9 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+from cafeReqMigrate import migrateCafeReq
 
-# Initialize Firebase Admin SDK
-cred = credentials.Certificate("serviceAccountKey.json")  # Path to your service account JSON
-firebase_admin.initialize_app(cred)
 
-# Get Firestore database instance
-db = firestore.client()
-
-def migrateSchoolReqByName(school):
+def migrateSchoolReqByName(school,city,state,db=None):
     try:
         # Get the school document
         # please use filter instead of where
@@ -18,8 +13,8 @@ def migrateSchoolReqByName(school):
             print("School not found")
             return
         print( "Here are the schools: ")
-        for i,doc in enumerate(schoolRef):
-            doc = doc.to_dict()
+        cafeData = [doc.to_dict() for doc in schoolRef]
+        for i,doc in enumerate(cafeData):
             print(f"{i+1}: {doc}")
             # Create a new document in the "schools" collection
         print("List which documents you want to migrate ( space separated )")
@@ -27,11 +22,22 @@ def migrateSchoolReqByName(school):
         if len(indexes) == 0:
             print("No documents selected")
             return
-        db.collection("schools").document().set(doc)
+        db.collection("schools").document(school).set({
+            "city": city,
+            "state": state
+            })
         # move all cafes
+        for i in indexes:
+            cafeName = cafeData[i-1]["cafe"]
+            print(f"Migrating cafe request for {school}/{cafeName}")
+            migrateCafeReq(school, cafeName,db=db)
 
         print("School migrated successfully")
     except Exception as e:
         print("Error: ", e)
 
-migrateSchoolReqByName("Faria") 
+if __name__ == "__main__":
+    cred = credentials.Certificate("serviceAccountKey.json")
+    firebase_admin.initialize_app(cred)
+    db = firestore.client()
+    migrateSchoolReqByName("Faria","Cupertino","CA",db=db) 
