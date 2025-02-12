@@ -166,7 +166,6 @@ useEffect(() => {
                     sx={{ fontWeight: 'bold' }}
                     style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}
                   >
-                  {`${cafeteria.stars ?? 0}/5 stars`} 
                   </Typography>
                 </CardContent>
               </Box>

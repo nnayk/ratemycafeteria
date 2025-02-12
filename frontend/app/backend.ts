@@ -3,6 +3,10 @@ import { log } from "./utils/logger";
 export async function uploadPhotos(photos: string[] | File[], schoolName: string, cafeName: string) {
   try 
   {
+      if (photos.length === 0) {
+        log('No photos to upload');
+        return [];
+      }
       const formData = new FormData();
       for (const photo of photos) {
         log( `photo = ${photo}` );

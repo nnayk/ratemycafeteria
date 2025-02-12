@@ -17,6 +17,8 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) 
   const [likes, setLikes] = useState(review.likes);
   const [dislikes, setDislikes] = useState(review.dislikes);
 
+  log(`in ReviewCard quality = ${review.quality}, quantity = ${review.quantity}, pricing = ${review.pricing}`);
+
   const handleLike = async (reviewId: string) => {
     log("inside addLike");	
     log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
@@ -109,7 +111,6 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) 
 };
 
 function renderStars(rating: number) {
-  rating += 0.5;
   const stars = [];
   for (let i = 1; i <= 5; i++) {
     if (i <= Math.floor(rating)) {

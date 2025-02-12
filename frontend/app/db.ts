@@ -71,6 +71,20 @@ export async function getCafeterias(school : string) {
     return cafes;
 }
 
+export async function getCafeDetails(school : string, cafe : string) {
+    log("inside getCafeDetails");
+    // fetch cafe doc for the cafe in the school
+    const cafeRef = doc(db, "cafes", school, "cafes", cafe);
+    const cafeDoc = await getDoc(cafeRef);
+    const data = cafeDoc.data();
+    const details = {
+        stars: data.stars,
+    };
+    log(`details=${details}`);
+    log(`stars=${details.stars}`);
+    return details;
+}
+
 export async function getSchoolDetails(school : string) {
     log("inside getSchoolDetails");
     // fetch cafeterias for the school
