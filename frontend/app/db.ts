@@ -193,9 +193,11 @@ export async function addReviewRequest(school : string, cafe : string, reviewDat
         });
         log("Document written with ID: ", docRef.id);
         log("Number of photos: ", photos.length);
-        //await uploadPhotos(photos, school, cafe, docRef.id);
+        await uploadPhotos(photos, school, cafe, docRef.id);
+        return true;
     } catch (e) {
         log("Error adding document: ", e);
+        return false;
         // TODO: redirect to server error page
     }
 }

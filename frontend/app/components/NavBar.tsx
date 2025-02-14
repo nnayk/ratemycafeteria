@@ -8,15 +8,22 @@ import { Login } from '../components/Login';
 import { Register } from '../components/Register';
 import "../css/nav.css"
 import { log } from "../utils/logger"; 
+import { useRouter } from 'next/navigation';
 
 export const Navbar: React.FC = () => {
   // const { isLoggedIn, isLoading, toggleLogin, toggleRegister } = useAuth();
   const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
+  const router = useRouter();
 
   const handleLogout = async () => {
     await auth.signOut();
     log('User logged out');
   };
+
+  const handleProfile = async () => {
+      console.log("Profile clicked");
+      router.push('./profile');
+  }
 
   const buttonClasses = "px-4 py-2 rounded-md transition duration-300";
 
@@ -41,7 +48,7 @@ export const Navbar: React.FC = () => {
           ) : isLoggedIn ? (
             <>
               <button 
-                onClick={() => log('Navigate to Profile')}
+                onClick={handleProfile}
                 className={`${buttonClasses} bg-white text-black hover:bg-yellow-100 mr-2`}
               >
                 Profile

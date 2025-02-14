@@ -38,7 +38,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   const [likes, setLikes] = useState<number | null>(0);
   const [dislikes, setDislikes] = useState<number | null>(0);
   const [photos, setPhotos] = useState<File[]>([]);
-  const [showThankYouPopup, setShowThankYouPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleQualityChange = (_: React.SyntheticEvent, value: number) => {
     log('Quality:', value);
@@ -65,7 +65,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     }
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     console.log(`quality: ${quality}, quantity: ${quantity}, pricing: ${pricing}`);
     log('inside handleSubmit');
     event.preventDefault();
@@ -84,9 +84,10 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       dislikes,
       photos,
     };
-    addReviewRequest(decodedSchoolName, decodedCafeName, reviewData);
+    const status = await addReviewRequest(decodedSchoolName, decodedCafeName, reviewData);
+    log('Status:', status);
     log('Review submitted:', reviewData);
-	setShowThankYouPopup(true);
+	setShowPopup(true);
 	for (const photo of photos) {
         log('Photo:', photo.name);
     }
@@ -214,7 +215,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
           </form>
         </div>
       </main>
-{showThankYouPopup && (
+{showPopup && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div className="bg-white p-8 rounded-lg w-96">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Thanks, food critic!</h2>
@@ -232,7 +233,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
         </button>
         <button
           onClick={() => {
-            setShowThankYouPopup(false);
+            setShowPopup(false);
             router.back();
           }}
           className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 transition duration-300"
