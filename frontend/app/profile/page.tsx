@@ -18,7 +18,7 @@ const ProfileSidebar = () => {
 
         <div className="flex flex-1">
           {/* Sidebar */}
-          <aside className="w-64 bg-yellow-400 py-6 px-4 border-r border-yellow-200">
+          <aside className="w-64 py-6 px-4 border-r border-yellow-200">
               <div>
                   <h2 className="text-xl font-semibold text-gray-600">My Account</h2>
                   <p className="text-gray-600">{username}</p>
