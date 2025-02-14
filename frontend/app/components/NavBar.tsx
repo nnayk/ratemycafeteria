@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
     <nav className="bg-yellow-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-white text-xl font-bold hover:text-yellow-200 transition duration-300">
-          RateMyCafeteria
+          RateMyCaf
         </Link> 
         <div className="flex items-center">
           {isLoading ? (

@@ -271,3 +271,7 @@ export async function removeLike(reviewId: string, school: string, cafe: string)
         dislikes: increment(1) // Correctly decrements the likes count
     });
 }
+
+export async function getFortune() {
+    return "You will have a great day! I think";
+}

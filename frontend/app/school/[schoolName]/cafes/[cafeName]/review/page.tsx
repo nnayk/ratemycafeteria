@@ -6,7 +6,7 @@ import { Button } from '../../../../../components/Button';
 import { useRouter } from 'next/navigation';
 import { Rating } from '@mui/material'; // Assuming you have MUI installed for the star ratings
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { addReviewRequest } from '../../../../../db';
+import { addReviewRequest, getFortune } from '../../../../../db';
 import { useAuth } from '../../../../../contexts/AuthContext'; import { useEffect } from 'react';
 import { Footer } from '../../../../../components/Footer';
 // import { uploadPhotos } from '../../../../../backend';
@@ -39,6 +39,11 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   const [dislikes, setDislikes] = useState<number | null>(0);
   const [photos, setPhotos] = useState<File[]>([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [popupTitle, setPopupTitle] = useState('Thanks, food critic!');
+  const [popupMessage, setPopupMessage] = useState('Your review will be checked for any spam and then (hopefully) posted soon!');
+  const [fortuneTitle, setFortuneTitle] = useState('🥠🥠 Enjoy your virtual fortune cookie 🥠🥠');
+  const [fortuneCookie, setFortuneCookie] = useState('');
+  const DEFAULT_FORTUNE = 'You will meet an old friend soon';
 
   const handleQualityChange = (_: React.SyntheticEvent, value: number) => {
     log('Quality:', value);
@@ -85,6 +90,18 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       photos,
     };
     const status = await addReviewRequest(decodedSchoolName, decodedCafeName, reviewData);
+    const fortune = getFortune();
+    if (fortune === '') {
+        setFortuneCookie(DEFAULT_FORTUNE);
+    } else {
+        setFortuneCookie(fortune);
+    }
+    if(status) {
+    } else {
+        setPopupTitle('Big yikes 😭😢😔🫠');
+        setPopupMessage('We had an issue submitting your review. ');
+        setFortuneTitle('Please accept this virtual fortune cookie as an apology:');
+    }
     log('Status:', status);
     log('Review submitted:', reviewData);
 	setShowPopup(true);
@@ -218,10 +235,10 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
 {showPopup && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div className="bg-white p-8 rounded-lg w-96">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Thanks, food critic!</h2>
-      <p className="mb-6 text-gray-600"> Your review will be checked for any spam and then (hopefully) posted soon!</p>
-      <p className="mb-6 text-green-600"> 🥠🥠 Enjoy your virtual fortune cookie: 🥠🥠 </p>
-      <p className="mb-6 text-red-600"> You will meet an old friend soon. </p>
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">{popupTitle}</h2>
+      <p className="mb-6 text-gray-600">{popupMessage}</p>
+      <p className="mb-6 text-green-600">  {fortuneTitle}  </p>
+      <p className="mb-6 text-red-600">{fortuneCookie} </p>
       <div className="flex justify-between">
         <button
           onClick={() => {
