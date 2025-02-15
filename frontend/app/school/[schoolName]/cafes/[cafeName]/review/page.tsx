@@ -43,7 +43,6 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   const [popupMessage, setPopupMessage] = useState('Your review will be checked for any spam and then (hopefully) posted soon!');
   const [fortuneTitle, setFortuneTitle] = useState('🥠🥠 Enjoy your virtual fortune cookie 🥠🥠');
   const [fortuneCookie, setFortuneCookie] = useState('');
-  const DEFAULT_FORTUNE = 'You will meet an old friend soon';
 
   const handleQualityChange = (_: React.SyntheticEvent, value: number) => {
     log('Quality:', value);
@@ -90,12 +89,10 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       photos,
     };
     const status = await addReviewRequest(decodedSchoolName, decodedCafeName, reviewData);
-    const fortune = getFortune();
-    if (fortune === '') {
-        setFortuneCookie(DEFAULT_FORTUNE);
-    } else {
-        setFortuneCookie(fortune);
-    }
+    const fortune = await getFortune();
+    log('Fortune:', fortune);
+    setFortuneCookie(fortune);
+   
     if(status) {
     } else {
         setPopupTitle('Big yikes 😭😢😔🫠');

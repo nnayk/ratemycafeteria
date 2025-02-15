@@ -273,5 +273,19 @@ export async function removeLike(reviewId: string, school: string, cafe: string)
 }
 
 export async function getFortune() {
-    return "You will have a great day! I think";
+    const getRandomIndex = (max: number) => {
+        return Math.floor(Math.random() * max);
+    }
+    try
+    {
+        const index = getRandomIndex(99).toString();
+        log(`fortune index=${index}`);
+        const fortune = await getDoc(doc(db, "fortunes", index));
+        if(fortune.exists()) {
+            return fortune.data()["fortune"];
+        }
+    } catch (e) {
+        log("Error getting fortune", e)
+        return "Be patient -- greatness is coming your way.";
+    }
 }
