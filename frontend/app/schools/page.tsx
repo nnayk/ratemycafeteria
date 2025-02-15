@@ -15,7 +15,6 @@ interface School {
   city: string;
   state: string;
 }
-
 export default function SchoolsPage() {
   const [schoolsByState, setSchoolsByState] = useState<Record<string, School[]>>({});
   const [expandedStates, setExpandedStates] = useState<Record<string, boolean>>({});
@@ -72,7 +71,7 @@ export default function SchoolsPage() {
         {Object.entries(schoolsByState).map(([state, schools]) => (
           <Accordion 
             key={state} 
-            expanded={expandedStates[state]} 
+            // expanded={expandedStates[state]} 
             onChange={handleAccordionChange(state)}
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
