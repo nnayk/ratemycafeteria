@@ -193,7 +193,6 @@ export async function addReviewRequest(school : string, cafe : string, reviewDat
         });
         log("Document written with ID: ", docRef.id);
         log("Number of photos: ", photos.length);
-        await uploadPhotos(photos, school, cafe, docRef.id);
         return true;
     } catch (e) {
         log("Error adding document: ", e);
@@ -236,6 +235,19 @@ export async function getReviews(school: string, cafe: string): Promise<Review[]
   log(reviews);
   return reviews;
 }
+
+export async function getReviewsByUser(userId) {
+    log(`inside getReviewsByUser`);
+    log(`userId=${userId}`);
+    const querySnap = await getDocs(collection(db, "users", userId, "reviews"));
+    const reviewIds = querySnap.docs.map(doc => doc.data());
+    for (const review of reviewIds) {
+        log(`review id = ${review}`);
+    }
+    const reviews = [];
+    return reviews;
+}
+
 
 /*
 export async function uploadPhotos(photos: File[], school: string, cafe: string, reviewId: string) {

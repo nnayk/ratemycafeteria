@@ -22,7 +22,7 @@ export const Navbar: React.FC = () => {
 
   const handleProfile = async () => {
       console.log("Profile clicked");
-      router.push('./profile');
+      router.push('/profile');
   }
 
   const buttonClasses = "px-4 py-2 rounded-md transition duration-300";
