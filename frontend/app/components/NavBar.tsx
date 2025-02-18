@@ -9,6 +9,7 @@ import { Register } from '../components/Register';
 import "../css/nav.css"
 import { log } from "../utils/logger"; 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export const Navbar: React.FC = () => {
   // const { isLoggedIn, isLoading, toggleLogin, toggleRegister } = useAuth();
@@ -30,9 +31,13 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="bg-yellow-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="text-white text-xl font-bold hover:text-yellow-200 transition duration-300">
-          RateMyCaf
-        </Link> 
+<div className="flex items-center">
+          {/* Logo to the left of the text */}
+          <Image src="/logo.webp" alt="Rate My Cafeteria Logo" width={60} height={60} className="mr-2" />
+          <Link href="/" className="text-white text-xl font-bold hover:text-yellow-200 transition duration-300">
+            RateMyCaf
+          </Link>
+        </div>
         <div className="flex items-center">
           {isLoading ? (
             <div className="flex items-center space-x-2">
