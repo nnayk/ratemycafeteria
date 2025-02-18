@@ -236,18 +236,18 @@ export async function getReviews(school: string, cafe: string): Promise<Review[]
   return reviews;
 }
 
-export async function getReviewsByUser(userId) {
+export async function getReviewsByUser(email) {
     log(`inside getReviewsByUser`);
-    log(`userId=${userId}`);
-    const querySnap = await getDocs(collection(db, "users", userId, "reviews"));
-    const reviewIds = querySnap.docs.map(doc => doc.data());
+    log(`email=${email}`);
+    const querySnap = await getDocs(collection(db, "users", "nanayak@calpoly.edu", "reviews"));
+    const reviewIds = querySnap.docs.map(doc => doc.id);
     for (const review of reviewIds) {
         log(`review id = ${review}`);
+        log(`type of review id = ${typeof review}`);
     }
     const reviews = [];
     return reviews;
 }
-
 
 /*
 export async function uploadPhotos(photos: File[], school: string, cafe: string, reviewId: string) {

@@ -48,12 +48,6 @@ export const Navbar: React.FC = () => {
           ) : isLoggedIn ? (
             <>
               <button 
-                onClick={handleProfile}
-                className={`${buttonClasses} bg-white text-black hover:bg-yellow-100 mr-2`}
-              >
-                Profile
-              </button>
-              <button 
                 onClick={handleLogout}
                 className={`${buttonClasses} bg-yellow-700 text-white hover:bg-yellow-600`}
               >

@@ -16,6 +16,7 @@ const ProfileSidebar = () => {
   const { user, isLoggedIn } = useAuth();
   const [ email, setEmail ] = useState("");
   const router = useRouter();
+  log(`user = ${user}, isLoggedIn = ${isLoggedIn}`);
   if (user) { 
     console.log(`user email = ${user.email}`);
   } else {
@@ -30,6 +31,7 @@ const ProfileSidebar = () => {
       if (!isLoggedIn) {
           router.push('/');
       }
+      log(`user logged in, email = ${user?.email}`);
       setEmail(user?.email);
       const fetchReviews = async () => {
           log(`get reviews for user ${email}`);
