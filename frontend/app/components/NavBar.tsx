@@ -33,9 +33,17 @@ export const Navbar: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center">
 <div className="flex items-center">
           {/* Logo to the left of the text */}
-          <Image src="/logo.webp" alt="Rate My Cafeteria Logo" width={60} height={60} className="mr-2" />
-          <Link href="/" className="text-white text-xl font-bold hover:text-yellow-200 transition duration-300">
-            RateMyCaf
+		  <Image 
+  src="/logo.png" 
+  alt="Rate My Cafeteria Logo" 
+  width={80}  // Increase width
+  height={80} // Increase height
+  className="mr-2 max-w-[80px] max-h-[80px] object-contain"
+  onClick={() => router.push('/')}
+/>
+
+          <Link href="/" className="text-white text-2xl font-bold hover:text-yellow-200 transition duration-300">
+            RateMyCafeteria
           </Link>
         </div>
         <div className="flex items-center">
