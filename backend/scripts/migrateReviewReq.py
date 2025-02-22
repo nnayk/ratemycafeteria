@@ -1,7 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
-
-# Initialize Firebase Admin SDK
+# Initialize Firebase Admin SDK 
 cred = credentials.Certificate("serviceAccountKey.json")  # Path to your service account JSON
 firebase_admin.initialize_app(cred)
 
@@ -77,5 +76,9 @@ def migrate_review_request(school, cafe, req_id):
         print(f"Error migrating review: {e}")
 
 # Example usage
-migrate_review_request("Faria", "A+", "8jHNuTDnSJ9rLWGabO2u")
+# migrate_review_request("Faria", "A+", "8jHNuTDnSJ9rLWGabO2u")
+school = input("Enter school name (case sensitive): ")
+cafe = input("Enter cafe name (case sensitive): ")
+doc_id = input("Enter review request document ID: ")
+migrate_review_request(school, cafe, doc_id)
 

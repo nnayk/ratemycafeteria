@@ -49,4 +49,7 @@ if __name__ == "__main__":
     cred = credentials.Certificate("serviceAccountKey.json")
     firebase_admin.initialize_app(cred)
     db = firestore.client()
-    migrateSchoolReqByName("Faria","Cupertino","CA",db=db) 
+    school = input("Enter school name (case sensitive): ")
+    city = input("Enter city name (case sensitive): ")
+    state = input("Enter school state (case sensitive): ")
+    migrateSchoolReqByName(school,city,state,db=db) 

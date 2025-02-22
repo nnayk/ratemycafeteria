@@ -110,6 +110,7 @@ export async function requestSchool(user : User|null, name : string, cafe : stri
             user: user ? user.uid : null,
             cafe: cafe 
         })
+        await requestCafe(user, name, cafe);
     } catch (e) {
         log("Error adding document: ", e);
     }

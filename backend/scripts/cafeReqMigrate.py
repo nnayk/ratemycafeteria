@@ -27,4 +27,6 @@ if __name__ == "__main__":
     cred = credentials.Certificate("serviceAccountKey.json")
     firebase_admin.initialize_app(cred)
     db = firestore.client()
-    migrateCafeReq("Cal Poly San Luis Obispo","anjappar",db=db)
+    school = input("Enter the school name (case sensitive): ")
+    cafe = input("Enter the cafe name (case sensitive): ")
+    migrateCafeReq(school,cafe,db=db)
