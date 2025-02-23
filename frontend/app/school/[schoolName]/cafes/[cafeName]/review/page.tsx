@@ -41,8 +41,8 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
   const [showPopup, setShowPopup] = useState(false);
   const [popupTitle, setPopupTitle] = useState('Thanks, food critic!');
   const [popupMessage, setPopupMessage] = useState('Your review will be checked for any spam and then (hopefully) posted soon!');
-  const [fortuneTitle, setFortuneTitle] = useState('🥠🥠 Enjoy your virtual fortune cookie 🥠🥠');
-  const [fortuneCookie, setFortuneCookie] = useState('');
+  const [fortuneTitle, setFortuneTitle] = useState('🥠 Enjoy your virtual fortune cookie 🥠');
+  const [fortuneCookie, setFortuneCookie] = useState('You will meet an old friend soon.');
 
   const handleQualityChange = (_: React.SyntheticEvent, value: number) => {
     log('Quality:', value);
@@ -234,8 +234,9 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     <div className="bg-white p-8 rounded-lg w-96">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">{popupTitle}</h2>
       <p className="mb-6 text-gray-600">{popupMessage}</p>
-      <p className="mb-6 text-green-600">  {fortuneTitle}  </p>
-      <p className="mb-6 text-red-600">{fortuneCookie} </p>
+<p className="mb-6 text-green-600 font-serif font-bold">{fortuneTitle}</p>
+<p className="mb-6 text-red-600 font-mono italic ">{fortuneCookie}</p>
+
       <div className="flex justify-between">
         <button
           onClick={() => {

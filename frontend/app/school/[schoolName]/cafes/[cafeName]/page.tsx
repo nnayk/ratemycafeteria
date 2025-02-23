@@ -57,7 +57,7 @@ useEffect(() => {
 			  <div className="flex justify-center space-x-4 mt-2 text-gray-600">
 				<p>{reviews.length} reviews</p>
 				<p>|</p>
-				<p>{cafeDetails.stars}/5 stars</p>
+				<p>{ cafeDetails ? cafeDetails.stars : "TBD"}/5 stars</p>
 			  </div>
 			</div>
         <div className="flex flex-wrap justify-center space-x-4 mb-6 gap-4">
