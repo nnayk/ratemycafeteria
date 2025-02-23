@@ -34,9 +34,13 @@ export interface SchoolDetails {
     cafeterias: Cafeteria[];
 }
 
+// export interface CafeDetails {
+//     name: string;
+//     reviews: Review[];
+// }
+
 export interface CafeDetails {
-    name: string;
-    reviews: Review[];
+        stars: number | null; // Define an explicit type instead of 'any'
 }
 
 export function getDb() {
@@ -71,7 +75,7 @@ export async function getCafeterias(school : string) {
     return cafes;
 }
 
-export async function getCafeDetails(school : string, cafe : string) {
+export async function getCafeDetails(school : string, cafe : string) : Promise<CafeDetails> {
     log("inside getCafeDetails");
     // fetch cafe doc for the cafe in the school
     const cafeRef = doc(db, "cafes", school, "cafes", cafe);

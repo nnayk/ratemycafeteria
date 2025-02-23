@@ -14,7 +14,7 @@ import { log } from "../../../../utils/logger";
 export default function CafePage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
   const [decodedSchoolName, setDecodedSchoolName] = React.useState('');
   const [decodedCafeName, setDecodedCafeName] = React.useState('');
-  const [cafeDetails, setCafeDetails] = React.useState('');
+  const [cafeDetails, setCafeDetails] = React.useState<CafeDetails | null>(null);
   const [reviews, setReviews] = React.useState<Review[]>([]); 
   const router = useRouter();
 useEffect(() => {
