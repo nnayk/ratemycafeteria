@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
             <Link href="/privacy-policy" className="text-black hover:text-yellow-500 transition duration-300">
               Privacy Policy
             </Link>
-            <a href="https://www.buymeacoffee.com/yourname" target="_blank" rel="noopener noreferrer" className="text-black hover:text-yellow-500 transition duration-300">
+            <a href="https://www.buymeacoffee.com/ratemycafeu" target="_blank" rel="noopener noreferrer" className="text-black hover:text-yellow-500 transition duration-300">
               Buy me a coffee
             </a>
           </div>
