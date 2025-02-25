@@ -6,7 +6,7 @@ import { Loading } from '../../components/Loading';
 import { Navbar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
 import { useAuth } from '../../contexts/AuthContext';
-import { requestSchool } from '../../db';
+import { requestSchool, cleanUrl } from '../../db';
 import { log } from "../../utils/logger"; 
 
 export default function AddschoolPage() {
@@ -31,9 +31,11 @@ export default function AddschoolPage() {
     // Show submission message
     setSubmitted(true);
 
+    const urlSchoolName = cleanUrl(schoolName);
+    const urlCafe = cleanUrl(cafe);
     // Delay navigation by 2 seconds
     setTimeout(() => {
-      router.push(`/school/${schoolName}/cafes/${cafe}/review`);
+      router.push(`/school/${urlSchoolName}/cafes/${urlCafe}/review`);
     }, 2000);
   };
 

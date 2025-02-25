@@ -50,10 +50,15 @@ export function getDb() {
 
 export async function getSchools() { // THis will be a future utility when we have a dynamic list of schools
    log(`inside getSchools`);
-   const querySnap = await getDocs(collection(db,"schools"));
-   const schools = querySnap.docs.map(doc => doc.data());
-   log(`db: schools=${schools}`);
-   return schools;
+   try {
+       const querySnap = await getDocs(collection(db,"schools"));
+       const schools = querySnap.docs.map(doc => doc.data());
+       log(`db: schools=${schools}`);
+       return schools;
+   } catch (e) {
+       log("Error getting documents: ", e);
+       return [];
+   }
 }
 
 export async function getCafeterias(school : string) {
@@ -92,18 +97,16 @@ export async function getCafeDetails(school : string, cafe : string) : Promise<C
 export async function getSchoolDetails(school : string) {
     log("inside getSchoolDetails");
     // fetch cafeterias for the school
-    const cafeterias = await getCafeterias(school);
-    return {
-        name: school,
-        cafeterias: cafeterias,
-        // cafeterias: [
-        //     { name: "cafeteria1jksadflhiudjsgdshfdukajslhsfhljlhjkadsflhjakdahkkhDKHADHkdjs", imageUrl: "/einsteins.png", stars: 4 },
-        //     { name: "Subway", imageUrl: "/subway.jpg", stars: 3 },
-        //     { name: "Panda Express", imageUrl: "/raw.png", stars: 2 },
-        //     { name: "VG", imageUrl: "/vg.jpg", stars: 1 },
-        //     { name: "Vista Grande", imageUrl: "https://contentful.harrypotter.com/usf1vwtuqyxm/5aXQB99zTum9IqXwFjNqrF/e3f4cfce28b6c8baead6f7fc3e1baaa7/the-great-hall_1_1800x1248.png",stars: 5 },
-        // ],
-    };
+    try {
+        const cafeterias = await getCafeterias(school);
+        return {
+            name: school,
+            cafeterias: cafeterias,
+        };
+   } catch (e) {
+       log(`Error getting school details for school ${school}: `, e);
+       return { name: school, cafeterias: [] };
+   }
 } 
 
 export async function requestSchool(user : User|null, name : string, cafe : string) {
@@ -305,4 +308,9 @@ export async function getFortune() {
         log("Error getting fortune", e)
         return "Be patient -- greatness is coming your way.";
     }
+}
+
+
+export function cleanUrl(url: string) {
+    return url.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase();
 }

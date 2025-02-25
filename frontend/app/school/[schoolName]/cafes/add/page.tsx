@@ -1,21 +1,22 @@
 'use client';
-import React, { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Box, Typography, Alert } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import {Loading} from '../../../../components/Loading';
+import { Loading } from '../../../../components/Loading';
 import { Navbar } from '../../../../components/NavBar';
 import { Footer } from '../../../../components/Footer';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { requestCafe } from '../../../../db';
-import {Login} from "../../../../components/Login"
-import {Register} from "../../../../components/Register"
-import { useEffect } from 'react';
 import { log } from "../../../../utils/logger"; 
 
 export default function AddCafe({ params }: { params: Promise<{ schoolName: string }> }) {
-  //const { schoolName } = React.use(params);
-  //const decodedSchoolName = decodeURIComponent(schoolName);
   const [decodedSchoolName, setDecodedSchoolName] = useState<string>('');
+  const [cafeName, setCafeName] = useState('');
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Prevent multiple submissions
+
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
 
   useEffect(() => {
     params.then((resolvedParams) => {
@@ -25,20 +26,24 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
   }, [params]);
 
   log(`decodedSchoolName = ${decodedSchoolName}`);
-  const [cafeName, setCafeName] = useState('');
-  const router = useRouter();
-  const {user} = useAuth();
-  const { isLoggedIn,isLoading,isLoginOpen, isRegisterOpen, toggleLogin, toggleRegister } = useAuth();
-  const maxInputLength = 50;
-  
-  if(isLoading) {
+
+  if (isLoading) {
     return <Loading />;
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    log(`school name = ${decodedSchoolName}, cafe = ${cafeName}`);
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    requestCafe(user,decodedSchoolName,cafeName);
+    setIsSubmitting(true); // Disable button to prevent multiple submissions
+
+    log(`Submitting: school = ${decodedSchoolName}, cafe = ${cafeName}`);
+    await requestCafe(user, decodedSchoolName, cafeName);
+
+    setSubmissionSuccess(true);
+
+    // Wait 2 seconds before navigating back
+    setTimeout(() => {
+      router.back();
+    }, 2000);
   };
 
   return (
@@ -50,31 +55,32 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'flex-start', // Changed from 'center' to 'flex-start'
-          padding: '2rem 1rem', // Adjusted padding
-          marginTop: '4rem', // Added margin at the top
+          justifyContent: 'flex-start',
+          padding: '2rem 1rem',
+          marginTop: '4rem',
           flexGrow: 1,
         }}
       >
         <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'black', fontWeight: 'bold' }}>
           Add a dining option 
         </Typography>
-        
+
+        {submissionSuccess && (
+          <Alert severity="success" sx={{ mb: 2, width: '100%', maxWidth: 400 }}>
+            Your request has been submitted successfully!
+          </Alert>
+        )}
+
         <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%', maxWidth: 400 }}>
           <TextField
             fullWidth
             label="Dining option name"
             variant="outlined"
             value={cafeName}
-            slotProps={{
-              htmlInput: {
-                maxLength: 50,
-                type: 'string'
-              }
-            }}
             onChange={(e) => setCafeName(e.target.value)}
             required
             margin="normal"
+            disabled={isSubmitting}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': { borderColor: '#F59E0B' },
@@ -88,6 +94,7 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
             type="submit" 
             variant="contained" 
             fullWidth 
+            disabled={isSubmitting}
             sx={{ 
               mt: 3, 
               mb: 2, 
@@ -97,13 +104,15 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
               },
             }}
           >
-            Add dining option 
+            {isSubmitting ? "Submitting..." : "Add dining option"}
           </Button>
         </Box>
-       {/* Centered Back Button */}
-       <Button
+
+        {/* Centered Back Button */}
+        <Button
           onClick={() => router.back()}
           variant="outlined"
+          disabled={isSubmitting}
           sx={{
             mt: 2,
             color: '#F59E0B',
@@ -117,9 +126,8 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
           {`Go back to ${decodedSchoolName} page`}
         </Button>
       </Box>
-      {/* <Login isOpen={isLoginOpen} onClose={toggleLogin} /> */}
-      {/* <Register isOpen={isRegisterOpen} onClose={toggleRegister} /> */}
       <Footer />
     </div>
   );
 }
+

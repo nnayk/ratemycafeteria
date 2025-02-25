@@ -14,7 +14,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <div className="bg-white min-h-[50vh] flex flex-col items-center justify-center p-4">
+    <div className="bg-white pt-12 flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold mb-6 text-black">Search a school to get started</h1>
       
       <div className="w-full max-w-md">
