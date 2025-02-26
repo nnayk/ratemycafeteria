@@ -14,7 +14,7 @@ const ComingSoon: React.FC = () => {
     <div className="bg-white text-center py-12 px-6 rounded-lg shadow-md max-w-3xl mx-auto border border-yellow-400">
       <h2 className="text-2xl font-bold text-yellow-500">🍽️ Coming Soon: Public Food Tier! 🍽️</h2>
       <p className="text-gray-900 mt-4 text-lg">
-        Rate your school's cafeterias from <span className="font-bold text-green-600">A</span> to 
+        Rate your school&rsquo;s cafeterias from <span className="font-bold text-green-600">A</span> to 
         <span className="font-bold text-red-600"> F</span> and help others discover the best (or worst) spots on campus.
       </p>
       <p className="mt-4 text-gray-800">Stay tuned for updates! 🚀</p>

@@ -22,7 +22,7 @@ const PrivacyPolicy: React.FC = () => {
         <h2 className="text-2xl font-semibold text-black mb-2">5. Sharing Your Information</h2>
         <p className="text-black mb-4">We do not sell or trade your personal data. Third-party services may be used for app hosting and analytics.</p>
 
-        <h2 className="text-2xl font-semibold text-black mb-2">6. Children's Privacy</h2>
+        <h2 className="text-2xl font-semibold text-black mb-2">6. Children&rsquo;s Privacy</h2>
         <p className="text-black mb-4">Our website is not intended for children under 13, and we do not knowingly collect data from them.</p>
 
         <h2 className="text-2xl font-semibold text-black mb-2">7. Legal Compliance</h2>
