@@ -9,6 +9,7 @@ import { Footer } from '../components/Footer';
 import { useAuth } from '../contexts/AuthContext';
 import { getSchools } from '../db';
 import { log } from "../utils/logger"; 
+import { getReviewRequests } from '../db';
 
 interface School {
   name: string;
@@ -27,6 +28,7 @@ export default function SchoolsPage() {
 
   const fetchSchools = async () => {
     try {
+      await getReviewRequests();
       const schoolsList = await getSchools();
       log('Schools:', schoolsList);
       const grouped = schoolsList.reduce((acc, school) => {

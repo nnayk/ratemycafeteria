@@ -314,3 +314,27 @@ export async function getFortune() {
 export function cleanUrl(url: string) {
     return url.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase();
 }
+
+// This is a purely experimental function intended to validate that 
+// the review_requests collection is not visible to the client. Please 
+// do not use this function in production code.
+export async function getReviewRequests() {
+    console.log("inside getReviewRequests");
+
+    try {
+        const querySnapshot = await getDocs(collection(db, "review_requests"));
+        console.log(`response=${querySnapshot}`);
+
+        for (const doc of querySnapshot.docs) { // Use querySnapshot.docs
+            console.log(doc.id, " YELAY => ", doc.data());
+        }
+
+        return querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+    } catch (error) {
+        console.error("Error fetching review requests:", error);
+        return [];
+    }
+}
