@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 
 # Configure Cloudinary
 cloudinary.config(
-    cloud_name="dh4nyybh4",
+    cloud_name="dii2biiw7",
     api_key=os.getenv("CLOUDINARY_API_KEY"),
     api_secret=os.getenv("CLOUDINARY_API_SECRET"),
     secure=True

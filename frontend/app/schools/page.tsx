@@ -9,7 +9,7 @@ import { Footer } from '../components/Footer';
 import { useAuth } from '../contexts/AuthContext';
 import { getSchools } from '../db';
 import { log } from "../utils/logger"; 
-import { getReviewRequests } from '../db';
+// import { getReviewRequests, updateReviewRequest } from '../db';
 
 interface School {
   name: string;
@@ -28,8 +28,14 @@ export default function SchoolsPage() {
 
   const fetchSchools = async () => {
     try {
-      await getReviewRequests();
+      // await getReviewRequests();
+      // await updateReviewRequest();
       const schoolsList = await getSchools();
+      if (schoolsList.length === 0) {
+          log('Unable to fetch schools right now (please forgive me)');
+          alert('Unable to fetch schools right now (please forgive me and consider reporting this issue)');
+        return;
+      }
       log('Schools:', schoolsList);
       const grouped = schoolsList.reduce((acc, school) => {
         if (!acc[school.state]) {

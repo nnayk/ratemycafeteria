@@ -62,22 +62,27 @@ export async function getSchools() { // THis will be a future utility when we ha
 }
 
 export async function getCafeterias(school : string) {
-    log("inside getCafeterias");
-    log(`school=${school}`);
-    // get all cafe subcollections under /cafes/{school} doc
-    // keep in mind /cafes/{school} is a doc not a collection
-    const cafeColl = collection(db, "cafes", school, "cafes"); 
-    const querySnap = await getDocs(cafeColl);
-    // store all doc data as well as doc id in a list
-    const cafes = querySnap.docs.map(doc => {
-        const data = doc.data();
-        return {
-            name: doc.id,
-            imageUrl: data.imageUrl,
-            stars: data.stars,
-        };
-    });
-    return cafes;
+    try {
+        log("inside getCafeterias");
+        log(`school=${school}`);
+        // get all cafe subcollections under /cafes/{school} doc
+        // keep in mind /cafes/{school} is a doc not a collection
+        const cafeColl = collection(db, "cafes", school, "cafes"); 
+        const querySnap = await getDocs(cafeColl);
+        // store all doc data as well as doc id in a list
+        const cafes = querySnap.docs.map(doc => {
+            const data = doc.data();
+            return {
+                name: doc.id,
+                imageUrl: data.imageUrl,
+                stars: data.stars,
+            };
+        });
+        return cafes;
+    }catch (e) {
+      log("Error: Unable to get cafeterias for school ", school, e);
+      return [];
+   }
 }
 
 export async function getCafeDetails(school : string, cafe : string) : Promise<CafeDetails> {
@@ -104,7 +109,7 @@ export async function getSchoolDetails(school : string) {
             cafeterias: cafeterias,
         };
    } catch (e) {
-       log(`Error getting school details for school ${school}: `, e);
+       log(`ERROR: Unable to get school details for school ${school}: `, e);
        return { name: school, cafeterias: [] };
    }
 } 
@@ -118,8 +123,10 @@ export async function requestSchool(user : User|null, name : string, cafe : stri
             cafe: cafe 
         })
         await requestCafe(user, name, cafe);
+        return true;
     } catch (e) {
         log("Error adding document: ", e);
+        return false;
     }
 }
 
@@ -138,8 +145,10 @@ export async function requestCafe(user : User|null, school : string, cafe : stri
 		user: user ? user.uid : null,
 		cafe: cafe,
 	});
+    return true;
 	} catch (e) {
         log("Error adding document: ", e);
+        return false;
     }
 }
 
@@ -166,6 +175,7 @@ export async function schoolNameToId(name : string) {
 
 export async function addReviewRequest(school : string, cafe : string, reviewData : Review ) {
     try {
+        log("inside addReviewRequest");
         log(`school=${school},cafe=${cafe}, reviewData=${reviewData}`);
         // if this is the first review for the school, create a document for the school
         // create the school doc
@@ -316,25 +326,42 @@ export function cleanUrl(url: string) {
 }
 
 // This is a purely experimental function intended to validate that 
-// the review_requests collection is not visible to the client. Please 
+// the reviews collection is not visible to the client. Please 
 // do not use this function in production code.
-export async function getReviewRequests() {
-    console.log("inside getReviewRequests");
+// export async function getReviews() {
+//     console.log("inside getReviews");
 
-    try {
-        const querySnapshot = await getDocs(collection(db, "review_requests"));
-        console.log(`response=${querySnapshot}`);
+//     try {
+//         const querySnapshot = await getDocs(collection(db, "reviews"));
+//         console.log(`response=${querySnapshot}`);
 
-        for (const doc of querySnapshot.docs) { // Use querySnapshot.docs
-            console.log(doc.id, " YELAY => ", doc.data());
-        }
+//         for (const doc of querySnapshot.docs) { // Use querySnapshot.docs
+//             console.log(doc.id, " YELAY => ", doc.data());
+//         }
 
-        return querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
-    } catch (error) {
-        console.error("Error fetching review requests:", error);
-        return [];
-    }
-}
+//         return querySnapshot.docs.map(doc => ({
+//             id: doc.id,
+//             ...doc.data()
+//         }));
+//     } catch (error) {
+//         console.error("Error fetching reviews:", error);
+//         return [];
+//     }
+// }
+
+// This is a purely experimental function intended to validate that 
+// the review_requests collection elements are not modifiable or deletable to the client. Please 
+// do not use this function in production code.
+// export async function updateReviewRequest() {
+//     const school = "Cal Poly San Luis Obispo";
+//     const cafe = "Subway";
+//     const reviewId = "kQ7OaT4ut5CPBH6uAllw";
+//     try {
+//         await updateDoc(doc(db, "review_requests", school, cafe, reviewId), {
+//             quality: 1
+//         });
+//         console.log("Document successfully updated!");
+//     } catch (error) {
+//         console.error("Error updating document: ", error);
+//     }
+// }

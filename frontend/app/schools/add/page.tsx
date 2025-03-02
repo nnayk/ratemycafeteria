@@ -22,14 +22,20 @@ export default function AddschoolPage() {
     return <Loading />;
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     log(`school name = ${schoolName}, cafe = ${cafe}`);
-    requestSchool(user, schoolName, cafe);
-
-    // Show submission message
-    setSubmitted(true);
+    const status = await requestSchool(user, schoolName, cafe);
+    if(status==true) {
+        log("School request submitted successfully");
+        // Show submission message
+        setSubmitted(true);
+    } else {
+        log("ERROR: School request submission failed");
+        alert("Failed to submit request. Please try again later.");
+        return;
+    }
 
     const urlSchoolName = cleanUrl(schoolName);
     const urlCafe = cleanUrl(cafe);

@@ -36,9 +36,14 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
     setIsSubmitting(true); // Disable button to prevent multiple submissions
 
     log(`Submitting: school = ${decodedSchoolName}, cafe = ${cafeName}`);
-    await requestCafe(user, decodedSchoolName, cafeName);
+    const status = await requestCafe(user, decodedSchoolName, cafeName);
 
-    setSubmissionSuccess(true);
+    if( status) {
+        setSubmissionSuccess(true);
+    } else {
+        alert("Failed to submit request. Please try again later.");
+        log("ERROR: Failed to submit cafe request");
+    }
 
     // Wait 2 seconds before navigating back
     setTimeout(() => {
