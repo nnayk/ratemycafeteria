@@ -42,7 +42,8 @@ export const Navbar: React.FC = () => {
   onClick={() => router.push('/')}
 />
 
-          <Link href="/" className="text-white text-2xl font-bold hover:text-yellow-200 transition duration-300">
+          <Link href="/" className="text-white text-2xl font-bold hover:text-yellow-200 transition duration-300 hidden md:block"
+          >
             RateMyCafeteria
           </Link>
         </div>
