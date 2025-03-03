@@ -220,94 +220,91 @@ export async function addReviewRequest(school : string, cafe : string, reviewDat
 }
 
 export async function getReviews(school: string, cafe: string): Promise<Review[]> {
-  const db = getDb();
-  log(`db = ${db.app.name}`);
-  // school = "Cal Poly San Luis Obispo";
-  // cafe = "Panda Express";
-  log(`Getting reviews for ${school}/${cafe}`);
-  const querySnap = await getDocs(collection(db, "reviews", school, cafe));
-  log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
-  
-  const reviews: Review[] = querySnap.docs.map(doc => {
-    const data = doc.data();
-    return {
-      id: doc.id,
-      user: data.user || null,
-      quality: data.quality || 0,
-      quantity: data.quantity || 0,
-      pricing: data.pricing || 0,
-      date: data.date || '',
-      details: data.details || '',
-      likes: data.likes || 0,
-      dislikes: data.dislikes || 0,
-      photos: data.photo_urls || [],
-    };
-  });
+  try {
+      const db = getDb();
+      log(`db = ${db.app.name}`);
+      // school = "Cal Poly San Luis Obispo";
+      // cafe = "Panda Express";
+      log(`Getting reviews for ${school}/${cafe}`);
+      const querySnap = await getDocs(collection(db, "reviews", school, cafe));
+      log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
+      
+      const reviews: Review[] = querySnap.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          user: data.user || null,
+          quality: data.quality || 0,
+          quantity: data.quantity || 0,
+          pricing: data.pricing || 0,
+          date: data.date || '',
+          details: data.details || '',
+          likes: data.likes || 0,
+          dislikes: data.dislikes || 0,
+          photos: data.photo_urls || [],
+        };
+      });
 
-  // sort reviews by date
-  reviews.sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
-  });
-  
-  log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
-  log(reviews);
-  return reviews;
+      // sort reviews by date
+      reviews.sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+      
+      log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
+      log(reviews);
+      return reviews;
+  } catch (e) {
+      log("Error getting documents: ", e);
+      return [];
+  }
 }
 
 export async function getReviewsByUser(email) {
-    log(`inside getReviewsByUser`);
-    log(`email=${email}`);
-    const querySnap = await getDocs(collection(db, "users", "nanayak@calpoly.edu", "reviews"));
-    const reviewIds = querySnap.docs.map(doc => doc.id);
-    for (const review of reviewIds) {
-        log(`review id = ${review}`);
-        log(`type of review id = ${typeof review}`);
-    }
-    const reviews = [];
-    return reviews;
-}
-
-/*
-export async function uploadPhotos(photos: File[], school: string, cafe: string, reviewId: string) {
-    return;
-    // Upload an image
-    for (const photo of photos) {
-        const uploadResult = await cloudinary.uploader
-            .upload(photo, {
-                public_id: `${school}/${cafe}/${reviewId}/${photo.name}`,
-            })
-            .catch((error) => {
-                log(error);
-            });
-        log(uploadResult);
+    try {
+        log(`inside getReviewsByUser`);
+        log(`email=${email}`);
+        const querySnap = await getDocs(collection(db, "users", "nanayak@calpoly.edu", "reviews"));
+        const reviewIds = querySnap.docs.map(doc => doc.id);
+        for (const review of reviewIds) {
+            log(`review id = ${review}`);
+            log(`type of review id = ${typeof review}`);
+        }
+        const reviews = [];
+        return reviews;
+    } catch (e) {
+        log("Error getting documents: ", e);
+        return [];
     }
 }
-*/
 
-export async function addLike(reviewId: string, school: string, cafe: string) {
-	log("inside addLike");	
-    log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
-    const reviewRef = doc(db, "reviews", school, cafe, reviewId);
-    await updateDoc(reviewRef, {
-        likes: increment(1) // Correctly increments the likes count
-    });
-}
+// export async function addLike(reviewId: string, school: string, cafe: string) {
+// 	log("inside addLike");	
+//     log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
+//     const reviewRef = doc(db, "reviews", school, cafe, reviewId);
+//     await updateDoc(reviewRef, {
+//         likes: increment(1) // Correctly increments the likes count
+//     });
+// }
 
-export async function removeLike(reviewId: string, school: string, cafe: string) {
-    log("inside removeLike");
-    log(`reviewId=${reviewId}`);
-    const reviewRef = doc(db, "reviews", school, cafe, reviewId);
-    await updateDoc(reviewRef, {
-        dislikes: increment(1) // Correctly decrements the likes count
-    });
-}
+// export async function removeLike(reviewId: string, school: string, cafe: string) {
+//     try {
+//         log("inside removeLike");
+//         log(`reviewId=${reviewId}`);
+//         const reviewRef = doc(db, "reviews", school, cafe, reviewId);
+//         await updateDoc(reviewRef, {
+//             dislikes: increment(1) // Correctly decrements the likes count
+//         });
+//     except (e) {
+//         log("Error updating document: ", e);
+//     }
+// }
 
 export async function getFortune() {
-    const getRandomIndex = (max: number) => {
-        return Math.floor(Math.random() * max);
-    }
     try
     {
+        const getRandomIndex = (max: number) => {
+            return Math.floor(Math.random() * max);
+        }
         const index = getRandomIndex(99).toString();
         log(`fortune index=${index}`);
         const fortune = await getDoc(doc(db, "fortunes", index));

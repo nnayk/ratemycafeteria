@@ -1,7 +1,7 @@
 import React from 'react';
 import { StarIcon as SolidStarIcon } from '@heroicons/react/solid';
 import { StarIcon as OutlineStarIcon } from '@heroicons/react/outline';
-import { Review, addLike, removeLike } from '../db';	
+import { Review } from '../db';	
 import { useState } from 'react';
 import { log } from "../utils/logger"; 
 
@@ -23,14 +23,14 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) 
     log("inside addLike");	
     log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
     setLikes(likes + 1);
-    await addLike(reviewId, school, cafe);
+    // await addLike(reviewId, school, cafe);
   };
 
   const handleDislike = async (reviewId: string) => {
     log("inside addLike");	
     log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
     setDislikes(dislikes + 1);
-    await removeLike(reviewId, school, cafe);
+    // await removeLike(reviewId, school, cafe);
   };
   
   log(`in ReviewCard got review with num photos = ${review.photos.length}`);
