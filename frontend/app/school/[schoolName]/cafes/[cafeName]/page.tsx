@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { Review, CafeDetails, getReviews, getCafeDetails } from '../../../../db'; 
 import { Footer } from '../../../../components/Footer';
 import { log } from "../../../../utils/logger"; 
+import { cleanUrl } from '../../../../db';
 
 //export default function CafePage({ params }: { params: { schoolName: string, cafeName: string } }) {
 export default function CafePage({ params }: { params: Promise<{ schoolName: string; cafeName: string }> }) {
@@ -66,7 +67,7 @@ useEffect(() => {
             Write a Review
           </Button>
           <Button className="bg-gray-400 text-white hover:bg-gray-300 px-4 py-2 rounded-md shadow-md w-full sm:w-auto"
-          onClick={() => router.push(`/school/${decodedSchoolName}`)}>
+          onClick={() => router.push(`/school/${cleanUrl(decodedSchoolName)}`)}>
             Return to {decodedSchoolName} Page
           </Button>
         </div>

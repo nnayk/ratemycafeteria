@@ -11,6 +11,7 @@ import { useAuth } from '../../../../../contexts/AuthContext'; import { useEffec
 import { Footer } from '../../../../../components/Footer';
 // import { uploadPhotos } from '../../../../../backend';
 import { log } from "../../../../../utils/logger"; 
+import { cleanUrl } from '../../../../../db';
 
 //export default function WriteReviewPage({ params }: { params: { schoolName: string, cafeName: string } }) {
 //  const router = useRouter();
@@ -88,6 +89,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       dislikes,
       photos,
     };
+    log(`Requesting to add review for ${decodedCafeName} at ${decodedSchoolName}`);
     const status = await addReviewRequest(decodedSchoolName, decodedCafeName, reviewData);
     const fortune = await getFortune();
     log('Fortune:', fortune);
@@ -240,7 +242,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
       <div className="flex justify-between">
         <button
           onClick={() => {
-              router.push(`/school/${encodeURIComponent(decodedSchoolName)}`);
+              router.push(`/school/${encodeURIComponent(cleanUrl(decodedSchoolName))}`);
           }}
           className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300"
         >

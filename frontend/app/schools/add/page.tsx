@@ -39,6 +39,7 @@ export default function AddschoolPage() {
 
     const urlSchoolName = cleanUrl(schoolName);
     const urlCafe = cleanUrl(cafe);
+    log(`urlSchoolName = ${urlSchoolName}, urlCafe = ${urlCafe}`);
     // Delay navigation by 2 seconds
     setTimeout(() => {
       router.push(`/school/${urlSchoolName}/cafes/${urlCafe}/review`);

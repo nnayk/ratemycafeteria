@@ -11,6 +11,7 @@ import { getSchoolDetails, SchoolDetails } from '../../db';
 import { useAuth } from '../../contexts/AuthContext';
 import { useEffect } from 'react';
 import { log } from "../../utils/logger"; 
+import { cleanUrl } from "../../db";
 
 export default function SchoolPage({ params }: { params: Promise<{ schoolName: string }> }) {
   log(`hello`)
@@ -123,7 +124,7 @@ useEffect(() => {
                 display: 'flex',
                 flexDirection: 'column',
               }}
-              onClick={() => router.push(`/school/${schoolName}/cafes/${encodeURIComponent(cafeteria.name)}`)}
+              onClick={() => router.push(`/school/${cleanUrl(schoolName)}/cafes/${encodeURIComponent(cafeteria.name)}`)}
             >
               <CardMedia
                 component="img"

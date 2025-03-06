@@ -317,9 +317,9 @@ export async function getFortune() {
     }
 }
 
-
+// For the rare case in which the school name has a slash in it, we will replace it with a dash
 export function cleanUrl(url: string) {
-    return url.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase();
+    return url.replace(/\//g, "-");
 }
 
 // This is a purely experimental function intended to validate that 

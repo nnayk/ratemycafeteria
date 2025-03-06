@@ -2,6 +2,7 @@ import React from 'react';
 import { Autocomplete, TextField, Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { SCHOOLS } from '../constants'; // HARD coding for now since schools are manually added anyways
+import { cleanUrl } from '../db';
 
 export const Hero: React.FC = () => {
   const router = useRouter();
@@ -9,7 +10,7 @@ export const Hero: React.FC = () => {
   const handleSchoolSelect = (event: React.SyntheticEvent, value: string | null) => {
     if (value) {
       // Navigate to the school's page
-      router.push(`/school/${encodeURIComponent(value)}`);
+      router.push(`/school/${encodeURIComponent(cleanUrl(value))}`);
     }
   };
 

@@ -9,6 +9,7 @@ import { Footer } from '../components/Footer';
 import { useAuth } from '../contexts/AuthContext';
 import { getSchools } from '../db';
 import { log } from "../utils/logger"; 
+import { cleanUrl } from "../db";
 // import { getReviewRequests, updateReviewRequest } from '../db';
 
 interface School {
@@ -58,7 +59,7 @@ export default function SchoolsPage() {
   };
 
   const handleSchoolClick = (school: string) => {
-    router.push(`/school/${encodeURIComponent(school)}`);
+    router.push(`/school/${encodeURIComponent(cleanUrl(school))}`);
   };
 
   const handleAccordionChange = (state: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
