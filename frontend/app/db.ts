@@ -319,7 +319,11 @@ export async function getFortune() {
 
 // For the rare case in which the school name has a slash in it, we will replace it with a dash
 export function cleanUrl(url: string) {
-    return url.replace(/\//g, "-");
+    log(`inside cleanUrl`);
+    log(`url=${url}`);
+    const cleanedUrl = url.replace(/\//g, "-");
+    log(`cleanedUrl=${cleanedUrl}`);
+    return cleanedUrl;
 }
 
 // This is a purely experimental function intended to validate that 
