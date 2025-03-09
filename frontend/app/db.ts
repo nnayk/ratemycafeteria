@@ -91,6 +91,9 @@ export async function getCafeDetails(school : string, cafe : string) : Promise<C
     const cafeRef = doc(db, "cafes", school, "cafes", cafe);
     const cafeDoc = await getDoc(cafeRef);
     const data = cafeDoc.data();
+    if (!data) {
+        return { stars: 0};
+    }
     const details = {
         stars: data.stars,
     };

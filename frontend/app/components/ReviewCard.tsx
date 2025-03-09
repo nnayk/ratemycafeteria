@@ -111,7 +111,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) 
 };
 
 function renderStars(rating: number) {
-  const stars = [];
+  const stars : React.ReactNode[] = [];
   for (let i = 1; i <= 5; i++) {
     if (i <= Math.floor(rating)) {
       stars.push(<SolidStarIcon key={i} className="h-5 w-5 text-yellow-500" />);

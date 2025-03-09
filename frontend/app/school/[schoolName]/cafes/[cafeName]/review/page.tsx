@@ -66,7 +66,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     if (event.target.files) {
       log('event.target.files:', event.target.files);
       setPhotos([...photos, ...Array.from(event.target.files)].slice(0, 3)); // Limit to 3 photos
-      event.target.value = null; // Clear the input after uploading
+      event.target.value = ""; // Clear the input after uploading
     }
   };
 
