@@ -80,13 +80,13 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     const reviewData = {
       id: '',
       user,
-      quality,
-      quantity,
-      pricing,
+      quality:0,
+      quantity:0,
+      pricing:0,
       details,
       date,
-      likes,
-      dislikes,
+      likes: 0,
+      dislikes: 0,
       photos,
     };
     log(`Requesting to add review for ${decodedCafeName} at ${decodedSchoolName}`);
