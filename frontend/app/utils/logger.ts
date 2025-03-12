@@ -47,14 +47,35 @@ const BETTERSTACK_URL = "https://s1229187.eu-nbg-2.betterstackdata.com/";
 //       logger.info(args.map(arg => String(arg)).join(" ")); // Pass as an array instead of spreading
 // };
 
-const sendLog = async (level: "info" | "warn" | "error", message: string, meta: object = {}) => {
-      await fetch("/api/log", {
-              method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ level, message, meta }),
-                        });
+// const sendLog = async (level: "info" | "warn" | "error", message: string, meta: object = {}) => {
+//       await fetch("/api/log", {
+//               method: "POST",
+//                   headers: { "Content-Type": "application/json" },
+//                       body: JSON.stringify({ level, message, meta }),
+//                         });
+// };
+
+// export const log = async  (...args: unknown[]) => {
+//     await sendLog("info", args.map(arg => String(arg)).join(" ")); // Pass as an array instead of spreading
+// }; 
+
+const sendLog = async (level: "info" | "warn" | "error" | "debug", message: string, meta: object = {}) => {
+  await fetch("/api/log", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ level, message, meta }),
+  });
 };
 
-export const log = async  (...args: unknown[]) => {
-    await sendLog("info", args.map(arg => String(arg)).join(" ")); // Pass as an array instead of spreading
-}; 
+const log = Object.assign(
+  (...args: unknown[]) => sendLog("info", args.map(arg => String(arg)).join(" ")), // Default to info
+  {
+    info: (...args: unknown[]) => sendLog("info", args.map(arg => String(arg)).join(" ")),
+    warn: (...args: unknown[]) => sendLog("warn", args.map(arg => String(arg)).join(" ")),
+    error: (...args: unknown[]) => sendLog("error", args.map(arg => String(arg)).join(" ")),
+    debug: (...args: unknown[]) => sendLog("debug", args.map(arg => String(arg)).join(" ")),
+  }
+);
+
+export { log };
+
