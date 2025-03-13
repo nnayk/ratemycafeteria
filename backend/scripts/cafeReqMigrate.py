@@ -1,7 +1,8 @@
 ### THIS SCRIPT IS ONLY NEEDED WHEN ADDING A CAFE TO AN EXISTING SCHOOL ###
 import firebase_admin
 from firebase_admin import credentials, firestore
-DEFAULT_IMAGE_URL = "https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design.jpg"
+# DEFAULT_IMAGE_URL = "https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design.jpg"
+DEFAULT_IMAGE_URL = "/defaultCafe.jpg"
 def migrateCafeReq(school, cafe, imageUrl=DEFAULT_IMAGE_URL,db=None):
     print(f"Migrating cafe request for {school}/{cafe}")
     # Get reference to the cafe request collection
