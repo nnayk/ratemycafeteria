@@ -29,14 +29,34 @@ const sendLog = async (level: "info" | "warn" | "error" | "debug", message: stri
 };
 
 const log = Object.assign(
-  (...args: unknown[]) => sendLog("info", args.map(arg => String(arg)).join(" ")), // Default to info
+  function (...args: unknown[]) {
+    return sendLog("info", args.map(arg => String(arg)).join(" "));
+  }, // Default to info
   {
-    info: (...args: unknown[]) => sendLog("info", args.map(arg => String(arg)).join(" ")),
-    warn: (...args: unknown[]) => sendLog("warn", args.map(arg => String(arg)).join(" ")),
-    error: (...args: unknown[]) => sendLog("error", args.map(arg => String(arg)).join(" ")),
-    debug: (...args: unknown[]) => sendLog("debug", args.map(arg => String(arg)).join(" ")),
+    info: function (...args: unknown[]) {
+      return sendLog("info", args.map(arg => String(arg)).join(" "));
+    },
+    warn: function (...args: unknown[]) {
+      return sendLog("warn", args.map(arg => String(arg)).join(" "));
+    },
+    error: function (...args: unknown[]) {
+      return sendLog("error", args.map(arg => String(arg)).join(" "));
+    },
+    debug: function (...args: unknown[]) {
+      return sendLog("debug", args.map(arg => String(arg)).join(" "));
+    },
   }
 );
+
+// const log = Object.assign(
+//   (...args: unknown[]) => sendLog("info", args.map(arg => String(arg)).join(" ")), // Default to info
+//   {
+//     info: (...args: unknown[]) => sendLog("info", args.map(arg => String(arg)).join(" ")),
+//     warn: (...args: unknown[]) => sendLog("warn", args.map(arg => String(arg)).join(" ")),
+//     error: (...args: unknown[]) => sendLog("error", args.map(arg => String(arg)).join(" ")),
+//     debug: (...args: unknown[]) => sendLog("debug", args.map(arg => String(arg)).join(" ")),
+//   }
+// );
 
 export { log };
 
