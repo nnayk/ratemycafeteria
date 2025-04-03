@@ -32,7 +32,7 @@ export default function AddschoolPage() {
         // Show submission message
         setSubmitted(true);
     } else {
-        log("ERROR: School request submission failed");
+        log.error("ERROR: School request submission failed");
         alert("Failed to submit request. Please try again later.");
         return;
     }

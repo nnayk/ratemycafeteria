@@ -54,7 +54,7 @@ export default function SchoolsPage() {
       }, {} as Record<string, boolean>);
       setExpandedStates(initialExpandedStates);
     } catch (error) {
-      log('Error fetching schools:', error);
+      log.error('Error fetching schools:', error);
     }
   };
 

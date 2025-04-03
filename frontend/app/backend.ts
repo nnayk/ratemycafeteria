@@ -35,7 +35,7 @@ export async function uploadPhotos(photos: string[] | File[], schoolName: string
       // print the data keys and values
       return data['photo_urls'];
   } catch (e) {
-        log('Error uploading photos: ', e);
+        log.error('Error uploading photos: ', e);
         throw e;
     }
 

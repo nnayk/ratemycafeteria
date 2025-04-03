@@ -18,11 +18,11 @@ export const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     await auth.signOut();
-    log('User logged out');
+    log.info('User logged out');
   };
 
   const handleProfile = async () => {
-      console.log("Profile clicked");
+      log.debug("Profile clicked");
       router.push('/profile');
   }
 

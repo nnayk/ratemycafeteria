@@ -56,7 +56,7 @@ export async function getSchools() { // THis will be a future utility when we ha
        log(`db: schools=${schools}`);
        return schools;
    } catch (e) {
-       log("Error getting documents: ", e);
+       log.error("Error getting documents: ", e);
        return [];
    }
 }
@@ -80,7 +80,7 @@ export async function getCafeterias(school : string) {
         });
         return cafes;
     }catch (e) {
-      log("Error: Unable to get cafeterias for school ", school, e);
+      log.error("Error: Unable to get cafeterias for school ", school, e);
       return [];
    }
 }
@@ -112,7 +112,7 @@ export async function getSchoolDetails(school : string) {
             cafeterias: cafeterias,
         };
    } catch (e) {
-       log(`ERROR: Unable to get school details for school ${school}: `, e);
+       log.error(`ERROR: Unable to get school details for school ${school}: `, e);
        return { name: school, cafeterias: [] };
    }
 } 
@@ -128,7 +128,7 @@ export async function requestSchool(user : User|null, name : string, cafe : stri
         await requestCafe(user, name, cafe);
         return true;
     } catch (e) {
-        log("Error adding document: ", e);
+        log.error("Error adding document: ", e);
         return false;
     }
 }
@@ -150,7 +150,7 @@ export async function requestCafe(user : User|null, school : string, cafe : stri
 	});
     return true;
 	} catch (e) {
-        log("Error adding document: ", e);
+        log.error("Error adding document: ", e);
         return false;
     }
 }
@@ -216,7 +216,7 @@ export async function addReviewRequest(school : string, cafe : string, reviewDat
         log("Number of photos: ", photos.length);
         return true;
     } catch (e) {
-        log("Error adding document: ", e);
+        log.error("Error adding document: ", e);
         return false;
         // TODO: redirect to server error page
     }
@@ -257,7 +257,7 @@ export async function getReviews(school: string, cafe: string): Promise<Review[]
       log(reviews);
       return reviews;
   } catch (e) {
-      log("Error getting documents: ", e);
+      log.error("Error getting documents: ", e);
       return [];
   }
 }
@@ -275,7 +275,7 @@ export async function getReviewsByUser(email) {
         const reviews = [];
         return reviews;
     } catch (e) {
-        log("Error getting documents: ", e);
+        log.error("Error getting documents: ", e);
         return [];
     }
 }

@@ -1,28 +1,27 @@
-./contexts/AuthContext.tsx:6:import { log } from "../utils/logger"; 
+Binary file ./contexts/.AuthContext.tsx.swp matches
 ./contexts/AuthContext.tsx:44:    log(`toggling login to ${!isLoginOpen}`)
-Binary file ./.db.ts.swp matches
-./utils/logger.ts:3:export const log = (...args) => {
-./utils/logger.ts:5:        console.log(...args);
-./components/NavBar.tsx:10:import { log } from "../utils/logger"; 
+./utils/logger.ts:33:    return sendLog("info", args.map(arg => String(arg)).join(" "));
+./utils/logger.ts:37:      return sendLog("info", args.map(arg => String(arg)).join(" "));
+./utils/logger.ts:40:      return sendLog("warn", args.map(arg => String(arg)).join(" "));
+./utils/logger.ts:43:      return sendLog("error", args.map(arg => String(arg)).join(" "));
+./utils/logger.ts:46:      return sendLog("debug", args.map(arg => String(arg)).join(" "));
+./utils/logger.ts:52://   (...args: unknown[]) => sendLog("info", args.map(arg => String(arg)).join(" ")), // Default to info
+./utils/logger.ts:54://     info: (...args: unknown[]) => sendLog("info", args.map(arg => String(arg)).join(" ")),
+./utils/logger.ts:55://     warn: (...args: unknown[]) => sendLog("warn", args.map(arg => String(arg)).join(" ")),
+./utils/logger.ts:56://     error: (...args: unknown[]) => sendLog("error", args.map(arg => String(arg)).join(" ")),
+./utils/logger.ts:57://     debug: (...args: unknown[]) => sendLog("debug", args.map(arg => String(arg)).join(" ")),
 ./components/NavBar.tsx:21:    log('User logged out');
 ./components/NavBar.tsx:25:      console.log("Profile clicked");
-./components/NavBar.tsx:37:  src="/logo.png" 
-./components/Login.tsx:2:import { loginUser } from '../auth';
-./components/Login.tsx:29:      const userCredential: UserCredential = await loginUser(email, password);
-./components/Login.tsx:110:              onClick={handleForgotPasswordOpen} // Replace with actual logic
-./components/ReviewCard.tsx:6:import { log } from "../utils/logger"; 
 ./components/ReviewCard.tsx:20:  log(`in ReviewCard quality = ${review.quality}, quantity = ${review.quantity}, pricing = ${review.pricing}`);
 ./components/ReviewCard.tsx:23:    log("inside addLike");	
 ./components/ReviewCard.tsx:24:    log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
 ./components/ReviewCard.tsx:30:    log("inside addLike");	
 ./components/ReviewCard.tsx:31:    log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
 ./components/ReviewCard.tsx:36:  log(`in ReviewCard got review with num photos = ${review.photos.length}`);
-./components/ResetPasswordModal.tsx:28:      // Perform password reset logic (Firebase, API call, etc.)
 ./foo:1:./contexts/AuthContext.tsx:43:    console.log(`toggling login to ${!isLoginOpen}`)
 ./foo:2:./utils/logger.ts:5:        console.log(...args);
 ./foo:3:./utils/logger.ts:5:        console.log(...args);
 ./foo:4:./utils/logger.ts:5:        console.log(...args);
-./backend.ts:2:import { log } from "./utils/logger"; 
 ./backend.ts:7:        log('No photos to upload');
 ./backend.ts:12:        log( `photo = ${photo}` );
 ./backend.ts:15:      log( 'Uploading photos...' );
@@ -34,17 +33,13 @@ Binary file ./.db.ts.swp matches
 ./backend.ts:32:      log( 'Photos uploaded successfully' );
 ./backend.ts:34:      log( `data = ${data}` );
 ./backend.ts:38:        log('Error uploading photos: ', e);
-Binary file ./schools/add/.page.tsx.swp matches
-./schools/add/page.tsx:10:import { log } from "../../utils/logger"; 
 ./schools/add/page.tsx:28:    log(`school name = ${schoolName}, cafe = ${cafe}`);
 ./schools/add/page.tsx:31:        log("School request submitted successfully");
 ./schools/add/page.tsx:35:        log("ERROR: School request submission failed");
 ./schools/add/page.tsx:42:    log(`urlSchoolName = ${urlSchoolName}, urlCafe = ${urlCafe}`);
-./schools/page.tsx:11:import { log } from "../utils/logger"; 
 ./schools/page.tsx:36:          log('Unable to fetch schools right now (please forgive me)');
 ./schools/page.tsx:40:      log('Schools:', schoolsList);
 ./schools/page.tsx:57:      log('Error fetching schools:', error);
-./school/[schoolName]/cafes/[cafeName]/review/page.tsx:13:import { log } from "../../../../../utils/logger"; 
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:49:    log('Quality:', value);
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:54:    log('Quantity:', value);
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:59:    log('Pricing:', value);
@@ -54,14 +49,11 @@ Binary file ./schools/add/.page.tsx.swp matches
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:79:    log('Date:', date);
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:92:    log(`Requesting to add review for ${decodedCafeName} at ${decodedSchoolName}`);
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:95:    log('Fortune:', fortune);
-./school/[schoolName]/cafes/[cafeName]/review/page.tsx:102:        setFortuneTitle('Please accept this virtual fortune cookie as an apology:');
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:104:    log('Status:', status);
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:105:    log('Review submitted:', reviewData);
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:108:        log('Photo:', photo.name);
-./school/[schoolName]/cafes/[cafeName]/review/page.tsx:112:    //router.back(); // Navigate back after submission (replace with your API logic)
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:136:                    log('Quality:', newValue);
 ./school/[schoolName]/cafes/[cafeName]/review/page.tsx:206:            log('Deleted photo:', photo.name);
-./school/[schoolName]/cafes/[cafeName]/page.tsx:11:import { log } from "../../../../utils/logger"; 
 ./school/[schoolName]/cafes/[cafeName]/page.tsx:29:      log(`schoolName = ${schoolName}, cafeName = ${cafeName}`);
 ./school/[schoolName]/cafes/[cafeName]/page.tsx:30:      log(`Fetching details for ${realSchoolName}/${realCafeName}`);
 ./school/[schoolName]/cafes/[cafeName]/page.tsx:33:          log(`review photo urls = ${review.photos}`);
@@ -69,13 +61,10 @@ Binary file ./schools/add/.page.tsx.swp matches
 ./school/[schoolName]/cafes/[cafeName]/page.tsx:39:      log(`stars = ${cafeDetails.stars}`);
 ./school/[schoolName]/cafes/[cafeName]/page.tsx:46:  log(`in cafe page got reviews = ${reviews}`);
 ./school/[schoolName]/cafes/[cafeName]/page.tsx:48:    log('Write a review for:', decodedCafeName);
-./school/[schoolName]/cafes/add/page.tsx:10:import { log } from "../../../../utils/logger"; 
 ./school/[schoolName]/cafes/add/page.tsx:28:  log(`decodedSchoolName = ${decodedSchoolName}`);
 ./school/[schoolName]/cafes/add/page.tsx:38:    log(`Submitting: school = ${decodedSchoolName}, cafe = ${cafeName}`);
 ./school/[schoolName]/cafes/add/page.tsx:45:        log("ERROR: Failed to submit cafe request");
-./school/[schoolName]/page.tsx:13:import { log } from "../../utils/logger"; 
 ./school/[schoolName]/page.tsx:17:  log(`hello`)
-./db.ts:7:import { log } from "./utils/logger"; 
 ./db.ts:47:    log(`db's app = ${db.app.name}`)
 ./db.ts:52:   log(`inside getSchools`);
 ./db.ts:56:       log(`db: schools=${schools}`);
@@ -84,54 +73,53 @@ Binary file ./schools/add/.page.tsx.swp matches
 ./db.ts:67:        log(`school=${school}`);
 ./db.ts:83:      log("Error: Unable to get cafeterias for school ", school, e);
 ./db.ts:89:    log("inside getCafeDetails");
-./db.ts:97:    log(`details=${details}`);
-./db.ts:98:    log(`stars=${details.stars}`);
-./db.ts:103:    log("inside getSchoolDetails");
-./db.ts:112:       log(`ERROR: Unable to get school details for school ${school}: `, e);
-./db.ts:119:        log(`user=${user}`)
-./db.ts:128:        log("Error adding document: ", e);
-./db.ts:135:        log(`user=${user},school=${school},cafe=${cafe}`);
-./db.ts:138:            log(`Creating document for ${school}`);
-./db.ts:150:        log("Error adding document: ", e);
-./db.ts:169://         log("Document written with ID: ", docId);
-./db.ts:171://         log("Error adding document: ", e);
-./db.ts:178:        log("inside addReviewRequest");
-./db.ts:179:        log(`school=${school},cafe=${cafe}, reviewData=${reviewData}`);
-./db.ts:182:        log(`Checking if document exists for ${school}`);
-./db.ts:185:            log(`Creating document for ${school}`);
-./db.ts:189:            log(`Document exists for ${school}`);
-./db.ts:192:        log(`reviewRef=${reviewRef}`);
-./db.ts:196:        log(`Adding review for ${school}/${cafe}`);
-./db.ts:198:        //     log(photo.name);
-./db.ts:212:        log("Document written with ID: ", docRef.id);
-./db.ts:213:        log("Number of photos: ", photos.length);
-./db.ts:216:        log("Error adding document: ", e);
-./db.ts:225:      log(`db = ${db.app.name}`);
-./db.ts:228:      log(`Getting reviews for ${school}/${cafe}`);
-./db.ts:230:      log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
-./db.ts:253:      log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
-./db.ts:254:      log(reviews);
-./db.ts:257:      log("Error getting documents: ", e);
-./db.ts:264:        log(`inside getReviewsByUser`);
-./db.ts:265:        log(`email=${email}`);
-./db.ts:269:            log(`review id = ${review}`);
-./db.ts:270:            log(`type of review id = ${typeof review}`);
-./db.ts:275:        log("Error getting documents: ", e);
-./db.ts:281:// 	log("inside addLike");	
-./db.ts:282://     log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
-./db.ts:291://         log("inside removeLike");
-./db.ts:292://         log(`reviewId=${reviewId}`);
-./db.ts:298://         log("Error updating document: ", e);
-./db.ts:309:        log(`fortune index=${index}`);
-./db.ts:315:        log("Error getting fortune", e)
-./db.ts:322:    log(`inside cleanUrl`);
-./db.ts:323:    log(`url=${url}`);
-./db.ts:325:    log(`cleanedUrl=${cleanedUrl}`);
-./db.ts:333://     console.log("inside getReviews");
-./db.ts:337://         console.log(`response=${querySnapshot}`);
-./db.ts:340://             console.log(doc.id, " YELAY => ", doc.data());
-./db.ts:364://         console.log("Document successfully updated!");
-./auth.ts:3:import { log } from "./utils/logger"; 
+./db.ts:100:    log(`details=${details}`);
+./db.ts:101:    log(`stars=${details.stars}`);
+./db.ts:106:    log("inside getSchoolDetails");
+./db.ts:115:       log(`ERROR: Unable to get school details for school ${school}: `, e);
+./db.ts:122:        log(`user=${user}`)
+./db.ts:131:        log("Error adding document: ", e);
+./db.ts:138:        log(`user=${user},school=${school},cafe=${cafe}`);
+./db.ts:141:            log(`Creating document for ${school}`);
+./db.ts:153:        log("Error adding document: ", e);
+./db.ts:172://         log("Document written with ID: ", docId);
+./db.ts:174://         log("Error adding document: ", e);
+./db.ts:181:        log("inside addReviewRequest");
+./db.ts:182:        log(`school=${school},cafe=${cafe}, reviewData=${reviewData}`);
+./db.ts:185:        log(`Checking if document exists for ${school}`);
+./db.ts:188:            log(`Creating document for ${school}`);
+./db.ts:192:            log(`Document exists for ${school}`);
+./db.ts:195:        log(`reviewRef=${reviewRef}`);
+./db.ts:199:        log(`Adding review for ${school}/${cafe}`);
+./db.ts:201:        //     log(photo.name);
+./db.ts:215:        log("Document written with ID: ", docRef.id);
+./db.ts:216:        log("Number of photos: ", photos.length);
+./db.ts:219:        log("Error adding document: ", e);
+./db.ts:228:      log(`db = ${db.app.name}`);
+./db.ts:231:      log(`Getting reviews for ${school}/${cafe}`);
+./db.ts:233:      log(`Got ${querySnap.docs.length} reviews for ${school}/${cafe}`);
+./db.ts:256:      log(`Got ${reviews.length} reviews for ${school}/${cafe}`);
+./db.ts:257:      log(reviews);
+./db.ts:260:      log("Error getting documents: ", e);
+./db.ts:267:        log(`inside getReviewsByUser`);
+./db.ts:268:        log(`email=${email}`);
+./db.ts:272:            log(`review id = ${review}`);
+./db.ts:273:            log(`type of review id = ${typeof review}`);
+./db.ts:278:        log("Error getting documents: ", e);
+./db.ts:284:// 	log("inside addLike");	
+./db.ts:285://     log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
+./db.ts:294://         log("inside removeLike");
+./db.ts:295://         log(`reviewId=${reviewId}`);
+./db.ts:301://         log("Error updating document: ", e);
+./db.ts:312:        log(`fortune index=${index}`);
+./db.ts:318:        log("Error getting fortune", e)
+./db.ts:325:    log(`inside cleanUrl`);
+./db.ts:326:    log(`url=${url}`);
+./db.ts:328:    log(`cleanedUrl=${cleanedUrl}`);
+./db.ts:336://     console.log("inside getReviews");
+./db.ts:340://         console.log(`response=${querySnapshot}`);
+./db.ts:343://             console.log(doc.id, " YELAY => ", doc.data());
+./db.ts:367://         console.log("Document successfully updated!");
 ./auth.ts:11:    log(`onAuthStateChanged: User with id ${uid} is signed in:`, user);
 ./auth.ts:12:    log( ' yeah aight')
 ./auth.ts:16:    log("onAuthStateChanged: User is signed out");
@@ -139,11 +127,8 @@ Binary file ./schools/add/.page.tsx.swp matches
 ./auth.ts:30:        log("Email verification error:", error);
 ./auth.ts:35:        // log("User registered successfully:", userCredential.user);
 ./auth.ts:38:        log("Registration error:", error);
-./auth.ts:43:export async function loginUser(email: string, password: string): Promise<UserCredential> {
 ./auth.ts:47:        log("Email not verified:", userCredential.user);
-./auth.ts:48:        await logoutUser(email, password);
 ./auth.ts:51:      log("User logged in successfully:", userCredential.user);
 ./auth.ts:54:      log("Login error:", error);
-./auth.ts:59:export async function logoutUser(email: string, password: string): Promise<void> {
 ./auth.ts:63:      log("Login error:", error);
 ./auth.ts:75:      log("Password reset error:", error);

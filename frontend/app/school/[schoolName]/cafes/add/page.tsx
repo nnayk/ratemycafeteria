@@ -42,7 +42,7 @@ export default function AddCafe({ params }: { params: Promise<{ schoolName: stri
         setSubmissionSuccess(true);
     } else {
         alert("Failed to submit request. Please try again later.");
-        log("ERROR: Failed to submit cafe request");
+        log.error("ERROR: Failed to submit cafe request");
     }
 
     // Wait 2 seconds before navigating back

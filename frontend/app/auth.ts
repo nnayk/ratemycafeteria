@@ -27,7 +27,7 @@ export async function registerUser(email: string, password: string): Promise<Use
       sendEmailVerification(userCredential.user, actionCodeSettings).then(() => {
         log("Email verification sent!");
       }).catch((error) => {
-        log("Email verification error:", error);
+        log.error("Email verification error:", error);
         // delete user
         throw error;
       });
@@ -35,7 +35,7 @@ export async function registerUser(email: string, password: string): Promise<Use
         // log("User registered successfully:", userCredential.user);
         // return userCredential;
     } catch (error) {
-        log("Registration error:", error);
+        log.error("Registration error:", error);
         throw error; // Re-throw the error to handle it in the calling code
     }
 }
@@ -51,7 +51,7 @@ export async function loginUser(email: string, password: string): Promise<UserCr
       log("User logged in successfully:", userCredential.user);
       return userCredential;
   } catch (error) {
-      log("Login error:", error);
+      log.error("Login error:", error);
       throw error; // Re-throw the error to handle it in the calling code
   }
 }
@@ -60,7 +60,7 @@ export async function logoutUser(email: string, password: string): Promise<void>
   try {
     signOut(auth);
   } catch (error) {
-      log("Login error:", error);
+      log.error("Login error:", error);
       throw error; // Re-throw the error to handle it in the calling code
   }
 }
@@ -72,7 +72,7 @@ export async function resetPassword(email: string): Promise<void> {
     };
     await sendPasswordResetEmail(auth, email, actionCodeSettings);
   } catch (error) {
-      log("Password reset error:", error);
+      log.error("Password reset error:", error);
       throw error; // Re-throw the error to handle it in the calling code
   }
 }

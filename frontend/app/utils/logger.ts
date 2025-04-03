@@ -30,7 +30,7 @@ const sendLog = async (level: "info" | "warn" | "error" | "debug", message: stri
 
 const log = Object.assign(
   function (...args: unknown[]) {
-    return sendLog("info", args.map(arg => String(arg)).join(" "));
+    return sendLog("debug", args.map(arg => String(arg)).join(" "));
   }, // Default to info
   {
     info: function (...args: unknown[]) {

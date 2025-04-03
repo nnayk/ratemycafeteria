@@ -17,11 +17,11 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) 
   const [likes, setLikes] = useState(review.likes);
   const [dislikes, setDislikes] = useState(review.dislikes);
 
-  log(`in ReviewCard quality = ${review.quality}, quantity = ${review.quantity}, pricing = ${review.pricing}`);
+  log.debug(`in ReviewCard quality = ${review.quality}, quantity = ${review.quantity}, pricing = ${review.pricing}`);
 
   const handleLike = async (reviewId: string) => {
-    log("inside addLike");	
-    log(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
+    log.debug("inside addLike");	
+    log.debug(`school=${school}, cafe=${cafe}, reviewId=${reviewId}`);
     setLikes(likes + 1);
     // await addLike(reviewId, school, cafe);
   };
