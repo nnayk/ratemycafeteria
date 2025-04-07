@@ -8,12 +8,12 @@ import { Footer } from '../components/Footer';
 
 const faqs = [
   {
-    question: 'Do I need an account?',
-    answer: 'No, you do not need an account to leave a review or request a new school or cafeteria be added. Reviews from users with accounts from a .edu email will display a verified tag.',
+    question: 'Do I need an account to use RateMyCafeteria?',
+    answer: 'No, you do not need an account to leave a review or request a new school or cafeteria be added.',
   },
   {
     question: 'Do I need a .edu email to create an account?',
-    answer: 'No, any email will work.',
+    answer: 'No, any email is fine.',
   },
   {
     question: 'But what about inappropriate content or spam 😡? How will you handle that 😩?',
