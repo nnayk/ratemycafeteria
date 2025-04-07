@@ -15,7 +15,7 @@
 //   },
 // };
 
-const BETTERSTACK_URL = "https://s1264101.eu-nbg-2.betterstackdata.com";
+const BETTERSTACK_URL = "https://s1229187.eu-nbg-2.betterstackdata.com/";
 
 const sendLog = async (level: "info" | "warn" | "error" | "debug", message: string, meta: object = {}) => {
   await fetch(BETTERSTACK_URL, {
