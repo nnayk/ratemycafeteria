@@ -13,6 +13,7 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+console.log('app', app.name, app.options.projectId);
 
 export const SCHOOLS = [
     {
