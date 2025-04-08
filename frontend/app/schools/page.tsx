@@ -33,7 +33,7 @@ export default function SchoolsPage() {
       // await updateReviewRequest();
       const schoolsList = await getSchools();
       if (schoolsList.length === 0) {
-          log('Unable to fetch schools right now (please forgive me)');
+          log.error('Unable to fetch schools right now (please forgive me)');
           alert('Unable to fetch schools right now (please forgive me and consider reporting this issue)');
         return;
       }
