@@ -13,3 +13,4 @@ myt.txt
 *.swp
 .DS_Store
 test_images
+.vercel
