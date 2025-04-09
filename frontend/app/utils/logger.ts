@@ -15,10 +15,7 @@
 //   },
 // };
 
-const BETTERSTACK_URL = process.env.NEXT_PUBLIC_BETTERSTACK_URL || "";
-if (!BETTERSTACK_URL) {
-  throw new Error("NEXT_PUBLIC_BETTERSTACK_URL is not defined");
-}
+const BETTERSTACK_URL = process.env.NEXT_PUBLIC_BETTERSTACK_URL;
 
 const sendLog = async (level: "info" | "warn" | "error" | "debug", message: string, meta: object = {}) => {
   await fetch(BETTERSTACK_URL, {
