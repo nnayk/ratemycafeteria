@@ -21,7 +21,8 @@ def updateCafeInfo(school,cafe,quality,quantity,pricing):
             print(f"Cafe data: {cafe_doc.to_dict()}")
             # Update the cafe document with the new review data
             cafe_data = cafe_doc.to_dict()
-            review_count = cafe_data.get("reviewCount", 0) + 1
+            review_count = int(cafe_data.get("reviewCount", 0)) + 1
+            print(f"Current review count: {cafe_data.get('reviewCount', 0)}, New review count: {review_count}")
             cafe_data["reviewCount"] = review_count
             avgQuality = (cafe_data.get("quality", 0) + quality) / review_count
             avgQty = (cafe_data.get("quantity", 0) + quantity) / review_count
