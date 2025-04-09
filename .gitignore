@@ -14,3 +14,4 @@ myt.txt
 .DS_Store
 test_images
 .vercel
+serviceAccount*
