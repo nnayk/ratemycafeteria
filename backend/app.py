@@ -29,7 +29,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Configure CORS for all routes
 CORS(app, resources={r"/*": {
-    "origins": ["https://ratemycafeteria.vercel.app", "http://localhost:3000"],
+    "origins": ["https://ratemycafeteria.vercel.app", "https://ratemycafeteria.org"],
     "methods": ["POST"],
     "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Origin"]
 }})

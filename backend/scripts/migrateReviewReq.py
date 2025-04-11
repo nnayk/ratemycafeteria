@@ -24,9 +24,12 @@ def updateCafeInfo(school,cafe,quality,quantity,pricing):
             review_count = int(cafe_data.get("reviewCount", 0)) + 1
             print(f"Current review count: {cafe_data.get('reviewCount', 0)}, New review count: {review_count}")
             cafe_data["reviewCount"] = review_count
-            avgQuality = (cafe_data.get("quality", 0) + quality) / review_count
-            avgQty = (cafe_data.get("quantity", 0) + quantity) / review_count
-            avgPricing = (cafe_data.get("pricing", 0) + pricing) / review_count
+            avgQuality = (int(cafe_data.get("quality", 0)) + quality) / review_count
+            print(f"avg quality: {avgQuality}")
+            avgQty = (int(cafe_data.get("quantity", 0)) + quantity) / review_count
+            print(f"avg quantity: {avgQty}")
+            avgPricing = (int(cafe_data.get("pricing", 0)) + pricing) / review_count
+            print(f"avg pricing: {avgPricing}")
             print(f"avg quality: {avgQuality}, avg quantity: {avgQty}, avg pricing: {avgPricing}")
             if (avgQuality > 5) or (avgQty > 5) or (avgPricing > 5):
                 print("Invalid rating value: quality = {avgQuality}, quantity = {avgQty}, pricing = {avgPricing}")
