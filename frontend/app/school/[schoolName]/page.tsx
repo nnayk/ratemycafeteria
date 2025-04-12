@@ -115,61 +115,114 @@ useEffect(() => {
           }}
         >
           {schoolDetails.cafeterias.map((cafeteria, index) => (
-            <Card
-              key={index}
-              sx={{
-                cursor: 'pointer',
-                '&:hover': { boxShadow: 6 },
-                width: 250,
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-              onClick={() => router.push(`/school/${cleanUrl(schoolName)}/cafes/${encodeURIComponent(cafeteria.name)}`)}
-            >
-              <CardMedia
-                component="img"
-                height="150"
-                src={cafeteria.imageUrl}
-                alt={cafeteria.name}
-                sx={{
-                  objectFit: 'cover',
-                }}
-              />
-              <Box
-                sx={{
-                  flexGrow: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: 'white',
-                }}
-              >
-                <CardContent
-                  sx={{
-                    backgroundColor: '#F59E0B',
-                    color: 'white',
-                    textAlign: 'center',
-                    width: '100%',
-                  }}
-                >
-                  <Typography
-                    variant="body1"
-                    component="div"
-                    sx={{ fontWeight: 'bold' }}
-                    style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}
-                  >
-                    {cafeteria.name}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    component="div"
-                    sx={{ fontWeight: 'bold' }}
-                    style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}
-                  >
-                  </Typography>
-                </CardContent>
-              </Box>
-            </Card>
+<Card
+  key={index}
+  sx={{
+    cursor: 'pointer',
+    '&:hover': { boxShadow: 6 },
+    width: 250,
+    display: 'flex',
+    flexDirection: 'column',
+  }}
+  onClick={() =>
+    router.push(
+      `/school/${cleanUrl(schoolName)}/cafes/${encodeURIComponent(cafeteria.name)}`
+    )
+  }
+>
+  {/* Constrain height of image container */}
+  <Box sx={{ height: 150, width: '100%', overflow: 'hidden' }}>
+    <CardMedia
+      component="img"
+      src={cafeteria.imageUrl}
+      alt={cafeteria.name}
+      sx={{
+        height: '100%',
+        width: '100%',
+        objectFit: 'cover',
+      }}
+    />
+  </Box>
+
+  {/* Cafeteria Name */}
+  <CardContent
+    sx={{
+      backgroundColor: '#F59E0B',
+      color: 'white',
+      textAlign: 'center',
+      width: '100%',
+    }}
+  >
+    <Typography
+      variant="body1"
+      component="div"
+      sx={{ fontWeight: 'bold' }}
+      style={{
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {cafeteria.name}
+    </Typography>
+  </CardContent>
+</Card>
+
+            // <Card
+            //   key={index}
+            //   sx={{
+            //     cursor: 'pointer',
+            //     '&:hover': { boxShadow: 6 },
+            //     width: 250,
+            //     display: 'flex',
+            //     flexDirection: 'column',
+            //   }}
+            //   onClick={() => router.push(`/school/${cleanUrl(schoolName)}/cafes/${encodeURIComponent(cafeteria.name)}`)}
+            // >
+            //   <CardMedia
+            //     component="img"
+            //     height="150"
+            //     src={cafeteria.imageUrl}
+            //     alt={cafeteria.name}
+            //     sx={{
+            //       objectFit: 'cover',
+            //     }}
+            //   />
+            //   <Box
+            //     sx={{
+            //       flexGrow: 1,
+            //       display: 'flex',
+            //       alignItems: 'center',
+            //       justifyContent: 'center',
+            //       backgroundColor: 'white',
+            //     }}
+            //   >
+            //     <CardContent
+            //       sx={{
+            //         backgroundColor: '#F59E0B',
+            //         color: 'white',
+            //         textAlign: 'center',
+            //         width: '100%',
+            //       }}
+            //     >
+            //       <Typography
+            //         variant="body1"
+            //         component="div"
+            //         sx={{ fontWeight: 'bold' }}
+            //         style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}
+            //       >
+            //         {cafeteria.name}
+            //       </Typography>
+            //       <Typography
+            //         variant="body1"
+            //         component="div"
+            //         sx={{ fontWeight: 'bold' }}
+            //         style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}
+            //       >
+            //       </Typography>
+            //     </CardContent>
+            //   </Box>
+            // </Card>
           ))}
         </Box>
         </Stack>
