@@ -131,7 +131,7 @@ useEffect(() => {
   }
 >
   {/* Constrain height of image container */}
-  <Box sx={{ height: 150, width: '100%', overflow: 'hidden' }}>
+  <Box sx={{ height: 250, width: '100%', overflow: 'hidden' }}>
     <CardMedia
       component="img"
       src={cafeteria.imageUrl}

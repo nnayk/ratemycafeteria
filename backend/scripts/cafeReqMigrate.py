@@ -29,5 +29,12 @@ if __name__ == "__main__":
     firebase_admin.initialize_app(cred)
     db = firestore.client()
     school = input("Enter the school name (case sensitive): ")
-    cafe = input("Enter the cafe name (case sensitive): ")
-    migrateCafeReq(school,cafe,db=db)
+    cafes = input("Enter the cafe name(s) (case sensitive, comma separated): ").split(",")
+    print(f"cafes: {cafes}")
+    for cafe in cafes:
+        cafe = cafe.strip()
+        if not cafe:
+            continue
+        print(f"Processing cafe {cafe}, length: {len(cafe)}")
+        # migrate the cafe request
+        migrateCafeReq(school,cafe,db=db)
