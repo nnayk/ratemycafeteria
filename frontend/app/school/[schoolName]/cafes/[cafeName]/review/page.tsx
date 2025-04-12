@@ -80,9 +80,9 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     const reviewData = {
       id: '',
       user,
-      quality: quality,
-      quantity: quantity,
-      pricing: pricing,
+      quality: 0,
+      quantity:0,
+      pricing: 0,
       details,
       date,
       likes: 0,
