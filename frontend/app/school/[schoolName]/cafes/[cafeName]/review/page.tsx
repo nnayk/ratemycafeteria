@@ -77,12 +77,15 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
     // I want to store the date in YYYY-MM-DD format
     const date = new Date().toISOString().split('T')[0];
     log('Date:', date);
+    const safe_quality = quality ?? 0;
+    const safe_quantity = quantity ?? 0;
+    const safe_pricing = pricing ?? 0;
     const reviewData = {
       id: '',
       user,
-      quality: 0,
-      quantity:0,
-      pricing: 0,
+      quality: safe_quality,
+      quantity: safe_quantity,
+      pricing: safe_pricing,
       details,
       date,
       likes: 0,
