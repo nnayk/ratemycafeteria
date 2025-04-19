@@ -37,7 +37,7 @@ def updateCafeInfo(school,cafe,quality,quantity,pricing):
             cafe_data["quality"] = round(avgQuality, 2)
             cafe_data["quantity"] = round(avgQty, 2)
             cafe_data["pricing"] = round(avgPricing, 2)
-            cafe_data["stars"] = (quality + quantity + pricing) / 3
+            cafe_data["stars"] = round((quality + quantity + pricing) / 3, 2)
             print(f"avg quality: {avgQuality}, avg quantity: {avgQty}, avg pricing: {avgPricing}, stars: {cafe_data['stars']}")
             print(f"Updating cafe document: {cafe_data}")
             cafe_ref.update(cafe_data)

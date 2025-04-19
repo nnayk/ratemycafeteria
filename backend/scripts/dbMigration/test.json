@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ratemycafeteria-67173",
+  "private_key_id": "f7f27470c325127a8cbae6f83f02329ea703ebbc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC8d2VBygSMPndL\nZUmWFbwn+5XIZZbydSaWesr/neTMzWA/J6tgmk71BHSZ+yQJ6LtxTCksuWAa4C8h\nE3xYUWz1A73021TJBOiTazfKJrB6a8v5IvIcWTQD0PwFU6797lcHOh4kY4k9PlvA\ngJsxo+33kcC5MUOFfGKPJsW3ssH3w1mhRcTyXjgLXRbv4LxT65izRSQwf3Ll5EzG\nZggm+wSKDcbQUEJ7ZuSwBwMKaZa9eCZE+vWeZTUIofOVCOZ3utAdCBS2stB+s29o\n7MJ+ssYLeyLZXcEGcD23iJHPAUQen1nxWB7be5piIUEs0SJgEkULHhywaeF8M4gf\ns/Tgr6APAgMBAAECggEAHWNTdhzK9MDQ2AA6p0f1sm5iqYBd4f+D6DchlxZx6mr5\nX8pkc4iHA2HnJL5VR6OeMZ6PVRqwR8CULh4xvOaFjPdBFFYXNHlVeEIMeF3sFaA1\niusjbGmPLivVAKekmT15yKC2uTSO3plDXr3ZyrXQklLiBdQOvq6UrSnTRD/VoI1K\n2S9TadNq/PGUUHmWAIWf5Od8Id1PB0bDKEwN28JCB+KOE27OWfy4Mm/StkxibgWm\nDPp2FZY21bDelrRLnIgDL1zrpxSeNTl8PyBRtaAHKB2wahviNVoNsAzzRGIqXl1j\n5Hl1IHN3aIiUlfHiaQAWZMONRAWm7LAdpSr3nsgpcQKBgQDyVK9qzim9zZr26YyU\nqgraBlkUJZIE21rP8i5qYTRzArZMNHP/63x1P3nzpC+IQJUjvPmtUkLKoqQr0sEo\n54A1JQjARqYiaFtPUKc8vO6cqz8qU/8D6p2Pry0PBEXjOxY1eCSjCxmcZuZpBmrg\no3ml79jNtLZkXZZ5lEik/S/UMwKBgQDHGOUyP7COvYB+mPopUHCogDbN5GFbsIK2\njWTe0z/8Rhyx0hB8yw7wDbwCb9GYH0Mzw9Rhw6bJ9dbLbU2k/j5jATads8NELW6M\n7rk8MXK+ksxqbC2uiB5KLbNBSwWPM83CAu28dqMG4fZlFoW2HbrShbhj2kcDSCeY\nQdJvDs8ItQKBgE9NhWZ3d1OE4IyjG31fNFPrNeWQ8fsi6dIZWDU6AFcO8Sd5FukO\nYFliX39rIJ7/O49JfY/J1s/Hb+BjhRDkyaEasIVz2VRzQEZxh3kp/xBIPlCU0mSu\nt8dYtW8vn8tf/8GZwquUq1nylr6R+hHvjZTPK+0NkY7AzciVzTwpGyjfAoGAf5fk\nyp8md1Pa1UcUiwWSLWp9tNV3z1r/ah6TVnnrt7D3Er6c8lzv5cfnhWhD2kmut634\nne7VJPj3/sa9y89kC+7rIYXizf6PqqIS9BB8iMVrW4iYfhGd18wR5PY/SdbZNkzK\nLs2ZDQAi+AXHCz9iSyiHUvbAK8pCFcGZKrNC20ECgYEAs2r6U85uMzV52eiOAah0\nM3FPb0InSYGbGaYKmuqaCxFJIhT3ruH10lHP7WeMyh5rjDfAa2G2VXaxmzBeK+15\ndFBo8XPzb6wJPd7rHOwoCPaO6vE/eulaiLbwu3bg5Qr2LarDB37WruerP/l64uPo\n/dBXM9Nr9/9sDxlwFJf8KeQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-3jqd5@ratemycafeteria-67173.iam.gserviceaccount.com",
+  "client_id": "105150892966071924847",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-3jqd5%40ratemycafeteria-67173.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

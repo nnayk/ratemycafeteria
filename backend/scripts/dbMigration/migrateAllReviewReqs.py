@@ -1,23 +1,10 @@
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
-from datetime import datetime
 
-def init_firebase():
-    """Initialize Firebase Admin SDK"""
-    try:
-        # Use your service account key
-        cred = credentials.Certificate('prod.json')
-        firebase_admin.initialize_app(cred)
-        db = firestore.client()
-        return db
-    except Exception as e:
-        print(f"Error initializing Firebase: {e}")
-        raise
+from datetime import datetime
+from utils import db, get_average_stars
+
 
 def migrate_cafe_reviews(school_name: str, cafe_name: str):
     """Migrate review requests for a specific cafe to reviews collection"""
-    db = init_firebase()
     
     try:
         print(f"\nStarting migration for {cafe_name} at {school_name}")
@@ -37,7 +24,7 @@ def migrate_cafe_reviews(school_name: str, cafe_name: str):
         
         print(f"Found {total_requests} review requests to migrate")
         migrated_count = 0
-        
+
         for review_request in review_requests:
             try:
                 # Get review request data
@@ -58,15 +45,46 @@ def migrate_cafe_reviews(school_name: str, cafe_name: str):
                 
                 migrated_count += 1
                 print(f"Migrated review {review_request.id} ({migrated_count}/{total_requests})")
+                # delete the review request from the review_requests collection
+                review_request.delete()
                 
             except Exception as e:
                 print(f"Error migrating review {review_request.id}: {e}")
                 continue
         
+        # Update the average stars for the cafe
+        cafe_ref = (db.collection('cafes')
+                    .document(school_name)
+                    .collection('cafes')
+                    .document(cafe_name))
+        # Calculate the average stars for the cafe
+        # Get all reviews for the cafe
+        reviews = (db.collection('reviews')
+                  .document(school_name)
+                  .collection(cafe_name)
+                  .get())
+        # Calculate the average stars for the cafe
+        average_stars = get_average_stars(school_name,cafe_name)
+        # for review in reviews:
+        #     review_data = review.to_dict()
+        #     print(review_data)
+        #     pricing, quality, quantity = review_data['pricing'], review_data['quality'], review_data['quantity']
+        #     total_stars += calculate_stars(pricing, quality, quantity)
+        # print(f"Total stars: {total_stars}, reviews: {len(reviews)}")
+        # average_stars = round(total_stars / len(reviews), 2)
+        existing_stars = cafe_ref.get().to_dict()['stars']
+        print(f"Average stars for {cafe_name} at {school_name}: old = {existing_stars}, new = {average_stars}")
+        # Update the average stars for the cafe
+        cafe_ref.update({'stars': average_stars})
+        
+
+        
         print(f"\nMigration completed! Migrated {migrated_count} out of {total_requests} reviews")
         
     except Exception as e:
         print(f"Error during migration: {e}")
+        # launch a pdb session
+        import pdb; pdb.set_trace()
     finally:
         # Clean up Firebase app
         try:

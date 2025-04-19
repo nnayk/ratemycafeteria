@@ -8,8 +8,8 @@ import os
 from dotenv import load_dotenv
 
 # Load environment variables
-# success = load_dotenv()
-# assert success, "Failed to load .env"
+success = load_dotenv()
+assert success, "Failed to load .env"
 
 # Configure Cloudinary
 cloudinary.config(
@@ -18,6 +18,10 @@ cloudinary.config(
     api_secret=os.getenv("CLOUDINARY_API_SECRET"),
     secure=True
 )
+
+assert os.getenv("CLOUDINARY_API_KEY") is not None
+frontend_origins = os.getenv("FRONTEND_URLS").split(',')
+print(frontend_origins)
 
 # Create Flask app in global scope
 app = Flask(__name__)
@@ -29,7 +33,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Configure CORS for all routes
 CORS(app, resources={r"/*": {
-    "origins": ["https://ratemycafeteria.vercel.app", "https://ratemycafeteria.org"],
+    # "origins": ["https://www.ratemycafeteria.vercel.app", "https://www.ratemycafeteria.org"],
+    "origins" : frontend_origins,
     "methods": ["POST"],
     "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Origin"]
 }})
