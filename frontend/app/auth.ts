@@ -21,23 +21,23 @@ onAuthStateChanged(auth, (user) => {
 export async function registerUser(email: string, password: string): Promise<UserCredential> {
     try {
       const actionCodeSettings = { 
-        url: 'http://localhost:3000/',
+        // url: 'https://www.ratemycafeteria.org',
+        url: 'http://localhost:3001',
       };
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      sendEmailVerification(userCredential.user, actionCodeSettings).then(() => {
-        log("Email verification sent!");
-      }).catch((error) => {
+      log("CREATED USER");
+      await sendEmailVerification(userCredential.user, actionCodeSettings);
+      log("Email verification sent!");
+      await auth.signOut()
+      log(`userCredential=${userCredential}`)
+      return userCredential;
+    } catch(error) {
         log.error("Email verification error:", error);
-        // delete user
         throw error;
-      });
-        return userCredential;
-        // log("User registered successfully:", userCredential.user);
-        // return userCredential;
-    } catch (error) {
-        log.error("Registration error:", error);
-        throw error; // Re-throw the error to handle it in the calling code
-    }
+    }  
+      // log("User registered successfully:", userCredential.user);
+      // return userCredential;
 }
 
 export async function loginUser(email: string, password: string): Promise<UserCredential> {

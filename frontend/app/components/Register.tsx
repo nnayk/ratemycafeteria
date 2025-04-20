@@ -27,7 +27,7 @@ export const Register: React.FC<LoginProps> = ({ isOpen, onClose }) => {
 
     try {
       const userCredential: UserCredential = await registerUser(email, password);
-      setSuccessMessage(`Verification email sent! You can exit this tab.`);
+      setSuccessMessage(`Verification email sent! Please verify your email within one week or else it will be deleted from our system. You can exit this tab.`);
       setErrorMessage('');
       setTimeout(() => {
         clearInputs(); // Clear inputs before closing
