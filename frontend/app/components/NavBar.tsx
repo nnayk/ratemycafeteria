@@ -36,9 +36,9 @@ export const Navbar: React.FC = () => {
 		  <Image 
   src="/logo.png" 
   alt="Rate My Cafeteria Logo" 
-  width={80}  // Increase width
-  height={80} // Increase height
-  className="mr-2 max-w-[80px] max-h-[80px] object-contain"
+  width={100}  // Increase width
+  height={100} // Increase height
+  className="mr-2 max-w-[100px] max-h-[100px] object-contain"
   onClick={() => router.push('/')}
 />
 
