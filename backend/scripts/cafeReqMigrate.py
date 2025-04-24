@@ -1,8 +1,11 @@
 ### THIS SCRIPT IS ONLY NEEDED WHEN ADDING A CAFE TO AN EXISTING SCHOOL ###
 import firebase_admin
 from firebase_admin import credentials, firestore
+from uploadImage import uploadImage
 DEFAULT_IMAGE_URL = "https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design.jpg"
 def migrateCafeReq(school, cafe, imageUrl=DEFAULT_IMAGE_URL,db=None):
+    if not imageUrl:
+        image = DEFAULT_IMAGE_URL
     print(f"Migrating cafe request for {school}/{cafe}")
     # Get reference to the cafe request collection
     cafeReqRef = db.collection("cafe_requests").document(school).collection("cafes").document(cafe)
@@ -16,7 +19,7 @@ def migrateCafeReq(school, cafe, imageUrl=DEFAULT_IMAGE_URL,db=None):
     db.collection("cafes").document(school).collection("cafes").document(cafe).set({
         "stars": 0,
         "reviewCount": 0,
-        "imageUrl": DEFAULT_IMAGE_URL
+        "imageUrl": imageUrl
     })
 
     print("Cafe requests migrated successfully!")
@@ -35,6 +38,14 @@ if __name__ == "__main__":
         cafe = cafe.strip()
         if not cafe:
             continue
+        # image = input(f"Enter the image path for {cafe} (hit enter to skip): ")
+        schoolPath = "uc davis"
+        imageName = cafe.lower()
+        imagePath = f"//Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/frontend/public/assets/{schoolPath}/{imageName}.jpg"
+        imageUrl = uploadImage(imagePath)
+        if not imageUrl:
+            print(f"Failed to upload image for {cafe}, gonna use default image")
+            imageUrl=DEFAULT_IMAGE_URL
         print(f"Processing cafe {cafe}, length: {len(cafe)}")
         # migrate the cafe request
-        migrateCafeReq(school,cafe,db=db)
+        migrateCafeReq(school,cafe,imageUrl=imageUrl,db=db)
