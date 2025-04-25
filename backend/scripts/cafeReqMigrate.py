@@ -2,6 +2,8 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 from uploadImage import uploadImage
+import os
+
 DEFAULT_IMAGE_URL = "https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design.jpg"
 def migrateCafeReq(school, cafe, imageUrl=DEFAULT_IMAGE_URL,db=None):
     if not imageUrl:
@@ -39,12 +41,24 @@ if __name__ == "__main__":
         if not cafe:
             continue
         # image = input(f"Enter the image path for {cafe} (hit enter to skip): ")
-        schoolPath = "uc davis"
+        schoolPath = school.lower()
         imageName = cafe.lower()
-        imagePath = f"//Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/frontend/public/assets/{schoolPath}/{imageName}.jpg"
-        imageUrl = uploadImage(imagePath)
-        if not imageUrl:
-            print(f"Failed to upload image for {cafe}, gonna use default image")
+        imgFound=False
+        # try .png, .jpg, .jpeg, .avif and .webp. Exit as soon as one works
+        for ext in [".png", ".jpg", ".jpeg", ".avif", ".webp"]:
+            imagePath = f"//Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/frontend/public/assets/{schoolPath}/{imageName}{ext}"
+            print(f"Trying image path: {imagePath}")
+            if os.path.exists(imagePath):
+                imgFound=True
+                break
+        # imagePath = f"//Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/frontend/public/assets/{schoolPath}/{imageName}.jpg"
+        if imgFound:
+            print(f"Image found at {imagePath}")
+            imageUrl = uploadImage(imagePath)
+            if not imageUrl:
+                print(f"Failed to upload image for {cafe}, gonna use default image")
+                imageUrl=DEFAULT_IMAGE_URL
+        else:
             imageUrl=DEFAULT_IMAGE_URL
         print(f"Processing cafe {cafe}, length: {len(cafe)}")
         # migrate the cafe request
