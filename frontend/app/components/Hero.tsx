@@ -1,11 +1,27 @@
 import React from 'react';
 import { Autocomplete, TextField, Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { SCHOOLS } from '../constants'; // HARD coding for now since schools are manually added anyways
+// import { SCHOOLS } from '../constants'; // HARD coding for now since schools are manually added anyways
+import { getSchools } from '../db'; // Adjust the import path as necessary
 import { cleanUrl } from '../db';
+import { useEffect, useState } from 'react';
 
 export const Hero: React.FC = () => {
   const router = useRouter();
+  
+  const [schools, setSchools] = useState<[]>([]);
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const result = await getSchools();
+        setSchools(result);
+      } catch (error) {
+        console.error('Failed to fetch schools:', error);
+      }
+    };
+
+    fetchSchools();
+  }, []);
 
   const handleSchoolSelect = (event: React.SyntheticEvent, value: string | null) => {
     if (value) {
@@ -21,7 +37,7 @@ export const Hero: React.FC = () => {
       <div className="w-full max-w-md">
         <Autocomplete
         // SCHOOLS is a list of objects with attribute name. I want a list of these names
-          options={SCHOOLS.map((school) => school.name)} // TODO: call getSchools() even if it's just a static list rn
+          options={schools.map((school) => school.name)} // TODO: call getSchools() even if it's just a static list rn
           onChange={handleSchoolSelect}
           renderInput={(params) => (
             <TextField

@@ -15,7 +15,7 @@ def migrateCafeReq(school, cafe, imageUrl=DEFAULT_IMAGE_URL,db=None):
         print(f"No cafe requests found for {school}/{cafe}")
     else:
         data = cafeReqRef.get().to_dict()
-        print(f"Cafe {cafe} request submitted by user {data['user']}")
+        # print(f"Cafe {cafe} request submitted by user {data['user']}")
     # create the school document in the /cafes collection if it doesn't exist
     db.collection("cafes").document(school).set({})
     db.collection("cafes").document(school).collection("cafes").document(cafe).set({
