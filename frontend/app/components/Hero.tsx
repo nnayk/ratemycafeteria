@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation';
 import { getSchools } from '../db'; // Adjust the import path as necessary
 import { cleanUrl } from '../db';
 import { useEffect, useState } from 'react';
+import { DocumentData } from 'firebase/firestore';
+
 
 export const Hero: React.FC = () => {
   const router = useRouter();
   
-  const [schools, setSchools] = useState<[]>([]);
+  const [schools, setSchools] = useState<DocumentData[]>([]);
   useEffect(() => {
     const fetchSchools = async () => {
       try {
