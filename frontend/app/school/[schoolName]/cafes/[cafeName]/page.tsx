@@ -72,6 +72,7 @@ useEffect(() => {
           </Button>
         </div>
         <div className="space-y-4">
+          <p>Note: 1 star = horrible, 5 stars = amazing</p>
           {reviews.map((review, index) => (
             <ReviewCard key={index} review={review} school={decodedSchoolName} cafe={decodedCafeName} />
           ))}

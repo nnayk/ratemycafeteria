@@ -124,6 +124,8 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
           <h1 className="text-xl font-bold text-gray-800 mb-4 truncate">
             Write a Review for {decodedCafeName}
           </h1>
+          <h2>Note: 1 star = horrible, 5 stars = amazing</h2>
+
 
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
