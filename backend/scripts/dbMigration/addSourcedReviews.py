@@ -9,13 +9,13 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()                                              
 # from utils import db
 
-def add_reviews_from_csv(file_path):
+def add_reviews_from_csv(file_path, schoolName, cafeteriaName):
     """
     Reads a CSV file with web source, review text, and web link,
-    and adds the data to the 'sourcedReviews' collection in Firebase.
+    and adds the data to the 'sourcedReviews/<schoolName>/<cafeteriaName>' collection in Firebase.
     """
     # db = init_firebase()
-    sourced_reviews_ref = db.collection('sourcedReviews')
+    sourced_reviews_ref = db.collection(f'sourcedReviews/{schoolName}/{cafeteriaName}')
 
     with open(file_path, mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
@@ -37,4 +37,6 @@ def add_reviews_from_csv(file_path):
 if __name__ == '__main__':
     # Replace 'path/to/your/csv_file.csv' with the actual path to your CSV file.
     fp = "/Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/backend/scripts/scraped-reviews/vista_grande_reviews.csv"
-    add_reviews_from_csv(fp)
+    schoolName = "Cal Poly San Luis Obispo"
+    cafeteriaName = "Vista Grande"
+    add_reviews_from_csv(fp, schoolName, cafeteriaName)
