@@ -6,7 +6,7 @@ import { Button } from '../../../../components/Button'; // Assuming you have a B
 import { ReviewCard } from '../../../../components/ReviewCard'; // Assuming you can create or have a ReviewCard component
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { Review, CafeDetails, getReviews, getCafeDetails } from '../../../../db'; 
+import { Review, CafeDetails, getReviews, getSourcedReviews, getCafeDetails } from '../../../../db';
 import { Footer } from '../../../../components/Footer';
 import { log } from "../../../../utils/logger"; 
 import { cleanUrl } from '../../../../db';
@@ -16,7 +16,8 @@ export default function CafePage({ params }: { params: Promise<{ schoolName: str
   const [decodedSchoolName, setDecodedSchoolName] = React.useState('');
   const [decodedCafeName, setDecodedCafeName] = React.useState('');
   const [cafeDetails, setCafeDetails] = React.useState<CafeDetails | null>(null);
-  const [reviews, setReviews] = React.useState<Review[]>([]); 
+  const [reviews, setReviews] = React.useState<Review[]>([]);
+  const [sourcedReviews, setSourcedReviews] = React.useState<Review[]>([]);
   const router = useRouter();
 useEffect(() => {
     params.then((resolvedParams) => {
@@ -34,6 +35,8 @@ useEffect(() => {
 		  log(`review quantity = ${review.quantity}, quality = ${review.quality}, pricing = ${review.pricing}`);
       }
       setReviews(reviews);
+      const sourcedReviews = await getSourcedReviews(realSchoolName, realCafeName);
+      setSourcedReviews(sourcedReviews);
       const cafeDetails = await getCafeDetails(realSchoolName, realCafeName);
       setCafeDetails(cafeDetails);
       log(`stars = ${cafeDetails.stars}`);
@@ -76,6 +79,12 @@ useEffect(() => {
           {reviews.map((review, index) => (
             <ReviewCard key={index} review={review} school={decodedSchoolName} cafe={decodedCafeName} />
           ))}
+        </div>
+        <div className="space-y-4 mt-8">
+            <h2 className="text-xl font-bold text-gray-800">Sourced from the web</h2>
+            {sourcedReviews.map((review, index) => (
+                <ReviewCard key={index} review={review} school={decodedSchoolName} cafe={decodedCafeName} />
+            ))}
         </div>
       </main>
       <Footer />

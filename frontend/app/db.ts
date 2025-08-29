@@ -27,6 +27,8 @@ export interface Review {
     likes: number;
     dislikes: number;
     photos: string[] | File[];
+    source?: string;
+    link?: string;
 }
   
 export interface SchoolDetails {
@@ -258,6 +260,46 @@ export async function getReviews(school: string, cafe: string): Promise<Review[]
       return reviews;
   } catch (e) {
       log.error("Error getting documents: ", e);
+      return [];
+  }
+}
+
+export async function getSourcedReviews(school: string, cafe: string): Promise<Review[]> {
+  try {
+      const db = getDb();
+      log(`db = ${db.app.name}`);
+      log(`Getting sourced reviews for ${school}/${cafe}`);
+      const querySnap = await getDocs(collection(db, "sourcedReviews", school, cafe));
+      log(`Got ${querySnap.docs.length} sourced reviews for ${school}/${cafe}`);
+      
+      const reviews: Review[] = querySnap.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          user: data.user || null,
+          quality: data.quality || 0,
+          quantity: data.quantity || 0,
+          pricing: data.pricing || 0,
+          date: data.date || '',
+          details: data.reviewText || '',
+          likes: data.likes || 0,
+          dislikes: data.dislikes || 0,
+          photos: data.photo_urls || [],
+          source: data.source || '',
+          link: data.link || ''
+        };
+      });
+
+      // sort reviews by date
+      reviews.sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+      
+      log(`Got ${reviews.length} sourced reviews for ${school}/${cafe}`);
+      log(reviews);
+      return reviews;
+  } catch (e) {
+      log.error("Error getting sourced reviews: ", e);
       return [];
   }
 }

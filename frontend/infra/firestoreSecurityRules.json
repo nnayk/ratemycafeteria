@@ -18,6 +18,10 @@ service cloud.firestore {
     allow read: if true
     }
     
+    match /sourcedReviews/{school}/{cafe}/{review} {
+    	allow read: if true;
+    }
+    
      // Allow users to add new cafe requests but not modify or delete
     match /cafe_requests/{school} {
       allow create,read: if true;
