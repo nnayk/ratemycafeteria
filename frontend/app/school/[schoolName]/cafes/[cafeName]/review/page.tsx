@@ -124,11 +124,9 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
           <h1 className="text-xl font-bold text-gray-800 mb-4 truncate">
             Write a Review for {decodedCafeName}
           </h1>
-          <h2>Note: 1 star = horrible, 5 stars = amazing</h2>
 
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+          <form onSubmit={handleSubmit}> <div className="mb-4">
               <label className="block text-gray-700 mb-2">Quality</label>
               <Rating
               key="quality"
@@ -153,7 +151,7 @@ export default function WriteReviewPage({ params }: { params: Promise<{ schoolNa
             </div>
 
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Pricing</label>
+              <label className="block text-gray-700 mb-2">Pricing (note: 1 star=extremely expensive, 5 stars=extremely affordable)</label>
               <Rating
                 value={pricing ?? 0}
                 onChange={handlePricingChange}
