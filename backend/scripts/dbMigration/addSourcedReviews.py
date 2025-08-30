@@ -25,7 +25,8 @@ def add_reviews_from_csv(file_path, schoolName, cafeteriaName):
                 review_data = {
                     'source': row['Source / Platform'],
                     'reviewText': row['Full Review Text'],
-                    'link': row['Source Link']
+                    'link': row['Source Link'],
+                    'date': row['Date']
                 }
                 sourced_reviews_ref.add(review_data)
                 print(f"Successfully added review from {row['Source / Platform']}")
@@ -36,7 +37,7 @@ def add_reviews_from_csv(file_path, schoolName, cafeteriaName):
 
 if __name__ == '__main__':
     # Replace 'path/to/your/csv_file.csv' with the actual path to your CSV file.
-    fp = "/Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/backend/scripts/scraped-reviews/vista_grande_reviews.csv"
+    fp = "/Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/backend/scripts/scraped-reviews/1901_marketplace_reviews.csv"
     schoolName = "Cal Poly San Luis Obispo"
-    cafeteriaName = "Vista Grande"
+    cafeteriaName = "1901 Kitchen"
     add_reviews_from_csv(fp, schoolName, cafeteriaName)

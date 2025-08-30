@@ -75,7 +75,7 @@ useEffect(() => {
           </Button>
         </div>
         <div className="space-y-4">
-          <p>Note: 1 star = horrible, 5 stars = amazing</p>
+          <p>Note: For pricing, higher stars = more affordable</p>
           {reviews.map((review, index) => (
             <ReviewCard key={index} review={review} school={decodedSchoolName} cafe={decodedCafeName} />
           ))}
@@ -83,7 +83,7 @@ useEffect(() => {
         <div className="space-y-4 mt-8">
             <h2 className="text-xl font-bold text-gray-800">Sourced from the web</h2>
             {sourcedReviews.map((review, index) => (
-                <ReviewCard key={index} review={review} school={decodedSchoolName} cafe={decodedCafeName} />
+                <ReviewCard key={index} review={review} school={decodedSchoolName} cafe={decodedCafeName} isSourced={true} />
             ))}
         </div>
       </main>

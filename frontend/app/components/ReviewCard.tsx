@@ -10,9 +10,10 @@ interface ReviewCardProps {
   review: Review;
   school: string;
   cafe: string;
+  isSourced?: boolean;
 }
 
-export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) => {
+export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe, isSourced }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [likes, setLikes] = useState(review.likes);
   const [dislikes, setDislikes] = useState(review.dislikes);
@@ -37,19 +38,26 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, school, cafe }) 
   return (
     <div className="border rounded-md p-4 shadow-md">
       {/* Ratings Row */}
-      <div className="flex flex-wrap items-center text-sm mb-2 gap-2 sm:gap-4">
-        <span className="flex items-center">Quality: {renderStars(review.quality)}</span>
-        <span className="hidden sm:inline">|</span>
-        <span className="flex items-center">Quantity: {renderStars(review.quantity)}</span>
-        <span className="hidden sm:inline">|</span>
-        <span className="flex items-center">Pricing: {renderStars(review.pricing)}</span>
-      </div>
+      {!isSourced && (
+       <div className="flex flex-wrap items-center text-sm mb-2 gap-2 sm:gap-4">
+         <span className="flex items-center">Quality: {renderStars(review.quality)}</span>
+         <span className="hidden sm:inline">|</span>
+         <span className="flex items-center">Quantity: {renderStars(review.quantity)}</span>
+         <span className="hidden sm:inline">|</span>
+         <span className="flex items-center">Pricing: {renderStars(review.pricing)}</span>
+       </div>
+      )}
 
       {/* Date */}
       <div className="text-xs text-gray-500 mb-2">{review.date}</div>
 
       {/* Review Text */}
       <p className="mb-4">{review.details}</p>
+       {isSourced && review.source && (
+           <p className="text-xs text-gray-500 italic mt-2">
+               Source: <a href={review.link} target="_blank" rel="noopener noreferrer" className="underline">{review.source}</a>
+           </p>
+       )}
 
 {/* Photos */}
       {review.photos.length > 0 && (

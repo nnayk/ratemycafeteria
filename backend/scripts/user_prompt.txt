@@ -1,0 +1,10 @@
+You are given the following list of cafeterias for {university_name}:
+
+{cafeteria_1}  
+{cafeteria_2}  
+{cafeteria_3}  
+...  
+
+
+For each cafeteria in the list:
+<system prompt>
