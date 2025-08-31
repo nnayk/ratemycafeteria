@@ -1,6 +1,8 @@
 import csv
 import firebase_admin                                                           
 from firebase_admin import credentials, firestore                               
+import os
+
 # Initialize Firebase Admin SDK                                                 
 cred = credentials.Certificate("prod.json")  # Path to your service account JSON
 firebase_admin.initialize_app(cred)                                             
@@ -37,7 +39,17 @@ def add_reviews_from_csv(file_path, schoolName, cafeteriaName):
 
 if __name__ == '__main__':
     # Replace 'path/to/your/csv_file.csv' with the actual path to your CSV file.
-    fp = "/Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/backend/scripts/scraped-reviews/1901_marketplace_reviews.csv"
-    schoolName = "Cal Poly San Luis Obispo"
-    cafeteriaName = "1901 Kitchen"
-    add_reviews_from_csv(fp, schoolName, cafeteriaName)
+    fp = "/Users/nnayak/Documents/other/proj/rmc/ratemycafeteria/backend/scripts/scraped-reviews/" #1901_marketplace_reviews.csv"
+    for file in os.listdir( fp ):
+        print(f'processing file {file}')
+        if '1901' in file or 'vista' in file:
+            print('SKIPPING')
+            continue
+        else:
+            schoolName = "Cal Poly San Luis Obispo"
+            cafeteriaName = ' '.join(map(str.capitalize,file[:file.index('reviews')].split('_')[:-1]))
+            if 'einstein' in cafeteriaName:
+                cafeteriaName = "Einstein Bros."
+            print(f'schoolName={schoolName}, cafeteriaName={cafeteriaName}')
+            add_reviews_from_csv(fp+file, schoolName, cafeteriaName)
+            print(f'done with sourced reviews for {cafeteriaName}')

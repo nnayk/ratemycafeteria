@@ -16,3 +16,7 @@ test_images
 .vercel
 serviceAccount*
 scraped-reviews/
+
+# synthetic review stuff
+synthetic-reviews/
+addSyntheticReviews.py

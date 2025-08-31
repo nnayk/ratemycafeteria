@@ -7,6 +7,11 @@ yarn-error.log*
 firebase-debug.log*
 firebase-debug.*.log*
 
+# synthetic review stuff
+addSyntheticReviews.py
+synthetic_reviews/
+
+
 # Firebase cache
 .firebase/
 
@@ -67,3 +72,5 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+
