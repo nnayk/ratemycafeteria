@@ -20,8 +20,8 @@ cloudinary.config(
 )
 
 assert os.getenv("CLOUDINARY_API_KEY") is not None
-frontend_origins = os.getenv("FRONTEND_URLS").split(',')
-print(frontend_origins)
+# frontend_origins = os.getenv("FRONTEND_URLS").split(',')
+# print(frontend_origins)
 
 # Create Flask app in global scope
 app = Flask(__name__)
@@ -42,7 +42,8 @@ CORS(app, resources={r"/*": {
 
 @app.route("/")
 def hello():
-    return "Hello, World!"
+    debug("inside hello 1/31/26")
+    return "Hello, World! 1/31/26"
 
 @app.route("/photos/upload", methods=['POST'])
 def upload_photos():
