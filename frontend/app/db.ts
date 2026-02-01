@@ -51,7 +51,7 @@ export function getDb() {
 }
 
 export async function getSchools() { // THis will be a future utility when we have a dynamic list of schools
-   log(`inside getSchools`);
+   log(`inside getSchools PROD DEBUG 2/1/26 3 pm`);
    try {
        const querySnap = await getDocs(collection(db,"schools"));
        const schools = querySnap.docs.map(doc => doc.data());
