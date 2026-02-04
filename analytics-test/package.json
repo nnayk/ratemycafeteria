@@ -1,0 +1,12 @@
+{
+  "name": "analytics-test",
+  "version": "1.0.0",
+  "description": "Puppeteer script for testing analytics",
+  "main": "open-page.js",
+  "scripts": {
+    "start": "node open-page.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  }
+}
